@@ -9,7 +9,7 @@ tree.op = [];
 tree.kids = [];
 tree.class = [];
 
-if (sample_entropy(binary_targets) == 0 || length(attributes) == 0)   
+if (sample_entropy(binary_targets) == 0 || isempty(attributes))   
     % either pure targets or no more attributes to base decision on
     
     tree.class = maj_value(binary_targets);
@@ -33,7 +33,7 @@ else
         %fprintf('Program paused. Press enter to continue.\n');
         %pause;
         
-        if (length(child_examples) == 0)
+        if (isempty(child_examples))
             % we can't train this child, make a leaf with the majority
             % value of all training data coming to the parent
             
