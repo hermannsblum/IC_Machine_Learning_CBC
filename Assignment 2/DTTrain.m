@@ -9,47 +9,64 @@ tree.op = [];
 tree.kids = [];
 tree.class = [];
 
-if (sample_entropy(binary_targets) == 0 || isempty(attributes))   
-    % either pure targets or no more attributes to base decision on
+p = length(find(binary_targets == 1)); %Number of positives
+n = length(find(binary_targets == 0)); %Number of negatives
+
+if (sampleEntropy(p, n) == 0)   %Check the purity
     
-    tree.class = maj_value(binary_targets);
+    %fprintf('Leaf: pure entrpy \n');
+    %fprintf('Program paused. Press enter to continue.\n');
+    %pause;
+    
+    tree.class = majValue(binary_targets);
+    
+elseif (isempty(attributes))    %Check if no more attributes are avilable
+    
+    %fprintf('Leaf: no more attribute \n');
+    %fprintf('Program paused. Press enter to continue.\n');
+    %pause;
+    
+    tree.class = majValue(binary_targets);
     
 else
     
-    tree.op = choose_best_attr(examples, attributes, binary_targets);
+    tree.op = chooseBestAtt(examples, attributes, binary_targets);
     tree.kids = cell(1, 2);
         
-    % raise up the kids
+    %tree
     
     for j = 1:2
         
-        fprintf('#Examples: %d \n', length(examples));
-        child_index = find(examples(:, tree.op) == (j - 1));
-        child_examples = examples(child_index, :);     
-        child_binary_targets = binary_targets(child_index);
+        %fprintf('#Examples: %d \n', length(examples));
+        xi_index = find(examples(:, tree.op) == (j - 1));
+        xi_ex = examples(xi_index, :);     
+        xi_binary_targets = binary_targets(xi_index);
         
         %fprintf('Attribute selected : %d \n', tree.op);
-        fprintf('#Examples with xi = 0: %d \n', length(child_index));
+        %fprintf('#Examples with xi = 0: %d \n', length(xi_index));
         %fprintf('Program paused. Press enter to continue.\n');
         %pause;
         
-        if (isempty(child_examples))
-            % we can't train this child, make a leaf with the majority
-            % value of all training data coming to the parent
+        if (isempty(xi_ex))
+       
+            %fprintf('Leaf: pure entropy \n');
+            %fprintf('Program paused. Press enter to continue.\n');
+            %pause;
             
             tree.kids{j}.op = [];
             tree.kids{j}.kids = [];
-            tree.kids{j}.class = maj_value(binary_targets);
+            tree.kids{j}.class = majValue(binary_targets);
             
         else 
             
-            % remove the used attribute from the list
+            %fprintf('Add a subtree. \n', tree.op);
+            %fprintf('Program paused. Press enter to continue.\n');
+            %pause;
+            
             index = find(attributes == tree.op);
             attributes(index) = [];
             
-            % recursive training with this child
-            tree.kids{j} = DTTrain(child_examples, attributes, ...
-                child_binary_targets);
+            tree.kids{j} = DTTrain(xi_ex, attributes, xi_binary_targets);
                     
         end
         
