@@ -70,7 +70,7 @@ if isempty(tree.kids)
     if state.nodeCount <= 1
         tree.X = 0;
     else
-        tree.X = tree.index / (state.nodeCount - 1);
+        tree.X = 2 * tree.index / (state.nodeCount - 1);
     end
     tree.Y = depth * state.yDist;
 end
@@ -102,5 +102,16 @@ else
 %     opText = tree.op; 
     line(tree.X, tree.Y, 'marker', '.', 'markersize', 8)
 %     text(tree.X, tree.Y, opText, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'top', 'interpreter', 'none')
-    text(tree.X, tree.Y, num2str(tree.class) ,'HorizontalAlignment', 'right', 'VerticalAlignment', 'top', 'interpreter', 'none');
+    
+    class = num2str(tree.class);
+    text(tree.X, tree.Y, class ,'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'interpreter', 'none');
+    
+    % additional data
+    sig = strcat('sig ', num2str(tree.significance * 100, 2), '%');
+    text(tree.X, tree.Y-0.2, sig ,'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'interpreter', 'none');
+    if (tree.p_error ~= 0 && tree.p_error ~= 1)
+        err = strcat('err ', num2str(tree.p_error * 100, 2), '%');
+        text(tree.X, tree.Y-0.4, err ,'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'interpreter', 'none');
+    end
+    
 end
