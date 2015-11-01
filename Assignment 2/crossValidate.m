@@ -20,13 +20,15 @@ if(stratified)
             % Repmat repeats the class value the specified number of
             % times
             folds{i} = [folds{i}; getFold(samplesPerClass{j},repmat(j,size(samplesPerClass{j},1),1),k,i)];
+            % Add as many labels as the number of examples added to
+            % folds{i} in this iteration of the for loop
             labelsFolds{i} = [labelsFolds{i}; repmat(j,size(folds{i},1)-size(labelsFolds{i},1),1)];
         end
         
     end
     
 else
-
+    % TODO: Non-stratified cross-validation
 end
 
 end
