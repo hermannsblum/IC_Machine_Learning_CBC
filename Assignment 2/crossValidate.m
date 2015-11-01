@@ -21,10 +21,23 @@ if(stratified)
             % times
             folds{i} = [folds{i}; getFold(samplesPerClass{j},repmat(j,size(samplesPerClass{j},1),1),k,i)];
             % Add as many labels as the number of examples added to
-            % folds{i} in this iteration of the for loop
+            % folds{i} in this iteration of the for loop. This number is
+            % the current size of folds{i} minus the previous size of
+            % folds{i} (which in turn is equal to the current size of
+            % labelsFolds{i}).
             labelsFolds{i} = [labelsFolds{i}; repmat(j,size(folds{i},1)-size(labelsFolds{i},1),1)];
         end
         
+    end
+    
+    % Perform cross-validation. Train on k-1 folds and test on the i-th
+    % fold. Rotate the testing fold.
+    predictions = cell(k,1);
+    for i=1:k
+        [trainingSet labelsTraining] = getTrainingSet(folds,labelsFolds,i);
+        [testSet labelsTest] = getTestSet(folds,labelsFolds,i);
+        T = train(trainingSet,1:45,labelsTraining);
+        predictions{i} = testTrees1(T,testSet);
     end
     
 else
