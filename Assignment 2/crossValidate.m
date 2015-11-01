@@ -33,11 +33,28 @@ if(stratified)
     % Perform cross-validation. Train on k-1 folds and test on the i-th
     % fold. Rotate the testing fold.
     predictions = cell(k,1);
+    % Confusion matrix over all the examples
+    confusionMatrix = zeros(length(samplesPerClass));
+    precisionFolds = zeros(k,length(samplesPerClass));
+    recallFolds = zeros(k,length(samplesPerClass));
+    fMeasureFolds = zeros(k,length(samplesPerClass));
+    accuracy = zeros(k,length(samplesPerClass));
+    
     for i=1:k
         [trainingSet labelsTraining] = getTrainingSet(folds,labelsFolds,i);
         [testSet labelsTest] = getTestSet(folds,labelsFolds,i);
         T = train(trainingSet,1:45,labelsTraining);
         predictions{i} = testTrees1(T,testSet);
+        % Confusion matrix over a single fold
+        confusionMatrixFold = zeros(length(samplesPerClass));
+        for j=1:length(predictions{i})
+            confusionMatrixFold(labelsTest(j),predictions{i}(j)) = confusionMatrixFold(labelsTest(j),predictions{i}(j))+1;
+        end
+        confusionMatrix = confusionMatrix+confusionMatrixFold;
+        % After computing the confusion matrix of the single fold, the TPs
+        % of each class are in the diagonal of such matrix, while the
+        % values TP+FP are the column sums.
+        precisionFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,1)';
     end
     
 else
