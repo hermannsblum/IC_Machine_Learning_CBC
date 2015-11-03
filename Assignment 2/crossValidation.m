@@ -1,4 +1,4 @@
-function [ output_args ] = crossValidation( examples, attributes, labels )
+function [ confusionMatrix ] = crossValidation( examples, attributes, labels )
 %crossValidation performs a 10-fold cross validation (90% training and 
 %validation, 10% testing) for the decision tree algorithm and reports the 
 %average performances in terms of:
@@ -21,6 +21,7 @@ fold(8, :)  = [1:200, 301:1000];
 fold(9, :)  = [1:100, 201:1000];
 fold(10, :) = 101:1000;
 
+confusionMatrix = zeros(6);
 %Cross validation
 for i = 1:10
    
@@ -36,11 +37,14 @@ for i = 1:10
     [N, ~] = size(test_examples);
     test_labels = labels;
     test_labels(fold(i, :)) = []; 
-    class_error(i) = 1/N * sum(not(predictions(:, i) == test_labels))
+    class_error(i) = 1/N * sum(not(predictions(:, i) == test_labels));
     
+    for j=1:length(test_labels)
+        confusionMatrix(test_labels(j),predictions(j,i)) = confusionMatrix(test_labels(j),predictions(j,i))+1;
+    end
 end
 
-avg_class_error = mean(class_error)
+avg_class_error = mean(class_error);
 
 end
 

@@ -1,4 +1,4 @@
-function testTreesRandomChoice(T,x2)
+function [ predictions ] = testTreesRandomChoice(T,x2)
 % TestTreesRandomChoice performs a random selection among the emotions of
 % all the trees that return a prediction of 1, or among all the emotions if
 % all the trees return 0.

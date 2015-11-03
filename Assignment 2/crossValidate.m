@@ -7,18 +7,21 @@ function [confusionMatrix, accuracy, precision, recall] = crossValidate(xvalues,
 % stratified is a Boolean value that specifies whether or not
 % stratification of folds should be performed.
 
+% Cell array containing the folds
+folds = cell(k,1);
+labelsFolds = cell(k,1);
+numClasses = length(unique(labels));
+
 if(stratified)
     % Obtain the samples divided by class label
     samplesPerClass = stratifySample(xvalues,labels);
-    % Split dataset in k folds
-    folds = cell(k,1);
-    labelsFolds = cell(k,1);
+    
     for i=1:k
         % Perform the division in k folds in every class. Merge the
         % subfolds from all the classes to obtain a single fold
-        for j=1:length(samplesPerClass)
+        for j=1:numClasses
             % Repmat repeats the class value the specified number of
-            % times
+            % times. It creates an array of values all equal to j
             folds{i} = [folds{i}; getFold(samplesPerClass{j},repmat(j,size(samplesPerClass{j},1),1),k,i)];
             % Add as many labels as the number of examples added to
             % folds{i} in this iteration of the for loop. This number is
@@ -39,46 +42,50 @@ if(stratified)
 %     end
 %     testProportions
 %     sum(testProportions,2)
-    %%
     
-    % Perform cross-validation. Train on k-1 folds and test on the i-th
-    % fold. Rotate the testing fold.
-    predictions = cell(k,1);
-    % Confusion matrix over all the examples
-    confusionMatrix = zeros(length(samplesPerClass));
-    
-    accuracyFolds = zeros(k,1);
-    precisionFolds = zeros(k,length(samplesPerClass));
-    recallFolds = zeros(k,length(samplesPerClass));
-    fMeasureFolds = zeros(k,length(samplesPerClass));
-    
-    for i=1:k
-        [trainingSet labelsTraining] = getTrainingSet(folds,labelsFolds,i);
-        [testSet labelsTest] = getTestSet(folds,labelsFolds,i);
-        T = train(trainingSet,1:45,labelsTraining);
-        predictions{i} = testTrees1(T,testSet);
-        % Confusion matrix over a single fold
-        confusionMatrixFold = zeros(length(samplesPerClass));
-        for j=1:length(predictions{i})
-            confusionMatrixFold(labelsTest(j),predictions{i}(j)) = confusionMatrixFold(labelsTest(j),predictions{i}(j))+1;
-        end
-        
-        confusionMatrix = confusionMatrix+confusionMatrixFold;
-        accuracyFolds(i) = sum(diag(confusionMatrixFold))/sum(sum(confusionMatrixFold));
-        % After computing the confusion matrix of the single fold, the TPs
-        % of each class are in the diagonal of such matrix, while the
-        % values TP+FP are the column sums.
-        precisionFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,1)';
-        recallFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,2);
-        
-    end
-    
-    accuracy = mean(accuracyFolds);
-    precision = mean(precisionFolds,1);
-    recall = mean(recallFolds,1);
     
 else
-    % TODO: Non-stratified cross-validation
+    % Non-stratified cross-validation
+    for i=1:k
+        [folds{i}, labelsFolds{i}] = getFold(xvalues,labels,k,i);
+    end
 end
+
+% Perform cross-validation. Train on k-1 folds and test on the i-th
+% fold. Rotate the testing fold.
+predictions = cell(k,1);
+% Confusion matrix over all the examples
+confusionMatrix = zeros(numClasses);
+
+accuracyFolds = zeros(k,1);
+precisionFolds = zeros(k,numClasses);
+recallFolds = zeros(k,numClasses);
+fMeasureFolds = zeros(k,numClasses);
+
+for i=1:k
+    [trainingSet, labelsTraining] = getTrainingSet(folds,labelsFolds,i);
+    [testSet, labelsTest] = getTestSet(folds,labelsFolds,i);
+    T = train(trainingSet,1:45,labelsTraining);
+    predictions{i} = testTreesRandomChoice(T,testSet);
+    % Confusion matrix over a single fold
+    confusionMatrixFold = zeros(numClasses);
+    for j=1:length(predictions{i})
+        confusionMatrixFold(labelsTest(j),predictions{i}(j)) = confusionMatrixFold(labelsTest(j),predictions{i}(j))+1;
+    end
+
+    confusionMatrix = confusionMatrix+confusionMatrixFold;
+    accuracyFolds(i) = sum(diag(confusionMatrixFold))/sum(sum(confusionMatrixFold));
+
+    % After computing the confusion matrix of the single fold, the TPs
+    % of each class are in the diagonal of such matrix, while the
+    % values TP+FP are the column sums.
+    precisionFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,1)';
+    recallFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,2);
+
+end
+
+accuracy = mean(accuracyFolds);
+precision = mean(precisionFolds,1);
+recall = mean(recallFolds,1);
 
 end

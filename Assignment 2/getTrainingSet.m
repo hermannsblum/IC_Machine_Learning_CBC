@@ -6,6 +6,6 @@ labelsTrS = [];
 for j=1:length(folds)
     if(j~=i)
         trS = [trS; folds{j}];
-        labelsTrS = [labelsTrS; labelsFolds{i}];
+        labelsTrS = [labelsTrS; labelsFolds{j}];
     end
 end
