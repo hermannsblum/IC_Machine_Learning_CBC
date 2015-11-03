@@ -14,13 +14,17 @@ test_examples = examples(split+1:data_size, :);
 test_emotions = emotions(split+1:data_size);
 
 % train the trees
-T = train(training_examples, 1:size(training_examples, 2), training_emotions);
+[M, T] = mother_train(training_examples, 1:size(training_examples, 2), training_emotions);
+
 
 % test in testset
-prediction = decide_by_score(T, test_examples);
+prediction = mothers_decision(M, T, test_examples);
 
-confusion = confusionmat(test_emotions, prediction)
+confusion = confusionmat(test_emotions, prediction);
+fprintf('Confusion Matrix \n');
+disp(confusion);
 
 accuracy = sum(diag(confusion))/sum(sum(confusion));
 
 fprintf('Performace is %0.5f \n', accuracy);
+

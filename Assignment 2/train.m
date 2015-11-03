@@ -14,7 +14,7 @@ for i = 1:6
     %Train a tree to learn an emotion
     T(i) = DTTrain(examples, attributes, binary_targets);
     
-    DrawDecisionTree(T(i));
+    %DrawDecisionTree(T(i));
     
     binary_targets = zeros(m, 1);
     
