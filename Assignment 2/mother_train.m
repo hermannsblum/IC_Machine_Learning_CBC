@@ -31,7 +31,7 @@ end
 % train the mother
 mother = meta_train(decisions, 1:6, labels);
 
-DrawDecisionTree(mother, 'Meta Tree');
+%DrawDecisionTree(mother, 'Meta Tree');
 
 end
 

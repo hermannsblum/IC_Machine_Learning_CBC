@@ -1,26 +1,35 @@
 load('cleandata_students.mat')
 
 data_size = length(y);
-% perform random permutation on training data
-permutation = randperm(data_size);
-examples = x(permutation, :);
-emotions = y(permutation);
 
-%split a training data set
-split = round(0.6 * data_size);
-training_examples = examples(1:split, :);
-training_emotions = emotions(1:split);
-test_examples = examples(split+1:data_size, :);
-test_emotions = emotions(split+1:data_size);
+times = 1;
 
-% train the trees
-T = train(training_examples, 1:size(training_examples, 2), training_emotions);
+confusion = cell(times,1);
+accuracy = zeros(times, 1);
+precision = zeros(times, 1);
+recall = zeros(times, 1);
 
-% test in testset
-prediction = decide_by_score(T, test_examples);
+for i = 1:times
+    % perform random permutation on training data
+    permutation = randperm(data_size);
+    examples = x(permutation, :);
+    emotions = y(permutation);
 
-confusion = confusionmat(test_emotions, prediction)
+    [confusion{i}, acc, prec, rec] = crossValidate( ...
+        examples, emotions, 10, false);
+    accuracy(i) = mean(acc);
+    precision(i) = mean(prec);
+    recall(i) = mean(rec);
+end
+% find mean confusion matrix
+sum = zeros(6, 6);
+for i = 1:times;
+    sum = sum + confusion{i};
+end
 
-accuracy = sum(diag(confusion))/sum(sum(confusion));
+fprintf('confusion matrix \n');
+disp(sum / times);
 
-fprintf('Performace is %0.5f \n', accuracy);
+fprintf('Accuracy is %0.5f \n', mean(accuracy));
+fprintf('Precision is %0.5f \n', mean(precision));
+fprintf('Recall is %0.5f \n', mean(recall));
