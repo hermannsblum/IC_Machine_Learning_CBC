@@ -23,13 +23,13 @@ else
     
     for j = 1:2
         
-        fprintf('#Examples: %d \n', length(examples));
+        %fprintf('#Examples: %d \n', length(examples));
         child_index = find(examples(:, tree.op) == (j - 1));
         child_examples = examples(child_index, :);     
         child_binary_targets = binary_targets(child_index);
         
         %fprintf('Attribute selected : %d \n', tree.op);
-        fprintf('#Examples with xi = 0: %d \n', length(child_index));
+        %fprintf('#Examples with xi = 0: %d \n', length(child_index));
         %fprintf('Program paused. Press enter to continue.\n');
         %pause;
         
@@ -58,4 +58,3 @@ else
 end
 
 end
-
