@@ -1,4 +1,4 @@
-function [confusionMatrix, accuracy, precision, recall] = crossValidate(xvalues, labels, k, stratified)
+function [confusionMatrix, accuracy, precision, recall, fmeasure] = crossValidate(xvalues, labels, k, stratified)
 % Returns the confusion matrix computed via cross-validation.
 % T is the set of binary trees.
 % xvalues are the feature values of the data set.
@@ -65,7 +65,7 @@ fMeasureFolds = zeros(k,numClasses);
 for i=1:k
     [trainingSet, labelsTraining] = getTrainingSet(folds,labelsFolds,i);
     [testSet, labelsTest] = getTestSet(folds,labelsFolds,i);
-    %T = train(trainingSet,1:45,labelsTraining);
+    %T = train_score(trainingSet,1:45,labelsTraining);
     %predictions{i} = decide_by_score(T,testSet);
     [M, T] = mother_train(trainingSet, 1:45, labelsTraining);
     predictions{i} = mothers_decision(M, T, testSet);
@@ -83,11 +83,13 @@ for i=1:k
     % values TP+FP are the column sums.
     precisionFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,1)';
     recallFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,2);
+    fMeasureFolds(i, :) = 2* precisionFolds(i,:).*recallFolds(i,:) ...
+        ./ (precisionFolds(i,:) + recallFolds(i,:));
 
 end
 
 accuracy = mean(accuracyFolds);
 precision = mean(precisionFolds,1);
 recall = mean(recallFolds,1);
-
+fmeasure = mean(fMeasureFolds,1);
 end

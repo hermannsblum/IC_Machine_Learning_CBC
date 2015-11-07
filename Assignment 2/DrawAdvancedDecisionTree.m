@@ -109,7 +109,7 @@ else
     % additional data
     sig = strcat('sig ', num2str(tree.significance * 100, 2), '%');
     text(tree.X, tree.Y-0.2, sig ,'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'interpreter', 'none');
-    if (tree.p_error ~= 0 && tree.p_error ~= 1)
+    if (tree.p_error ~= 0)
         err = strcat('err ', num2str(tree.p_error * 100, 2), '%');
         text(tree.X, tree.Y-0.4, err ,'HorizontalAlignment', 'left', 'VerticalAlignment', 'top', 'interpreter', 'none');
     end
