@@ -54,9 +54,10 @@ end
 % Perform cross-validation. Train on k-1 folds and test on the i-th
 % fold. Rotate the testing fold.
 predictions = cell(k,1);
-% Confusion matrix over all the examples
+% Confusion matrix over all the examples in all the folds
 confusionMatrix = zeros(numClasses);
 
+% Performance metrics per fold
 accuracyFolds = zeros(k,1);
 precisionFolds = zeros(k,numClasses);
 recallFolds = zeros(k,numClasses);
@@ -83,11 +84,21 @@ for i=1:k
     % values TP+FP are the column sums.
     precisionFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,1)';
     recallFolds(i,:) = diag(confusionMatrixFold)./sum(confusionMatrixFold,2);
-    fMeasureFolds(i, :) = 2* precisionFolds(i,:).*recallFolds(i,:) ...
-        ./ (precisionFolds(i,:) + recallFolds(i,:));
+    
+    % If both precision and recall are 0, the corresponding F-measure is 0,
+    % otherwise it is computed according to the formula.
+    for j=1:numClasses
+        if(precisionFolds(i,j)+recallFolds(i,j)==0)
+            fMeasureFolds(i,j)=0;
+        else
+            fMeasureFolds(i, j) = 2* precisionFolds(i,j).*recallFolds(i,j) ...
+                ./ (precisionFolds(i,j) + recallFolds(i,j));
+        end
+    end
 
 end
 
+% Average performance metrics across the folds
 accuracy = mean(accuracyFolds);
 precision = mean(precisionFolds,1);
 recall = mean(recallFolds,1);
