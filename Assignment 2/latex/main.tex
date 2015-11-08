@@ -14,6 +14,9 @@
 
 \usepackage{lipsum}
 
+%\usepackage{epstopdf}
+%\epstopdfsetup{outdir=./}
+
 \begin{document}
 
 \author{H. Blum, D. Cavezza, A. Paudice and M. Rohbeck\\
@@ -24,11 +27,16 @@
 \maketitle
 
 \section{Training}
-Decision trees are a conceptually simple, yet powerful model for solving classification problems. The ID3 algorithm is one of the simplest training algorithms for decision trees: it builds the tree by choosing at each step the attribute that maximizes the Information Gain, a measure that represents the discriminatory power of an attribute over the class values.\\
-The problem we are given consists in classifying facial expressions into 6 emotion classes via decision trees; each facial expression is represented as a feature vector of 45 Action Units (AU), where each feature is a binary value that indicates the presence or absence of each AU in the example. We decompose the problem in 6 binary decision problems, one corresponding to the recognition of one specific emotion. Therefore, we use ID3 to train 6 different trees, each specific to one emotion.\\
-Our implementation of ID3 is provided in the files \verb$train.m$, \verb$DTTrain.m$, \verb$choose_best_attr.m$, and \verb$sample_entropy.m$, containing the functions with the same name.\\
-The function \verb$train$ is the entry point for the training algorithm. It takes as inputs the training examples, the array of attribute ids (in our case, an array from 1 to 45), and an array of labels of the same length as the number of examples; such labels are numbers from 1 to 6, each one indicating one of the emotions in the original dataset. It returns the 6 desired trees.\\
+Decision trees are a conceptually simple, yet powerful model for solving classification problems. The ID3 algorithm is one of the simplest training algorithms for decision trees: it builds the tree by choosing at each step the attribute that maximizes the \emph{Information Gain}, a measure that represents the discriminatory power of an attribute over the class values.
+
+The problem we are given consists in classifying facial expressions into 6 emotion classes via decision trees; each facial expression is represented as a feature vector of 45 \emph{Action Units} (AU), where each feature is a binary value that indicates the presence or absence of each AU in the example. We decompose the problem in 6 binary decision problems according to the \emph{1-vs-all model}, with each problem corresponding to the recognition of one specific emotion. Therefore, we use ID3 to train 6 different trees, each one trained to recognize one specific emotion.
+
+Our implementation of the ID3 algorithm is provided in the files \verb$train.m$, \verb$DTTrain.m$ and \verb$choose_best_attr.m$, containing the functions with the same name.
+
+The function \verb$train$ is the entry point for the training algorithm. It takes as inputs the training examples, the array of attribute ids (in our case, an array from 1 to 45), and an array of labels of the same length as the number of examples; such labels are numbers from 1 to 6, each one indicating one of the emotions in the original dataset. It returns the 6 desired trees.
+
 Each tree is trained on a transformed version of the input data: at the i-th iteration of the for loop, the labels are made binary; the vector \verb$binary_targets$ contains a 1 in the positions corresponding to the i-th emotion, a 0 in all the other positions. The function \verb$DTTrain$ is called to train each tree on such transformed data.
+
 \begin{lstlisting}
 function [ T ] = train( examples, attributes, labels )
 %Train 6 binary trees on the training set (examples, labels) and return
@@ -231,7 +239,42 @@ This strategy is one of the simplest to consider in resolving conflicts. It is c
 \subsection{Tree confidence strategy}
 
 \section{Cross-validation}
-
+\emph{Cross-validation} is generally used to obtain an appropriate estimate of the performance of a model on unseen data, or to tune the parameters of a model appropriately (i.e. to perform model selection), if the size of the data set at one's disposal is low.\\
+It consists in splitting the data set into k partitions, called \emph{folds}, and testing the training algorithm iteratively on these folds. In each iteration, k-1 folds are used to train the model, while the remaining one is used for testing or validating the trained model. After k iterations, the performances computed in each folds are averaged.\\
+Such partitioning and iterations are necessary for two reasons:
+\begin{itemize}
+	\item the performance statistics computed on the same data used for training are not reliable estimates of the generalization power of the learnt model; thus, it is necessary to leave some data outside the training set for testing purposes;
+	\item the performance statistics are more reliable as the test set size increases; iterating over all the folds is a device to increase the number of examples on which the learnt model is tested.
+\end{itemize}
+We provide an implementation of \emph{stratified} cross-validation: in this version, the proportion of class values inside each fold reproduces approximately the proportion of class values inside the entire dataset. Our implementation is provided in the five m-files \verb$crossValidate.m$, \verb$stratifySampleIndexed.m$, \verb$getFoldIndexed.m$, \verb$getTrainingSetIndexed.m$, and \verb$getTestSetIndexed.m$.\\
+The function \verb$crossValidate$ requires as inputs the attributes and label values of every example, and the number of desired folds; \verb$stratified$ is a Boolean parameter specifying whether or not the cross-validation should be stratified.
+\begin{lstlisting}[breaklines=true]
+function [confusionMatrix, accuracy, precision, recall, fmeasure] = crossValidate(xvalues, labels, k, stratified)
+\end{lstlisting}
+If \verb$stratified$ is \verb$false$, the function just performs a split of the data set into k folds (lines 27-31). Otherwise, the split is performed according to the stratified cross-validation (lines 15-25). First, the dataset is split by class value (line 16); then, each fold is constructed by taking a subfold from the examples of each class, and concatenating such subfolds (lines 18-25).
+\begin{lstlisting}[firstnumber=14]
+if(stratified)
+    % Obtain the example indices divided by class label
+    indicesPerClass = stratifySampleIndexed(labels);
+    
+    for i=1:k
+        % Perform the division in k folds in every class. Merge the
+        % subfolds from all the classes to obtain a single fold
+        for j=1:numClasses
+            foldsIndices{i} = [foldsIndices{i}; getFoldIndexed(indicesPerClass{j},k,i)];
+        end
+        
+    end    
+    
+else
+    % Non-stratified cross-validation
+    for i=1:k
+        foldsIndices{i} = getFoldIndexed(1:length(labels),k,i);
+    end
+end
+\end{lstlisting}
+Notice that there is no randomness in the split: if the input is the same, the folds will not change over different calls.\\
+After the split, the training and test sets are constructed for each iteration, the performance indicators are computed for each fold and the averages are returned. For further details, refer to the indicated files and their comments.
 
 \section{Performance}
 
