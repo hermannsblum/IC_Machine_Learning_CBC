@@ -23,10 +23,226 @@
 \title{Assignment 2: Decision Trees Algorithm}
 \maketitle
 
-\begin{abstract}
-\lipsum[5]
-\end{abstract}
+\section{Training}
+Decision trees are a conceptually simple, yet powerful model for solving classification problems. The ID3 algorithm is one of the simplest training algorithms for decision trees: it builds the tree by choosing at each step the attribute that maximizes the Information Gain, a measure that represents the discriminatory power of an attribute over the class values.\\
+The problem we are given consists in classifying facial expressions into 6 emotion classes via decision trees; each facial expression is represented as a feature vector of 45 Action Units (AU), where each feature is a binary value that indicates the presence or absence of each AU in the example. We decompose the problem in 6 binary decision problems, one corresponding to the recognition of one specific emotion. Therefore, we use ID3 to train 6 different trees, each specific to one emotion.\\
+Our implementation of ID3 is provided in the files \verb$train.m$, \verb$DTTrain.m$, \verb$choose_best_attr.m$, and \verb$sample_entropy.m$, containing the functions with the same name.\\
+The function \verb$train$ is the entry point for the training algorithm. It takes as inputs the training examples, the array of attribute ids (in our case, an array from 1 to 45), and an array of labels of the same length as the number of examples; such labels are numbers from 1 to 6, each one indicating one of the emotions in the original dataset. It returns the 6 desired trees.\\
+Each tree is trained on a transformed version of the input data: at the i-th iteration of the for loop, the labels are made binary; the vector \verb$binary_targets$ contains a 1 in the positions corresponding to the i-th emotion, a 0 in all the other positions. The function \verb$DTTrain$ is called to train each tree on such transformed data.
+\begin{lstlisting}
+function [ T ] = train( examples, attributes, labels )
+%Train 6 binary trees on the training set (examples, labels) and return
+%them into the tree array T.
 
+[m, n] = size(examples); 
+binary_targets = zeros(m, 1);
+
+for i = 1:6
+   
+    %Switch to binary labels
+    index = find(labels == i);
+    binary_targets(index) = 1;
+    
+    %Train a tree to learn an emotion
+    T(i) = DTTrain(examples, attributes, binary_targets);
+    
+%    DrawDecisionTree(T(i));
+    
+    binary_targets = zeros(m, 1);
+    
+end
+
+end
+\end{lstlisting}
+The function \verb$DTTrain$ is a recursive function implementing the ID3 algorithm. Every time a recursion occurs, a check is performed on the entropy of the current node: if it is not 0, the attribute that maximizes the Information Gain is chosen and associated to the current node, then the recursion occurs.\\
+In the first call it is passed the whole training sample, the array 1:45 of attribute ids, and the binary labels.
+\begin{lstlisting}
+function [ tree ] = DTTrain( examples, attributes, binary_targets )
+%Train a decision tree on the dataset (examples, binary_target)
+%according to the ID3 algorithm. The examples have the attributes listed in
+%attributes
+\end{lstlisting}
+First, an empty tree is initialized.
+\begin{lstlisting}[firstnumber=6]
+%Initialize an empty tree
+tree.op = [];
+
+tree.kids = [];
+tree.class = [];
+\end{lstlisting}
+Then a check on the input's entropy is performed. If the sample entropy in the labels is 0, the algorithm is in a pure node, that is all the current examples belong to the same class: in such case, the algorithm must stop, and the value returned by the current node is the class value held by the majority of the examples. Likewise, the algorithm must stop if there are no more attributes to decide about. In these cases, \verb$tree.op$ and \verb$tree.kids$ are not set, so as to mark the node as a leaf.
+\begin{lstlisting}[firstnumber=12]
+if (sample_entropy(binary_targets) == 0 || isempty(attributes))   
+    % either pure targets or no more attributes to base decision on
+    
+    tree.class = maj_value(binary_targets);
+\end{lstlisting}
+Else, the attribute that yields the highest Information Gain is chosen
+\begin{lstlisting}[firstnumber=17]
+else
+    
+    tree.op = choose_best_attr(examples, attributes, binary_targets);
+\end{lstlisting}
+and the examples are split by the value they contain in the chosen attribute.
+\begin{lstlisting}
+    tree.kids = cell(1, 2);
+        
+    % raise up the kids
+    
+    for j = 1:2
+        
+        %fprintf('#Examples: %d \n', length(examples));
+        child_index = find(examples(:, tree.op) == (j - 1));
+        child_examples = examples(child_index, :);     
+        child_binary_targets = binary_targets(child_index);
+\end{lstlisting}
+At this point, the set of examples with a specific value of the chosen attribute may be empty. In that case, the corresponding kid node is made leaf and the returned class value is the value held by the majority of the nodes in the current node.
+\begin{lstlisting}[firstnumber=36]
+        if (isempty(child_examples))
+            % we can't train this child, make a leaf with the majority
+            % value of all training data coming to the parent
+            
+            tree.kids{j}.op = [];
+            tree.kids{j}.kids = [];
+            tree.kids{j}.class = maj_value(binary_targets);
+\end{lstlisting}
+Otherwise, the corresponding subtree is created. Note that in the recursive calls, the chosen attribute is deleted from the list of candidate attributes, since its value is fixed for the samples in each of the kids (0 for the left kid and 1 for the right).
+\begin{lstlisting}[firstnumber=44]
+        else 
+            
+            % remove the used attribute from the list
+            index = find(attributes == tree.op);
+            attributes(index) = [];
+            
+            % recursive training with this child
+            tree.kids{j} = DTTrain(child_examples, attributes, ...
+                child_binary_targets);
+                    
+        end
+\end{lstlisting}
+At line 19, the above functions calls \verb$choose_best_attr$. This function computes the Information Gain of every available attribute and returns the id of the attribute that yields the highest Information Gain.
+\begin{lstlisting}
+function [ best_attr ] = choose_best_attr( examples, attributes, binary_targets )
+%chooseBestAtt computes and return in bestAtt the attribute in attributes
+%which determine the maximum information gain for the set 
+%(examples, binary_targets). Return -1 if the set is pure because no split
+%is required
+
+%Compute the sample entropy
+n_ex = length(binary_targets);         %Dataset size
+E = sample_entropy(binary_targets); %Sample entropy
+
+% initial values
+best_gain = 0;
+best_attr = attributes(1); % for now this is as good as anything
+    
+for i = 1:length(attributes)
+       
+    % examples where attribute is 1
+    one_attr = binary_targets(examples(:, attributes(i)) == 1); 
+    % examples where attribute is 0
+    zero_attr = binary_targets(examples(:, attributes(i)) == 0);
+        
+    E_partition = length(one_attr)/n_ex * sample_entropy(one_attr) ...
+        + length(zero_attr)/n_ex * sample_entropy(zero_attr);
+        
+    gain = E - E_partition;
+        
+    if (gain > best_gain)
+            
+       best_gain = gain;
+       best_attr = attributes(i);
+        
+    end
+        
+end
+
+end
+
+\end{lstlisting}
+Finally, the files \verb$sample_entropy.m$ and \verb$maj_value.m$ simply contain the computation of the entropy and the most frequent label value in a sample respectively.
+
+\section{Decision making strategies}
+Since we have different trees, and each of these trees may commit mistakes in its classification, their outputs may be contradictory. Specifically, more than one tree may return 1 in response to the same example, or all trees may return 0. Therefore, we have devised different decision policies to resolve conflicts.
+
+\subsection{Random choice}
+One possible strategy is choosing randomly: if more than a tree returns 1, the label of the example is chosen randomly among the classes corresponding to such trees; if all the trees return 0, the label is picked randomly among all the classes.\\
+The implementation of this strategy is in the file \verb$testTreesRandomChoice.m$.
+\begin{lstlisting}
+function [ predictions ] = testTreesRandomChoice(T,x2)
+% TestTreesRandomChoice performs a random selection among the emotions of
+% all the trees that return a prediction of 1, or among all the emotions if
+% all the trees return 0.
+
+[m,n] = size(x2);
+binary_predictions = zeros(m,6);
+predictions = zeros(m,1);
+
+for i = 1:m
+    for j = 1:6
+        binary_predictions(i,j) = predictionBinaryTree(T(j),x2(i,:));
+    end
+    % If all the predictions are 0, pick an emotion randomly
+    if(max(binary_predictions(i,:))==0)
+        predictions(i) = randi(6);
+    % Else pick an emotion randomly among the 1s
+    else
+        candidateEmotions = find(binary_predictions(i,:));
+        predictions(i) = candidateEmotions(randi(length(candidateEmotions)));
+    end
+    
+end
+
+
+end
+\end{lstlisting}
+The function \verb$predictionBinaryTree$ called in line 12 is defined in the same file: it passes through the branches of the tree corresponding to the attribute values of the input example and returns the binary label corresponding to the reached leaf.
+\begin{lstlisting}[firstnumber=28]
+function [ class ] = predictionBinaryTree( tree, x )
+%predictionBinaryTree walks along the tree to find the classification of
+%the istance x
+    
+    if (isempty(tree.op))   %Check if it is a leaf
+        
+        class = tree.class;
+        
+    else                    %Test the attribute
+        
+        x_to_test = x(tree.op);
+        
+        if (x_to_test == 0) %Follow the left branch
+           
+           class = predictionBinaryTree(tree.kids{1}, x);
+            
+        else %Follow the right branch
+            
+           class = predictionBinaryTree(tree.kids{2}, x);
+            
+        end
+        
+    end
+
+end
+\end{lstlisting}
+This strategy is one of the simplest to consider in resolving conflicts. It is chosen as our baseline strategy.
+
+\subsection{Score-based choice}
+
+\subsection{Tree confidence strategy}
+
+\section{Cross-validation}
+
+
+\section{Performance}
+
+
+\section{Questions}
+
+
+
+
+
+=================================================
 \section{Implementations}
 From the set of 6 Decision Trees, each tree will return a binary classification for a given data sample. Therefore, we need an Algorithm that decides on Basis of the output of the 6 trees, which class the given sample falls into. In fact, this algorithm does not even have to depend on the output of the classification trees. For example, one could think of an algorithm that simply outputs a randomly choosen classification and will have an accuracy of 17\% for a balanced test set. However, we searched for algorithms with a better performance.
 

@@ -1,4 +1,4 @@
-load('noisydata_students.mat')
+load('cleandata_students.mat')
 
 data_size = length(y);
 
