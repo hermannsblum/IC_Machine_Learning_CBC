@@ -8,26 +8,46 @@ function [confusionMatrix, accuracy, precision, recall, fmeasure] = crossValidat
 % stratification of folds should be performed.
 
 % Cell array containing the folds
-foldsIndices = cell(k,1);
+folds = cell(k,1);
+labelsFolds = cell(k,1);
 numClasses = length(unique(labels));
 
 if(stratified)
-    % Obtain the example indices divided by class label
-    indicesPerClass = stratifySampleIndexed(labels);
+    % Obtain the samples divided by class label
+    samplesPerClass = stratifySample(xvalues,labels);
     
     for i=1:k
         % Perform the division in k folds in every class. Merge the
         % subfolds from all the classes to obtain a single fold
         for j=1:numClasses
-            foldsIndices{i} = [foldsIndices{i}; getFoldIndexed(indicesPerClass{j},k,i)];
+            % Repmat repeats the class value the specified number of
+            % times. It creates an array of values all equal to j
+            folds{i} = [folds{i}; getFold(samplesPerClass{j},repmat(j,size(samplesPerClass{j},1),1),k,i)];
+            % Add as many labels as the number of examples added to
+            % folds{i} in this iteration of the for loop. This number is
+            % the current size of folds{i} minus the previous size of
+            % folds{i} (which in turn is equal to the current size of
+            % labelsFolds{i}).
+            labelsFolds{i} = [labelsFolds{i}; repmat(j,size(folds{i},1)-size(labelsFolds{i},1),1)];
         end
         
-    end    
+    end
+    
+%     % Test if proportion of class values in each fold is equal
+%     testProportions = zeros(k,6);
+%     for i=1:k
+%         for j=1:6
+%             testProportions(i,j) = sum(labelsFolds{i}==j)/length(labelsFolds{i});
+%         end
+%     end
+%     testProportions
+%     sum(testProportions,2)
+    
     
 else
     % Non-stratified cross-validation
     for i=1:k
-        foldsIndices{i} = getFoldIndexed(1:length(labels),k,i);
+        [folds{i}, labelsFolds{i}] = getFold(xvalues,labels,k,i);
     end
 end
 
@@ -44,13 +64,12 @@ recallFolds = zeros(k,numClasses);
 fMeasureFolds = zeros(k,numClasses);
 
 for i=1:k
-    trainingSetIndices = getTrainingSetIndexed(foldsIndices,i);
-    testSetIndices = getTestSetIndexed(foldsIndices,i);
-    labelsTest = labels(foldsIndices{i});
+    [trainingSet, labelsTraining] = getTrainingSet(folds,labelsFolds,i);
+    [testSet, labelsTest] = getTestSet(folds,labelsFolds,i);
     %T = train_score(trainingSet,1:45,labelsTraining);
     %predictions{i} = decide_by_score(T,testSet);
-    T = train(xvalues(trainingSetIndices,:), 1:45, labels(trainingSetIndices));
-    predictions{i} = testTreesFirstChoice(T, xvalues(testSetIndices,:));
+    [M, T] = mother_train(trainingSet, 1:45, labelsTraining);
+    predictions{i} = mothers_decision(M, T, testSet);
     % Confusion matrix over a single fold
     confusionMatrixFold = zeros(numClasses);
     for j=1:length(predictions{i})
