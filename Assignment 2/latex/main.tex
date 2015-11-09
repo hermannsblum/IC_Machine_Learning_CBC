@@ -446,8 +446,8 @@ Class & Precision & Recall & $F_1$ & Accuracy \\
 
 \section{Questions}
 \subsection{Noisy-Clean Datasets}
-All the alternative approaches perform worse on noisy data than on clean ones. This is because ID3 is particularly prone to overfit, since decision trees are a very expressive model. Overfitting a corrupted training set leads to a model which captures a wrong correlation between features and labels. The learnt model does not represent well the function outside the training set.\\
-Particularly, on both clean and noisy data we observe the worst performance in classes 1 and 5. This is related to the particular shape of the corresponding trees: they use many attributes to make their decisions, and thereby are the most prone to overfitting.
+All the alternative approaches perform worse on noisy data than on clean ones. This is because ID3 is particularly prone to overfit, since decision trees are a very expressive model. Overfitting a corrupted training set leads to a model which captures a wrong correlation between features and labels. Thus, the learnt model is not able to predict the target function outside the training set.\\
+More specifically, on both clean and noisy data we observe the worst performance in classes 1 and 5. Class 3, instead, exhibits bad performance on noisy data. This is related to the particular shape of the corresponding trees: they use many attributes to make their decisions, and thereby are the most prone to overfitting.
 
 \subsection{Ambiguity}
 \begin{itemize}
@@ -457,7 +457,9 @@ Particularly, on both clean and noisy data we observe the worst performance in c
 \end{itemize}
 \subsection{Pruning}
 The \emph{pruning\_example} function plots the training and test error of a tree learned on the data as a function of the tree size (number of leaves).\\
-The learnt tree is returned by the MATLAB function \verb$classregtree$. This tree is first tested using cross-validation, and then retested using the training data themselves: the classification errors recorded are stored into the variables \verb$cost$ and \verb$cost2$, along with the number of leaves for which the errors are observed. These variables are used for plotting purposes.
+The tree is learned by the MATLAB function \verb$classregtree$. This tree is the basis for the pruning algorithm, run via the MATLAB function \verb$test$: this function returns the classification errors obtained by pruning the starting tree at different sizes; the tree size is expressed as the number of leaves. Besides, the function returns the tree size for which the minimum error has been recorded.\\
+Two tests are performed, one on the whole training set and the other using cross-validation. 
+%The results of the two tests consist in a vector of classification errors obtained by different tree of different sizes; the tree size is computed as the number of leaves it has.
 The plot represents the classification error recorded in the two tests as a function of the number of leaves: the red line represents the error on the training set, while the blue line is the average error recorded on unseen data. The figures also report the optimal values on both the curves.\\
 The curves have this shape because, as long as the tree size increases, the tree fits the training data better, but it progressively loses generalization power. Therefore, while the red curve has its optimum for 200 leaf nodes, the blue one has its minimum cost with 24 leaves.
 

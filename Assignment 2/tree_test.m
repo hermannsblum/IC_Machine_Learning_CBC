@@ -1,4 +1,4 @@
-load('noisydata_students.mat')
+load('cleandata_students.mat')
 
 data_size = length(y);
 
@@ -10,9 +10,9 @@ precision = zeros(times, 1);
 recall = zeros(times, 1);
 
 T = train(x, 1:45, y);
-% for i=1:6
-%     DrawDecisionTree(T(i));
-% end
+for i=1:6
+    DrawDecisionTree(T(i));
+end
 
 [confusion, acc, prec, rec, f1] = crossValidate(x, y, 10, true);
 accuracy = acc;
