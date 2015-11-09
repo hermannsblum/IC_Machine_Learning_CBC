@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  9 NOV 2015 02:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  9 NOV 2015 17:23
 entering extended mode
 **main.tex
 (main.tex
@@ -469,11 +469,11 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 File: pruning_clean_data.eps Graphic file (type eps)
  <pruning_clean_data.eps>
 File: pruning_noisy_data.eps Graphic file (type eps)
- <pruning_noisy_data.eps> (main.bbl
+ <pruning_noisy_data.eps> [8] (main.bbl
 
 Package natbib Warning: Empty `thebibliography' environment on input line 8.
 
-) [8] [9] (main.aux) ) 
+) [9] (main.aux) ) 
 Here is how much of TeX's memory you used:
  5862 strings out of 493674
  81615 string characters out of 3151302
@@ -483,4 +483,4 @@ Here is how much of TeX's memory you used:
  1025 hyphenation exceptions out of 8191
  42i,12n,44p,603b,1512s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (9 pages, 97252 bytes).
+Output written on main.dvi (9 pages, 99992 bytes).
