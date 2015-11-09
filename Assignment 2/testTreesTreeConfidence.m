@@ -1,8 +1,4 @@
-function [ predictions ] = testTrees2( T, x, y, test_data )
-%testTrees1 make prediction on the unseen data test_data using the 6 trees
-%in T and returns the results in predictions. The decision method choose
-%the maximum prediction (0 or 1) and choose the first (beetween the trees whom output 1
-%prediction in case of a tie.
+function [ predictions ] = testTreesTreeConfidence( T, x, y, test_data )
 
 [m, n] = size(test_data);
 binary_predictions = zeros(m, 6);
@@ -18,7 +14,8 @@ for i = 1:6
     for j = 1:m_train
         
         binary_predictions(j, i) = predictionBinaryTree(T(i), x(j, :));
-        binary_errors(i) = binary_errors(i) + not(binary_predictions(j, i) == y(j));
+        binary_errors(i) = binary_errors(i) + (not(binary_predictions(j, i)==1 && y(j)==i)...
+            && not(binary_predictions(j, i)==0 && y(j)~=i));
    
     end
     
@@ -40,26 +37,39 @@ for i = 1:6
 
 end
 
-%Compute the prediciton
+%Compute the prediction
 for i = 1:m
-
-    value = max(binary_predictions(i, :));
-    conf = 0;
-  
-    for j = 1:6
-        
-        if (binary_predictions(i, j) == value)
-        
-            if (confidence(j) > conf)
-                
-                predictions(i) = j;
-                conf = confidence(j);
-                
-            end
-            
-        end
-   
+    candidateClasses = find(binary_predictions(i,:)==1);
+    if(isempty(candidateClasses))
+        % If all the trees return 0, pick the prediction with minimum
+        % confidence. This prediction, indeed, is the most error-prone and
+        % most likely its correct value should be 1 (only according to our
+        % confidence heuristic, there is no mathematical justification
+        % here)
+        [~, predictions(i)] = min(confidence);
+    else
+        % Take the prediction of the tree with most confidence among the
+        % ones returning 1
+        [~, imaxConfidence] = max(confidence(candidateClasses));
+        predictions(i) = candidateClasses(imaxConfidence);
     end
+%     value = max(binary_predictions(i, :));
+%     conf = 0;
+%   
+%     for j = 1:6
+%         
+%         if (binary_predictions(i, j) == value)
+%         
+%             if (confidence(j) > conf)
+%                 
+%                 predictions(i) = j;
+%                 conf = confidence(j);
+%                 
+%             end
+%             
+%         end
+%    
+%     end
 
 end
 
