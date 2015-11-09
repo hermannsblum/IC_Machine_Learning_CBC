@@ -21,7 +21,7 @@ if(stratified)
         for j=1:numClasses
             foldsIndices{i} = [foldsIndices{i}; getFoldIndexed(indicesPerClass{j},k,i)];
         end
-        
+        foldsIndices{i} = sort(foldsIndices{i});
     end    
     
 else
