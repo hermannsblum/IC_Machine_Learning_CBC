@@ -11,7 +11,7 @@ recall = zeros(times, 1);
 
 T = train(x, 1:45, y);
 for i=1:6
-    DrawDecisionTree(T(i));
+    DrawDecisionTree(T(i),['Tree for class ' int2str(i)]);
 end
 
 [confusion, acc, prec, rec, f1] = crossValidate(x, y, 10, true);

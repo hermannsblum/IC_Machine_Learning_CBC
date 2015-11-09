@@ -7,6 +7,7 @@
 \usepackage{url}            
 \usepackage{subcaption}    
 
+
 \usepackage[a4paper,margin=2cm]{geometry}
 
 \usepackage{natbib} 
@@ -168,7 +169,31 @@ end
 end
 
 \end{lstlisting}
-Finally, the files \verb$sample_entropy.m$ and \verb$maj_value.m$ simply contain the computation of the entropy and the most frequent label value in a sample respectively.
+Finally, the files \verb$sample_entropy.m$ and \verb$maj_value.m$ simply contain the computation of the entropy and the most frequent label value in a sample respectively.\\
+The learned trees are shown in Figure~\ref{fig:trees}.
+\begin{figure}
+ \centering
+ \begin{subfigure}[b]{.49\textwidth}
+   \includegraphics[width=\textwidth]{tree1.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.49\textwidth}
+   \includegraphics[width=\textwidth]{tree2.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.49\textwidth}
+   \includegraphics[width=\textwidth]{tree3.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.49\textwidth}
+   \includegraphics[width=\textwidth]{tree4.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.49\textwidth}
+   \includegraphics[width=\textwidth]{tree5.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.49\textwidth}
+   \includegraphics[width=\textwidth]{tree6.eps}
+ \end{subfigure}
+ \caption{Trees learnt on clean data}
+ \label{fig:trees}
+\end{figure}
 
 \section{Decision making strategies}
 \label{sec:decision_strategies}
@@ -447,7 +472,7 @@ Class & Precision & Recall & $F_1$ & Accuracy \\
 \section{Questions}
 \subsection{Noisy-Clean Datasets}
 All the alternative approaches perform worse on noisy data than on clean ones. This is because ID3 is particularly prone to overfit, since decision trees are a very expressive model. Overfitting a corrupted training set leads to a model which captures a wrong correlation between features and labels. Thus, the learnt model is not able to predict the target function outside the training set.\\
-More specifically, on both clean and noisy data we observe the worst performance in classes 1 and 5. Class 3, instead, exhibits bad performance on noisy data. This is related to the particular shape of the corresponding trees: they use many attributes to make their decisions, and thereby are the most prone to overfitting.
+More specifically, on both clean and noisy data we observe the worst performance in classes 1 and 5. Class 3, instead, exhibits bad performance on noisy data. This is related to the particular shape of the corresponding trees: they use many attributes to make their decisions, and thereby are the most prone to overfitting. The trees for class 1 and 5 exhibit this shape in both the clean and noisy trainings, while class 3 does just in the noisy one.
 
 \subsection{Ambiguity}
 \begin{itemize}
@@ -457,12 +482,22 @@ More specifically, on both clean and noisy data we observe the worst performance
 \end{itemize}
 \subsection{Pruning}
 The \emph{pruning\_example} function plots the training and test error of a tree learned on the data as a function of the tree size (number of leaves).\\
-The tree is learned by the MATLAB function \verb$classregtree$. This tree is the basis for the pruning algorithm, run via the MATLAB function \verb$test$: this function returns the classification errors obtained by pruning the starting tree at different sizes; the tree size is expressed as the number of leaves. Besides, the function returns the tree size for which the minimum error has been recorded.\\
+The tree is learned by the MATLAB function \verb$classregtree$, which also computes the optimal pruning path. The returned tree object is the basis for the subsequent testing, run via the MATLAB function \verb$test$: this function returns the classification errors obtained by pruning the starting tree at different sizes; the tree size is expressed as the number of leaves. Besides, the function returns the tree size for which the minimum error has been recorded.\\
 Two tests are performed, one on the whole training set and the other using cross-validation. 
 %The results of the two tests consist in a vector of classification errors obtained by different tree of different sizes; the tree size is computed as the number of leaves it has.
-The plot represents the classification error recorded in the two tests as a function of the number of leaves: the red line represents the error on the training set, while the blue line is the average error recorded on unseen data. The figures also report the optimal values on both the curves.\\
-The curves have this shape because, as long as the tree size increases, the tree fits the training data better, but it progressively loses generalization power. Therefore, while the red curve has its optimum for 200 leaf nodes, the blue one has its minimum cost with 24 leaves.
-
+The plot represents the classification error recorded in the two tests as a function of the number of leaves: the red line represents the error on the training set, while the blue line is the average error recorded on unseen data. The figures also report the optimal values on both the curves. The plots for clean and noisy data are shown in Figure~\ref{fig:pruning}\\
+The curves have this shape because, as long as the tree size increases, the tree fits the training data better, but it progressively loses generalization power. Therefore, while the red curve has its optimum for 200 leaf nodes, the blue one has its optimum at 32 leaves.
+\begin{figure}
+\centering
+\subcaptionbox{Pruning Example with clean data}{
+    \includegraphics[scale=.4]{pruning_clean_data.eps}
+}
+\subcaptionbox{Pruning Example with noisy data}{
+    \includegraphics[scale=.4]{pruning_noisy_data.eps}
+}
+\caption{Plots produced by \emph{pruning\_example}}
+\label{fig:pruning}
+\end{figure}
 
 
 =================================================
@@ -607,30 +642,22 @@ The described method achieves a general accuracy of 73.2\% on clean data and 64.
 \end{figure}
 
 
-\section{Pruning}
-\begin{figure}
-\centering
-\subcaptionbox{Pruning Example with clean data}{
-    \includegraphics[scale=.4]{pruning_clean_data.eps}
-}
-\subcaptionbox{Pruning Example with noisy data}{
-    \includegraphics[scale=.4]{pruning_noisy_data.eps}
-}
-\end{figure}
+%\section{Pruning}
 
-These Figures show the error rate on validation and training set as the size (i. e. the number of leaves) of the trees increase.
-For clean data the actual loss in accuracy is, as can be seen, negligible. With the optimal size, the error rate is 21\% instead of 24\% with no pruning.\\
-For noisy data, this difference becomes much bigger. Pruning can increase performance in this case by approx. 10\% from 62\% to 68\%.
 
-\section{Performance with Noisy Data}
-The Performance with noisy data is much worse. Decision Trees can represent any kind of function, also the function generating noise. This is because while training the decision trees, we fit our tree to the training data, even if this data is noisy. Therefore noisy data generates noisy trees.
-For Class 1 (precision is less than half in comparison to clean data) we especially have a problem of overfitting wich leads to much worse precision than with the clean data.
+%These Figures show the error rate on validation and training set as the size (i. e. the number of leaves) of the trees increase.
+%For clean data the actual loss in accuracy is, as can be seen, negligible. With the optimal size, the error rate is 21\% instead of 24\% with no pruning.\\
+%For noisy data, this difference becomes much bigger. Pruning can increase performance in this case by approx. 10\% from 62\% to 68\%.
 
-\section{Choosing the Best Algorithm}
-We tested each of our algorithms using cross-validation. The Accuracy on the cross-validation test set is at this point a valid approximation of the accuracy on the unknown data set. On basis of these approximations, we choose the algorithm with the best accuracy.
-After choosing an algorithm, we train it with the whole data set we got. Unfortunately, we don't have a test set to estimate the performance of this trained algorithm on unseen data.
+%\section{Performance with Noisy Data}
+%The Performance with noisy data is much worse. Decision Trees can represent any kind of function, also the function generating noise. This is because while training the decision trees, we fit our tree to the training data, even if this data is noisy. Therefore noisy data generates noisy trees.
+%For Class 1 (precision is less than half in comparison to clean data) we especially have a problem of overfitting wich leads to much worse precision than with the clean data.
+%
+%\section{Choosing the Best Algorithm}
+%We tested each of our algorithms using cross-validation. The Accuracy on the cross-validation test set is at this point a valid approximation of the accuracy on the unknown data set. On basis of these approximations, we choose the algorithm with the best accuracy.
+%After choosing an algorithm, we train it with the whole data set we got. Unfortunately, we don't have a test set to estimate the performance of this trained algorithm on unseen data.
 
-\bibliographystyle{plainnat}
-\bibliography{example}
+%\bibliographystyle{plainnat}
+%\bibliography{example}
 
 \end{document}

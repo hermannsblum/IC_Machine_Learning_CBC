@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  9 NOV 2015 19:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  9 NOV 2015 20:04
 entering extended mode
 **main.tex
 (main.tex
@@ -326,26 +326,26 @@ Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
 Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
 \c@lips@count=\count114
 ) (main.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 21.
 
 (C:\MikTeX\tex\latex\base\ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 20.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 21.
  (C:\MikTeX\tex\latex\psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
@@ -388,76 +388,88 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \c@lstlisting=\count115
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 27
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 28
 .
 (C:\MikTeX\tex\latex\psnfss\ot1ztmcm.fd
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 27
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 28
 .
 
 (C:\MikTeX\tex\latex\psnfss\omlztmcm.fd
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 27
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 28
 .
 
 (C:\MikTeX\tex\latex\psnfss\omsztmcm.fd
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 27
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 28
 .
 
 (C:\MikTeX\tex\latex\psnfss\omxztmcm.fd
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 29.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 40.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 30.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 41.
  (C:\MikTeX\tex\latex\psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 ) [1
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+pcr on input line 83.
+LaTeX Font Info:    Try loading font information for OMS+pcr on input line 84.
  (C:\MikTeX\tex\latex\psnfss\omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 83.
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 102.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 103.
 
 
 (C:\MikTeX\tex\latex\psnfss\ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 ) [2]
-LaTeX Font Info:    Try loading font information for OML+pcr on input line 159.
+LaTeX Font Info:    Try loading font information for OML+pcr on input line 160.
 
 
 (C:\MikTeX\tex\latex\psnfss\omlpcr.fd
 File: omlpcr.fd 
 )
 LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <8> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 159.
- [3]
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 247.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 160.
+File: tree1.eps Graphic file (type eps)
+ <tree1.eps>
+File: tree2.eps Graphic file (type eps)
+ <tree2.eps>
+File: tree3.eps Graphic file (type eps)
+ <tree3.eps>
+File: tree4.eps Graphic file (type eps)
+
+<tree4.eps>
+File: tree5.eps Graphic file (type eps)
+ <tree5.eps>
+File: tree6.eps Graphic file (type eps)
+ <tree6.eps> [3] [4]
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 272.
 
 
 (C:\MikTeX\tex\latex\psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [4]
+) [5]
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 293.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 318.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 293.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 318.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 293.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 318.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -465,22 +477,19 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[5] [6] [7]
+[6]
 File: pruning_clean_data.eps Graphic file (type eps)
  <pruning_clean_data.eps>
 File: pruning_noisy_data.eps Graphic file (type eps)
- <pruning_noisy_data.eps> [8] (main.bbl
-
-Package natbib Warning: Empty `thebibliography' environment on input line 8.
-
-) [9] (main.aux) ) 
+ <pruning_noisy_data.eps> [7] [8] [9] [10]
+(main.aux) ) 
 Here is how much of TeX's memory you used:
- 5862 strings out of 493674
- 81615 string characters out of 3151302
- 294621 words of memory out of 3000000
- 9141 multiletter control sequences out of 15000+200000
+ 5872 strings out of 493674
+ 81724 string characters out of 3151302
+ 295621 words of memory out of 3000000
+ 9148 multiletter control sequences out of 15000+200000
  26802 words of font info for 67 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,12n,44p,603b,1512s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,12n,44p,603b,1542s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (9 pages, 100228 bytes).
+Output written on main.dvi (10 pages, 99632 bytes).
