@@ -303,7 +303,7 @@ Notice that there is no randomness in the split: if the input is the same, the f
 After the split, the training and test sets are constructed for each iteration, the performance indicators are computed for each fold and the averages are returned. For further details, refer to the indicated files and their comments.
 
 \section{Performance}
-We report the performance of a 10-fold stratified cross-validation executed on each of the decision strategies presented in Section~\ref{sec:decision_strategies}.\\
+We report the performance of a 10-fold stratified cross-validation executed on each of the decision strategies presented in Section~\ref{sec:decision_strategies}. Figures~\ref{fig:perfRandom}-\ref{fig:perfTreeConf} show the total confusion matrix (that is the sum of confusion matrices over all the folds) and the average performance metrics over the 10 folds.\\
 \begin{figure}[h]
     \hspace*{\fill}%
     \subcaptionbox{Confusion matrix for clean data}{
@@ -357,6 +357,7 @@ Class & Precision & Recall & $F_1$ & Accuracy \\
     \hspace*{\fill}
     
     \caption{Performance of Random Choice}
+		\label{fig:perfRandom}
 \end{figure}
 
 \begin{figure}[h]
@@ -412,6 +413,7 @@ Class & Precision & Recall & $F_1$ & Accuracy \\
     \hspace*{\fill}
     
     \caption{Performance of Score-based Choice}
+		\label{fig:perfScore}
 \end{figure}
 
 \begin{figure}[h]
@@ -467,10 +469,17 @@ Class & Precision & Recall & $F_1$ & Accuracy \\
     \hspace*{\fill}
     
     \caption{Performance of Tree confidence Choice}
+		\label{fig:perfTreeConf}
 \end{figure}
+The metrics reveal that every approach classifies better clean data than noisy ones in terms of accuracy and per-class precision and recall. Classes 1 and 5 consistently show the worst performances; class 1, in particular, has precision and recall around 25\% on noisy data. Class 3 is not recognized well on noisy data in terms of recall.\\
+For details on the possible explanations of such results, see Section~\ref{sec:datasetsQuestion}.\\
+Among the conflict-resolving approaches, we choose the \textbf{Score-based Choice}, which has a better accuracy on both clean and noisy data.\\
+\textbf{NOTE:} Since we have run cross-validation on different approaches and chosen the best performing one, we used cross-validation for \emph{validating} the model: the performance estimates are then biased and cannot be considered as performance estimates of the chosen model on unseen data. To have such estimate, we need to hold out a separate test set and compute the performance of the chosen model on this set.\\
+\textbf{NOTE:} Since the Random Choice approach has randomness in it, it may produce slightly different confusion matrices on different cross-validations, even with the same folds.
 
 \section{Questions}
 \subsection{Noisy-Clean Datasets}
+\label{sec:datasetsQuestion}
 All the alternative approaches perform worse on noisy data than on clean ones. This is because ID3 is particularly prone to overfit, since decision trees are a very expressive model. Overfitting a corrupted training set leads to a model which captures a wrong correlation between features and labels. Thus, the learnt model is not able to predict the target function outside the training set.\\
 More specifically, on both clean and noisy data we observe the worst performance in classes 1 and 5. Class 3, instead, exhibits bad performance on noisy data. This is related to the particular shape of the corresponding trees: they use many attributes to make their decisions, and thereby are the most prone to overfitting. The trees for class 1 and 5 exhibit this shape in both the clean and noisy trainings, while class 3 does just in the noisy one.
 
