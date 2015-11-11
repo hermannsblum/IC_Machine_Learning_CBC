@@ -49,8 +49,8 @@ for i=1:k
     labelsTest = labels(foldsIndices{i});
     %T = train_score(trainingSet,1:45,labelsTraining);
     %predictions{i} = decide_by_score(T,testSet);
-    T = train(xvalues(trainingSetIndices,:), 1:45, labels(trainingSetIndices));
-    predictions{i} = testTreesTreeConfidence(T, xvalues(trainingSetIndices,:), labels(trainingSetIndices), xvalues(testSetIndices,:));
+    T = train_score(xvalues(trainingSetIndices,:), 1:45, labels(trainingSetIndices));
+    predictions{i} = decide_by_score(T, xvalues(testSetIndices,:));
     % Confusion matrix over a single fold
     confusionMatrixFold = zeros(numClasses);
     for j=1:length(predictions{i})
