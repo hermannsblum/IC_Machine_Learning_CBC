@@ -11,8 +11,8 @@ MaxPos.x=-1
 MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
-NormalPos.right=624
-NormalPos.bottom=385
+NormalPos.right=1573
+NormalPos.bottom=533
 Class=LaTeXView
 Document=main.tex
 
