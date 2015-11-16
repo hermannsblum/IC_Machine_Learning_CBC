@@ -1,13 +1,15 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.10.22)  31 OCT 2015 14:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=latex 2015.11.10)  11 NOV 2015 11:38
 entering extended mode
 **main.tex
-(main.tex
-LaTeX2e <2015/10/01> patch level 1
-Babel <3.9m> and hyphenation patterns for 69 languages loaded.
-(D:\MiKTeX\tex\latex\base\article.cls
-Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(D:\MiKTeX\tex\latex\base\size10.clo
-File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+
+("C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\main.te
+x"
+LaTeX2e <2014/05/01>
+Babel <3.9k> and hyphenation patterns for 68 languages loaded.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo"
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@section=\count80
@@ -20,23 +22,25 @@ File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
-) (D:\MiKTeX\tex\latex\amsmath\amsmath.sty
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip43
+
 For additional information on amsmath, use the `?' option.
-(D:\MiKTeX\tex\latex\amsmath\amstext.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
 Package: amstext 2000/06/29 v2.01
 
-(D:\MiKTeX\tex\latex\amsmath\amsgen.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks14
 \ex@=\dimen103
 ))
-(D:\MiKTeX\tex\latex\amsmath\amsbsy.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen104
 )
-(D:\MiKTeX\tex\latex\amsmath\amsopn.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count87
@@ -77,7 +81,7 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
 LaTeX Info: Redefining \[ on input line 2665.
 LaTeX Info: Redefining \] on input line 2666.
 )
-(D:\MiKTeX\tex\latex\psnfss\mathptmx.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\mathptmx.sty"
 Package: mathptmx 2005/04/12 PSNFSS-v9.2a Times w/ Math, improved (SPQR, WaS) 
 LaTeX Font Info:    Redeclaring symbol font `operators' on input line 28.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
@@ -113,89 +117,106 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/ptm/m/it on input line 35.
 LaTeX Info: Redefining \hbar on input line 50.
 )
-(D:\MiKTeX\tex\latex\graphics\graphicx.sty
-Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(D:\MiKTeX\tex\latex\graphics\keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
 \KV@toks@=\toks19
 )
-(D:\MiKTeX\tex\latex\graphics\graphics.sty
-Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
-(D:\MiKTeX\tex\latex\graphics\trig.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty"
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(D:\MiKTeX\tex\latex\00miktex\graphics.cfg
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
 File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
-Package graphics Info: Driver file: pdftex.def on input line 94.
+Package graphics Info: Driver file: dvips.def on input line 91.
 
-(D:\MiKTeX\tex\latex\pdftex-def\pdftex.def
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-
-(D:\MiKTeX\tex\generic\oberdiek\infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
-)
-(D:\MiKTeX\tex\generic\oberdiek\ltxcmds.sty
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
-)
-\Gread@gobject=\count99
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\dvips.def"
+File: dvips.def 2014/04/23 v3.0j Driver-dependant file (DPC,SPQR)
 ))
 \Gin@req@height=\dimen112
 \Gin@req@width=\dimen113
 )
-(D:\MiKTeX\tex\latex\url\url.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-) (D:\MiKTeX\tex\latex\geometry\geometry.sty
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\subcaption.sty"
+Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption.sty"
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption3.sty"
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen114
+\captionmargin@=\dimen115
+\captionwidth=\dimen116
+\caption@tempdima=\dimen117
+\caption@indent=\dimen118
+\caption@parindent=\dimen119
+\caption@hangindent=\dimen120
+)
+\c@ContinuedFloat=\count99
+)
+\c@subfigure=\count100
+\c@subtable=\count101
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.sty"
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
-(D:\MiKTeX\tex\generic\oberdiek\ifpdf.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
+Package ifpdf Info: pdfTeX in PDF mode is not detected.
 )
-(D:\MiKTeX\tex\generic\oberdiek\ifvtex.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty"
 Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
 )
-(D:\MiKTeX\tex\generic\ifxetex\ifxetex.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count100
-\Gm@cntv=\count101
-\c@Gm@tempcnt=\count102
-\Gm@bindingoffset=\dimen114
-\Gm@wd@mp=\dimen115
-\Gm@odd@mp=\dimen116
-\Gm@even@mp=\dimen117
-\Gm@layoutwidth=\dimen118
-\Gm@layoutheight=\dimen119
-\Gm@layouthoffset=\dimen120
-\Gm@layoutvoffset=\dimen121
+\Gm@cnth=\count102
+\Gm@cntv=\count103
+\c@Gm@tempcnt=\count104
+\Gm@bindingoffset=\dimen121
+\Gm@wd@mp=\dimen122
+\Gm@odd@mp=\dimen123
+\Gm@even@mp=\dimen124
+\Gm@layoutwidth=\dimen125
+\Gm@layoutheight=\dimen126
+\Gm@layouthoffset=\dimen127
+\Gm@layoutvoffset=\dimen128
 \Gm@dimlist=\toks20
 
-(D:\MiKTeX\tex\latex\geometry\geometry.cfg))
-(D:\MiKTeX\tex\latex\natbib\natbib.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.cfg"))
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\natbib\natbib.sty"
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip46
 \bibsep=\skip47
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count103
-) (mcode.sty
+\c@NAT@ctr=\count105
+)
+("C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\mcode.s
+ty"
 -- Package: `mcode' 2.5 <2014/03/06> --
 Package: mcode 2014/03/06 2.5
  - settings optimized for display (colour formating)
  - line numbering enabled
  - framed listings
-(D:\MiKTeX\tex\latex\xcolor\xcolor.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty"
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
- (D:\MiKTeX\tex\latex\00miktex\color.cfg
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
 File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
-Package xcolor Info: Driver file: pdftex.def on input line 225.
+Package xcolor Info: Driver file: dvips.def on input line 225.
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1337.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1341.
 Package xcolor Info: Model `RGB' extended on input line 1353.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1355.
 Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1356.
@@ -203,32 +224,33 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
-) (D:\MiKTeX\tex\latex\listings\listings.sty
-\lst@mode=\count104
+)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.sty"
+\lst@mode=\count106
 \lst@gtempboxa=\box28
 \lst@token=\toks21
-\lst@length=\count105
-\lst@currlwidth=\dimen122
-\lst@column=\count106
-\lst@pos=\count107
-\lst@lostspace=\dimen123
-\lst@width=\dimen124
-\lst@newlines=\count108
-\lst@lineno=\count109
-\lst@maxwidth=\dimen125
+\lst@length=\count107
+\lst@currlwidth=\dimen129
+\lst@column=\count108
+\lst@pos=\count109
+\lst@lostspace=\dimen130
+\lst@width=\dimen131
+\lst@newlines=\count110
+\lst@lineno=\count111
+\lst@maxwidth=\dimen132
 
-(D:\MiKTeX\tex\latex\listings\lstmisc.sty
-File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count110
-\lst@skipnumbers=\count111
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty"
+File: lstmisc.sty 2014/03/04 1.5c (Carsten Heinz)
+\c@lstnumber=\count112
+\lst@skipnumbers=\count113
 \lst@framebox=\box29
 )
-(D:\MiKTeX\tex\latex\listings\listings.cfg
-File: listings.cfg 2015/06/04 1.6 listings configuration
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.cfg"
+File: listings.cfg 2014/03/04 1.5c listings configuration
 ))
-Package: listings 2015/06/04 1.6 (Carsten Heinz)
+Package: listings 2014/03/04 1.5c (Carsten Heinz)
 
-(D:\MiKTeX\tex\latex\base\textcomp.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\textcomp.sty"
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -241,119 +263,110 @@ Package textcomp Info: Sub-encoding information:
 (textcomp)             only a restricted character set as indicated.
 (textcomp)             Family '?' is the default used for unknown fonts.
 (textcomp)             See the documentation for details.
-Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 79.
- (D:\MiKTeX\tex\latex\base\ts1enc.def
+Package textcomp Info: Setting ? sub-encoding to TS1/1 on input line 71.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1enc.def"
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 )
-LaTeX Info: Redefining \oldstylenums on input line 334.
-Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 349.
-Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 350.
-Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 351.
-Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 352.
-Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 353.
-Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 354.
-Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 355.
-Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 356.
-Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 357.
-Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 358.
-Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 359.
-Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 360.
-Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 361.
-Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 362.
-Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 363.
-Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 364.
-Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 365.
-Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 366.
-Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 367.
-Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 368.
-Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 369.
-Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 370.
-Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 371.
-Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 372.
-
-Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 373.
-Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 374.
-Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 375.
-Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 376.
-Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 377.
-Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 378.
-Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 379.
-Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 380.
-Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 381.
-Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 382.
-Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 383.
-Package textcomp Info: Setting lmtt sub-encoding to TS1/0 on input line 384.
-Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 385.
-Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 386.
-Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 387.
-Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 388.
-Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 389.
-Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 390.
-Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 391.
-Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 392.
-Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 393.
-Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 394.
-Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 395.
-Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 396.
-Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 397.
-Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 398.
-Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 399.
-Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 400.
-Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 401.
-Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 402.
-Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 403.
-Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 404.
-Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 405.
-Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 406.
-Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 407.
-Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 408.
-Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 409.
+LaTeX Info: Redefining \oldstylenums on input line 266.
+Package textcomp Info: Setting cmr sub-encoding to TS1/0 on input line 281.
+Package textcomp Info: Setting cmss sub-encoding to TS1/0 on input line 282.
+Package textcomp Info: Setting cmtt sub-encoding to TS1/0 on input line 283.
+Package textcomp Info: Setting cmvtt sub-encoding to TS1/0 on input line 284.
+Package textcomp Info: Setting cmbr sub-encoding to TS1/0 on input line 285.
+Package textcomp Info: Setting cmtl sub-encoding to TS1/0 on input line 286.
+Package textcomp Info: Setting ccr sub-encoding to TS1/0 on input line 287.
+Package textcomp Info: Setting ptm sub-encoding to TS1/4 on input line 288.
+Package textcomp Info: Setting pcr sub-encoding to TS1/4 on input line 289.
+Package textcomp Info: Setting phv sub-encoding to TS1/4 on input line 290.
+Package textcomp Info: Setting ppl sub-encoding to TS1/3 on input line 291.
+Package textcomp Info: Setting pag sub-encoding to TS1/4 on input line 292.
+Package textcomp Info: Setting pbk sub-encoding to TS1/4 on input line 293.
+Package textcomp Info: Setting pnc sub-encoding to TS1/4 on input line 294.
+Package textcomp Info: Setting pzc sub-encoding to TS1/4 on input line 295.
+Package textcomp Info: Setting bch sub-encoding to TS1/4 on input line 296.
+Package textcomp Info: Setting put sub-encoding to TS1/5 on input line 297.
+Package textcomp Info: Setting uag sub-encoding to TS1/5 on input line 298.
+Package textcomp Info: Setting ugq sub-encoding to TS1/5 on input line 299.
+Package textcomp Info: Setting ul8 sub-encoding to TS1/4 on input line 300.
+Package textcomp Info: Setting ul9 sub-encoding to TS1/4 on input line 301.
+Package textcomp Info: Setting augie sub-encoding to TS1/5 on input line 302.
+Package textcomp Info: Setting dayrom sub-encoding to TS1/3 on input line 303.
+Package textcomp Info: Setting dayroms sub-encoding to TS1/3 on input line 304.
+Package textcomp Info: Setting pxr sub-encoding to TS1/0 on input line 305.
+Package textcomp Info: Setting pxss sub-encoding to TS1/0 on input line 306.
+Package textcomp Info: Setting pxtt sub-encoding to TS1/0 on input line 307.
+Package textcomp Info: Setting txr sub-encoding to TS1/0 on input line 308.
+Package textcomp Info: Setting txss sub-encoding to TS1/0 on input line 309.
+Package textcomp Info: Setting txtt sub-encoding to TS1/0 on input line 310.
+Package textcomp Info: Setting lmr sub-encoding to TS1/0 on input line 311.
+Package textcomp Info: Setting lmdh sub-encoding to TS1/0 on input line 312.
+Package textcomp Info: Setting lmss sub-encoding to TS1/0 on input line 313.
+Package textcomp Info: Setting lmssq sub-encoding to TS1/0 on input line 314.
+Package textcomp Info: Setting lmvtt sub-encoding to TS1/0 on input line 315.
+Package textcomp Info: Setting qhv sub-encoding to TS1/0 on input line 316.
+Package textcomp Info: Setting qag sub-encoding to TS1/0 on input line 317.
+Package textcomp Info: Setting qbk sub-encoding to TS1/0 on input line 318.
+Package textcomp Info: Setting qcr sub-encoding to TS1/0 on input line 319.
+Package textcomp Info: Setting qcs sub-encoding to TS1/0 on input line 320.
+Package textcomp Info: Setting qpl sub-encoding to TS1/0 on input line 321.
+Package textcomp Info: Setting qtm sub-encoding to TS1/0 on input line 322.
+Package textcomp Info: Setting qzc sub-encoding to TS1/0 on input line 323.
+Package textcomp Info: Setting qhvc sub-encoding to TS1/0 on input line 324.
+Package textcomp Info: Setting futs sub-encoding to TS1/4 on input line 325.
+Package textcomp Info: Setting futx sub-encoding to TS1/4 on input line 326.
+Package textcomp Info: Setting futj sub-encoding to TS1/4 on input line 327.
+Package textcomp Info: Setting hlh sub-encoding to TS1/3 on input line 328.
+Package textcomp Info: Setting hls sub-encoding to TS1/3 on input line 329.
+Package textcomp Info: Setting hlst sub-encoding to TS1/3 on input line 330.
+Package textcomp Info: Setting hlct sub-encoding to TS1/5 on input line 331.
+Package textcomp Info: Setting hlx sub-encoding to TS1/5 on input line 332.
+Package textcomp Info: Setting hlce sub-encoding to TS1/5 on input line 333.
+Package textcomp Info: Setting hlcn sub-encoding to TS1/5 on input line 334.
+Package textcomp Info: Setting hlcw sub-encoding to TS1/5 on input line 335.
+Package textcomp Info: Setting hlcf sub-encoding to TS1/5 on input line 336.
+Package textcomp Info: Setting pplx sub-encoding to TS1/3 on input line 337.
+Package textcomp Info: Setting pplj sub-encoding to TS1/3 on input line 338.
+Package textcomp Info: Setting ptmx sub-encoding to TS1/4 on input line 339.
+Package textcomp Info: Setting ptmj sub-encoding to TS1/4 on input line 340.
 ))
-(D:\MiKTeX\tex\latex\lipsum\lipsum.sty
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lipsum\lipsum.sty"
 Package: lipsum 2014/07/27 v1.3 150 paragraphs of Lorem Ipsum dummy text
-\c@lips@count=\count112
-) (main.aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 16.
-
-(D:\MiKTeX\tex\latex\base\ts1cmr.fd
-File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+\c@lips@count=\count114
 )
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 16.
- (D:\MiKTeX\tex\latex\psnfss\ot1ptm.fd
+("C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\main.au
+x")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 21.
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 21.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 21.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
+File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 21.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 21.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd"
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
-(D:\MiKTeX\tex\context\base\supp-pdf.mkii
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count113
-\scratchdimen=\dimen126
-\scratchbox=\box30
-\nofMPsegments=\count114
-\nofMParguments=\count115
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count116
-\MPscratchDim=\dimen127
-\MPnumerator=\count117
-\makeMPintoPDFobject=\count118
-\everyMPtoPDFconversion=\toks23
-)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
+Package caption Info: End \AtBeginDocument code.
+
 *geometry* driver: auto-detecting
-*geometry* detected driver: pdftex
+*geometry* detected driver: dvips
 *geometry* verbose mode - [ preamble ] result:
-* driver: pdftex
+* driver: dvips
 * paper: a4paper
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
@@ -384,59 +397,110 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count119
-LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 23
-.
-(D:\MiKTeX\tex\latex\psnfss\ot1ztmcm.fd
+\c@lstlisting=\count115
+LaTeX Font Info:    Try loading font information for OT1+ztmcm on input line 28.
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ztmcm.fd"
 File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 23
-.
+LaTeX Font Info:    Try loading font information for OML+ztmcm on input line 28.
 
-(D:\MiKTeX\tex\latex\psnfss\omlztmcm.fd
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omlztmcm.fd"
 File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 23
-.
+LaTeX Font Info:    Try loading font information for OMS+ztmcm on input line 28.
 
-(D:\MiKTeX\tex\latex\psnfss\omsztmcm.fd
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsztmcm.fd"
 File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
 )
-LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 23
-.
+LaTeX Font Info:    Try loading font information for OMX+ztmcm on input line 28.
 
-(D:\MiKTeX\tex\latex\psnfss\omxztmcm.fd
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omxztmcm.fd"
 File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 23.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 23.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 23.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 29.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 32.
- (D:\MiKTeX\tex\latex\psnfss\ot1pcr.fd
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 30.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 41.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd"
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-) (main.bbl) [1
+) [1
 
-{C:/Users/Martin/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}] (main.aux)
- ) 
+]
+LaTeX Font Info:    Try loading font information for OMS+pcr on input line 84.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omspcr.fd"
+File: omspcr.fd 
+)
+LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <8> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 103.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1pcr.fd"
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+) [2]
+LaTeX Font Info:    Try loading font information for OML+pcr on input line 160.
+
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omlpcr.fd"
+File: omlpcr.fd 
+)
+LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <8> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 160.
+File: tree1.eps Graphic file (type eps)
+ <tree1.eps>
+File: tree2.eps Graphic file (type eps)
+ <tree2.eps>
+File: tree3.eps Graphic file (type eps)
+ <tree3.eps>
+File: tree4.eps Graphic file (type eps)
+ <tree4.eps>
+File: tree5.eps Graphic file (type eps)
+
+<tree5.eps>
+File: tree6.eps Graphic file (type eps)
+ <tree6.eps>
+File: noisytree1.eps Graphic file (type eps)
+ <noisytree1.eps>
+File: noisytree2.eps Graphic file (type eps)
+ <noisytree2.eps>
+File: noisytree3.eps Graphic file (type eps)
+ <noisytree3.eps>
+File: noisytree4.eps Graphic file (type eps)
+ <noisytree4.eps>
+File: noisytree5.eps Graphic file (type eps)
+ <noisytree5.eps>
+File: noisytree6.eps Graphic file (type eps)
+
+<noisytree6.eps> [3] [4] [5] [6]
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 291.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 291.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 291.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 349.
+ ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd"
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [7] [8] [9] [10]
+[11] [12]
+File: pruning_clean_data.eps Graphic file (type eps)
+ <pruning_clean_data.eps>
+File: pruning_noisy_data.eps Graphic file (type eps)
+ <pruning_noisy_data.eps> [13] [14]
+("C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\main.au
+x") ) 
 Here is how much of TeX's memory you used:
- 5177 strings out of 493636
- 67339 string characters out of 3151068
- 241615 words of memory out of 3000000
- 8498 multiletter control sequences out of 15000+200000
- 26964 words of font info for 53 fonts, out of 3000000 for 9000
+ 5899 strings out of 493707
+ 85391 string characters out of 3142202
+ 291129 words of memory out of 3000000
+ 9141 multiletter control sequences out of 15000+200000
+ 27116 words of font info for 68 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 33i,6n,42p,232b,1020s stack positions out of 5000i,500n,10000p,200000b,50000s
-{D:/MiKTeX/fonts/enc/dvips/fontname/8r.enc}<D:/MiKTeX/fonts/type1/urw/courier
-/ucrr8a.pfb><D:/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><D:/MiKTeX/fonts/type1/
-urw/times/utmr8a.pfb><D:/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (1 page, 51408 bytes).
-PDF statistics:
- 23 PDF objects out of 1000 (max. 8388607)
- 0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 42i,12n,44p,603b,1521s stack positions out of 5000i,500n,10000p,200000b,50000s
 
+Output written on main.dvi (14 pages, 144124 bytes).
