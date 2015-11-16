@@ -1,53 +1,53 @@
 SyncTeX Version:1
-Input:1:C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\main.tex
-Input:2:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls
-Input:3:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo
-Input:4:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty
-Input:5:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amstext.sty
-Input:6:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty
-Input:7:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty
-Input:8:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty
-Input:9:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\mathptmx.sty
-Input:10:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphicx.sty
-Input:11:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty
-Input:12:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\graphics.sty
-Input:13:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\trig.sty
-Input:14:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg
-Input:15:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\dvips.def
-Input:16:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\url\url.sty
-Input:17:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\subcaption.sty
-Input:18:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption.sty
-Input:19:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\caption\caption3.sty
-Input:20:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.sty
-Input:21:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty
-Input:22:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\oberdiek\ifvtex.sty
-Input:23:C:\Program Files (x86)\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty
-Input:24:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\geometry\geometry.cfg
-Input:25:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\natbib\natbib.sty
-Input:26:C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\mcode.sty
-Input:27:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\xcolor\xcolor.sty
-Input:28:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\00miktex\color.cfg
-Input:29:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.sty
-Input:30:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\lstmisc.sty
-Input:31:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\listings\listings.cfg
-Input:32:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\textcomp.sty
-Input:33:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1enc.def
-Input:34:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\lipsum\lipsum.sty
-Input:35:C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\main.aux
-Input:36:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\ts1cmr.fd
-Input:37:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ptm.fd
-Input:38:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1ztmcm.fd
-Input:39:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omlztmcm.fd
-Input:40:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omsztmcm.fd
-Input:41:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omxztmcm.fd
-Input:42:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ot1pcr.fd
+Input:1:main.tex
+Input:2:C:\MikTeX\tex\latex\base\article.cls
+Input:3:C:\MikTeX\tex\latex\base\size10.clo
+Input:4:C:\MikTeX\tex\latex\amsmath\amsmath.sty
+Input:5:C:\MikTeX\tex\latex\amsmath\amstext.sty
+Input:6:C:\MikTeX\tex\latex\amsmath\amsgen.sty
+Input:7:C:\MikTeX\tex\latex\amsmath\amsbsy.sty
+Input:8:C:\MikTeX\tex\latex\amsmath\amsopn.sty
+Input:9:C:\MikTeX\tex\latex\psnfss\mathptmx.sty
+Input:10:C:\MikTeX\tex\latex\graphics\graphicx.sty
+Input:11:C:\MikTeX\tex\latex\graphics\keyval.sty
+Input:12:C:\MikTeX\tex\latex\graphics\graphics.sty
+Input:13:C:\MikTeX\tex\latex\graphics\trig.sty
+Input:14:C:\MikTeX\tex\latex\00miktex\graphics.cfg
+Input:15:C:\MikTeX\tex\latex\graphics\dvips.def
+Input:16:C:\MikTeX\tex\latex\url\url.sty
+Input:17:C:\MikTeX\tex\latex\caption\subcaption.sty
+Input:18:C:\MikTeX\tex\latex\caption\caption.sty
+Input:19:C:\MikTeX\tex\latex\caption\caption3.sty
+Input:20:C:\MikTeX\tex\latex\geometry\geometry.sty
+Input:21:C:\MikTeX\tex\generic\oberdiek\ifpdf.sty
+Input:22:C:\MikTeX\tex\generic\oberdiek\ifvtex.sty
+Input:23:C:\MikTeX\tex\generic\ifxetex\ifxetex.sty
+Input:24:C:\MikTeX\tex\latex\geometry\geometry.cfg
+Input:25:C:\MikTeX\tex\latex\natbib\natbib.sty
+Input:26:mcode.sty
+Input:27:C:\MikTeX\tex\latex\xcolor\xcolor.sty
+Input:28:C:\MikTeX\tex\latex\00miktex\color.cfg
+Input:29:C:\MikTeX\tex\latex\listings\listings.sty
+Input:30:C:\MikTeX\tex\latex\listings\lstmisc.sty
+Input:31:C:\MikTeX\tex\latex\listings\listings.cfg
+Input:32:C:\MikTeX\tex\latex\base\textcomp.sty
+Input:33:C:\MikTeX\tex\latex\base\ts1enc.def
+Input:34:C:\MikTeX\tex\latex\lipsum\lipsum.sty
+Input:35:main.aux
+Input:36:C:\MikTeX\tex\latex\base\ts1cmr.fd
+Input:37:C:\MikTeX\tex\latex\psnfss\ot1ptm.fd
+Input:38:C:\MikTeX\tex\latex\psnfss\ot1ztmcm.fd
+Input:39:C:\MikTeX\tex\latex\psnfss\omlztmcm.fd
+Input:40:C:\MikTeX\tex\latex\psnfss\omsztmcm.fd
+Input:41:C:\MikTeX\tex\latex\psnfss\omxztmcm.fd
+Input:42:C:\MikTeX\tex\latex\psnfss\ot1pcr.fd
 Output:dvi
 Magnification:1000
 Unit:1
 X Offset:4736287
 Y Offset:4736287
 Content:
-!3299
+!2030
 {1
 [1,73:0,48881425:30692631,48881425,0
 [1,73:-1006927,48881425:31699558,52313184,0
@@ -827,9 +827,9 @@ k1,39:26797813,23689830:194007
 x1,39:27307676,23689830
 k1,39:27501684,23689830:194008
 x1,39:28157026,23689830
-k1,39:28351033,23689830:194007
-x1,39:29151872,23689830
-k1,39:29345880,23689830:194008
+k1,39:28351034,23689830:194008
+x1,39:29151873,23689830
+k1,39:29345880,23689830:194007
 x1,39:30692631,23689830
 k1,39:30692631,23689830:0
 )
@@ -4076,9 +4076,9 @@ k1,66:12568103,42193481:190414
 x1,66:13005214,42193481
 k1,66:13195628,42193481:190414
 x1,66:14033171,42193481
-k1,66:14223585,42193481:190414
-x1,66:14715105,42193481
-k1,66:14912162,42193481:197057
+k1,66:14223584,42193481:190413
+x1,66:14715104,42193481
+k1,66:14912162,42193481:197058
 x1,66:15713001,42193481
 k1,66:15903414,42193481:190413
 x1,66:17286851,42193481
@@ -5152,9 +5152,9 @@ k1,73:30692631,48881425:15685939
 ]
 !127120
 }1
-Input:43:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omspcr.fd
-Input:44:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1pcr.fd
-!151
+Input:43:C:\MikTeX\tex\latex\psnfss\omspcr.fd
+Input:44:C:\MikTeX\tex\latex\psnfss\ts1pcr.fd
+!103
 {2
 [1,134:0,48881425:30692631,48881425,0
 [1,134:-1006927,48881425:31699558,52313184,0
@@ -10698,9 +10698,9 @@ x1,118:24764332,35453997
 x1,118:25552067,35453997
 k1,118:25736055,35453997:183988
 x1,118:26173166,35453997
-k1,118:26357154,35453997:183988
-x1,118:28249808,35453997
-k1,118:28433797,35453997:183989
+k1,118:26357155,35453997:183989
+x1,118:28249809,35453997
+k1,118:28433797,35453997:183988
 x1,118:29707804,35453997
 k1,118:29891792,35453997:183988
 x1,118:30692631,35453997
@@ -12359,8 +12359,8 @@ k1,134:30692631,48881425:15685939
 ]
 !182235
 }2
-Input:45:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\omlpcr.fd
-!81
+Input:45:C:\MikTeX\tex\latex\psnfss\omlpcr.fd
+!57
 {3
 [1,222:0,48881425:30692631,48881425,9168
 [1,222:-1006927,48881425:31699558,52313184,9168
@@ -17977,6 +17977,7 @@ x1,173:10169477,24814221
 h1,173:10169477,24814221:0,0,0
 x1,173:10333317,24814221
 g1,173:10536477,24814221
+g1,196:10536477,24814221
 k1,220:30692631,24814221:20156154
 g1,220:30692631,24814221
 )
@@ -17990,7 +17991,7 @@ k1,222:30692631,48881425:15685939
 )
 ]
 ]
-!141701
+!141726
 }3
 !11
 {4
@@ -18758,9 +18759,9 @@ k1,232:11122042,9267469:3
 x1,232:11436615,9267469
 k1,232:11436618,9267469:3
 x1,232:11751191,9267469
-k1,232:11751194,9267469:3
-x1,232:12065767,9267469
-k1,232:12065769,9267469:2
+k1,232:11751193,9267469:2
+x1,232:12065766,9267469
+k1,232:12065769,9267469:3
 x1,232:12380342,9267469
 k1,232:12380345,9267469:3
 x1,232:12694918,9267469
@@ -18913,9 +18914,9 @@ k1,233:3257642,9890060:3
 x1,233:3572215,9890060
 k1,233:3572218,9890060:3
 x1,233:3886791,9890060
-k1,233:3886794,9890060:3
-x1,233:4201367,9890060
-k1,233:4201369,9890060:2
+k1,233:3886793,9890060:2
+x1,233:4201366,9890060
+k1,233:4201369,9890060:3
 x1,233:4515942,9890060
 k1,233:4515945,9890060:3
 x1,233:4830518,9890060
@@ -25827,8 +25828,8 @@ k1,291:30692631,48881425:15685939
 ]
 !194586
 }6
-Input:46:C:\Program Files (x86)\MiKTeX 2.9\tex\latex\psnfss\ts1ptm.fd
-!81
+Input:46:C:\MikTeX\tex\latex\psnfss\ts1ptm.fd
+!57
 {7
 [1,351:0,48881425:30692631,48881425,4912
 [1,351:-1006927,48881425:31699558,52313184,4912
@@ -42507,9 +42508,9 @@ x1,422:25919797,45210628
 x1,422:26704261,45210628
 k1,422:26937155,45210628:232894
 x1,422:27737994,45210628
-k1,422:27970887,45210628:232893
-x1,422:29117094,45210628
-k1,422:29527416,45210628:410322
+k1,422:27970888,45210628:232894
+x1,422:29117095,45210628
+k1,422:29527416,45210628:410321
 x1,422:30692631,45210628
 k1,422:30692631,45210628:0
 )
@@ -53053,9 +53054,9 @@ k1,506:16071790,9239625:197290
 x1,506:17090853,9239625
 k1,506:17288143,9239625:197290
 x1,506:19872181,9239625
-k1,506:20086196,9239625:214015
-x1,506:22270472,9239625
-k1,506:22467761,9239625:197289
+k1,506:20086195,9239625:214014
+x1,506:22270471,9239625
+k1,506:22467761,9239625:197290
 x1,506:22795441,9239625
 x1,506:23113297,9239625
 x1,506:23612681,9239625
@@ -54585,9 +54586,9 @@ k1,517:9549162,24670069:3
 x1,517:9863735,24670069
 k1,517:9863738,24670069:3
 x1,517:10178311,24670069
-k1,517:10178314,24670069:3
-x1,517:10492887,24670069
-k1,517:10492889,24670069:2
+k1,517:10178313,24670069:2
+x1,517:10492886,24670069
+k1,517:10492889,24670069:3
 x1,517:10807462,24670069
 k1,517:10807465,24670069:3
 x1,517:11122038,24670069
@@ -60805,6 +60806,7 @@ g1,760:30692631,34903521
 )
 (1,760:-1006927,35689953:31699558,0,0
 g1,595:-803767,35689953
+g1,650:-803767,35689953
 g1,705:-600607,35689953
 k1,760:30692631,35689953:31293238
 g1,760:30692631,35689953
@@ -61248,7 +61250,7 @@ k1,767:30692631,48881425:15522099
 )
 ]
 ]
-!109093
+!109117
 }11
 !12
 {12
@@ -66304,9 +66306,9 @@ k1,804:30692631,48881425:15522099
 ]
 !3918
 }14
-Input:47:C:\Users\a\DropboxImperial\Dropbox\HiPEDS\MRes\Machine Learning\CBC\IC_Machine_Learning_CBC\Assignment 2\latex\main.aux
-!139
-Postamble:
-Count:54890
+Input:47:main.aux
 !28
+Postamble:
+Count:54892
+!27
 Post scriptum:
