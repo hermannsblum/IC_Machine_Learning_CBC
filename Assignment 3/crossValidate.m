@@ -59,7 +59,7 @@ switch algorithm
                                     validationSetIndices = foldIndices{i};
                                     % Set indices for training and validation
                                     % sets
-                                    net.divideFcn = 'divideInd';
+                                    net.divideFcn = 'divideind';
                                     net.divideParam.trainInd = trainingSetIndices;
                                     net.divideParam.valInd = validationSetIndices;
                                     net.divideParam.testInd = [];
@@ -73,7 +73,7 @@ switch algorithm
                                     % Train network
                                     net = train(net, attributesNN, labelsNN);
                                     % Get performance on validation set
-                                    predictions = NNout2labels(sim(net, attributes(:,validationSetIndices)));
+                                    predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
                                     confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
                                     accuracyPerFold(i,j) = sum(diag(confMatrix))/length(predictions);
                                 end
