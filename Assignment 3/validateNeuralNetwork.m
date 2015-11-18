@@ -1,26 +1,19 @@
-function [ parameters, accuracies ] = validateNeuralNetwork( algorithm, attributesNN, labelsNN, trainingSetIndices, validationSetIndices )
+function [ accuracies ] = validateNeuralNetwork( algorithm, parameters, attributesNN, labelsNN, trainingSetIndices, validationSetIndices )
 % attributesNN and labelsNN must be already in NN format (call ANNdata on the
 % dataset and pass the output to this function)
 
 % Set common parameters
-neuronsPerLayer = 6:45;
-hiddenLayers = 1:3;
+neuronsPerLayer = parameters{1};
+hiddenLayers = parameters{2};
 
 switch algorithm
     case 'traingd'
         
     case 'traingda'
         % Define the candidate parameter values
-        learningRates = [5 2 1 0.5 0.2 0.1 0.05 0.02 0.01];
-        lrDecreaseRatios = [0.7 0.5 0.07 0.05];
-        lrIncreaseRatios = [1.4 2 5];
-        
-        parameters = cell(5,1);
-        parameters{1} = hiddenLayers;
-        parameters{2} = neuronsPerLayer;
-        parameters{3} = learningRates;
-        parameters{4} = lrDecreaseRatios;
-        parameters{5} = lrIncreaseRatios;
+        learningRates = parameters{3};
+        lrDecreaseRatios = parameters{4};
+        lrIncreaseRatios = parameters{5};
         
         accuracies = zeros(length(hiddenLayers),...
             length(neuronsPerLayer),...

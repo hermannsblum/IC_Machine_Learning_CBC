@@ -6,12 +6,14 @@ function [ parameters, accuracies ] = crossValidate( algorithm, attributes, labe
 foldsIndices = getFoldsPartitioning(labels,10,true);
 [attributesNN,labelsNN] = ANNdata(attributes,labels);
 
-
+[parameters, numParams] = getParameters(algorithm);
+accuracies = zeros(numParams);
 for i=1:10
     trainingSetIndices = getTrainingSetIndexed(foldsIndices,i);
     validationSetIndices = foldsIndices{i};
     
-    [parameters, accuraciesPerFold] = validateNeuralNetwork(algorithm,attributesNN,labelsNN,trainingSetIndices,validationSetIndices);
+    accuraciesPerFold = validateNeuralNetwork(algorithm,parameters,attributesNN,labelsNN,trainingSetIndices,validationSetIndices);
+    
     accuracies = accuracies+accuraciesPerFold;
 end
 % Average the accuracies
