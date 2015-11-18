@@ -45,13 +45,15 @@ switch algorithm
                     for d = 1:length(lrDecreaseRatios);
                         lr_dec = lrDecreaseRatios(d);
                         % Set learning rate's decrement rate
-                        net.trainParam.lr_inc = lr_inc;
+                        net.trainParam.lr_dec = lr_dec;
                         for e = 1:length(lrIncreaseRatios);
                             lr_inc = lrIncreaseRatios(e);
                             % Set learning rate's increment rate
                             net.trainParam.lr_inc = lr_inc;
-                            accuracyPerFold = zeros(10,1);
+                            
+                            accuracyPerFold = zeros(10,5);
                             for i = 1:10 % Loop over the folds
+                                for j = 1:5 
                                 % Get training and validation indices
                                 trainingSetIndices = getTrainingSetIndexed(foldIndices,i);
                                 validationSetIndices = foldIndices{i};

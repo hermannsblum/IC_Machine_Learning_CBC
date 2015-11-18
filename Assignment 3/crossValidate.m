@@ -45,40 +45,42 @@ switch algorithm
                     for d = 1:length(lrDecreaseRatios);
                         lr_dec = lrDecreaseRatios(d);
                         % Set learning rate's decrement rate
-                        net.trainParam.lr_inc = lr_inc;
+                        net.trainParam.lr_dec = lr_dec;
                         for e = 1:length(lrIncreaseRatios);
                             lr_inc = lrIncreaseRatios(e);
                             % Set learning rate's increment rate
                             net.trainParam.lr_inc = lr_inc;
                             
-                            accuracyPerFold = zeros(10,1);
+                            accuracyPerFold = zeros(10,5);
                             for i = 1:10 % Loop over the folds
-                                % Get training and validation indices
-                                trainingSetIndices = getTrainingSetIndexed(foldIndices,i);
-                                validationSetIndices = foldIndices{i};
-                                % Set indices for training and validation
-                                % sets
-                                net.divideFcn = 'divideInd';
-                                net.divideParam.trainInd = trainingSetIndices;
-                                net.divideParam.valInd = validationSetIndices;
-                                net.divideParam.testInd = [];
-                                
-                                
-                                % TODO: Set overfitting avoidance
-                                % parameters
-                                
-                                % Set up input and output layer
-                                net = configure(net, attributesNN, labelsNN);
-                                % Train network
-                                net = train(net, attributesNN, labelsNN);
-                                % Get performance on validation set
-                                predictions = NNout2labels(sim(net, attributes(:,validationSetIndices)));
-                                confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
-                                accuracyPerFold(i) = sum(diag(confMatrix))/length(predictions);
+                                for j = 1:5 
+                                    % Get training and validation indices
+                                    trainingSetIndices = getTrainingSetIndexed(foldIndices,i);
+                                    validationSetIndices = foldIndices{i};
+                                    % Set indices for training and validation
+                                    % sets
+                                    net.divideFcn = 'divideInd';
+                                    net.divideParam.trainInd = trainingSetIndices;
+                                    net.divideParam.valInd = validationSetIndices;
+                                    net.divideParam.testInd = [];
+
+
+                                    % TODO: Set overfitting avoidance
+                                    % parameters
+
+                                    % Set up input and output layer
+                                    net = configure(net, attributesNN, labelsNN);
+                                    % Train network
+                                    net = train(net, attributesNN, labelsNN);
+                                    % Get performance on validation set
+                                    predictions = NNout2labels(sim(net, attributes(:,validationSetIndices)));
+                                    confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
+                                    accuracyPerFold(i,j) = sum(diag(confMatrix))/length(predictions);
+                                end
                             end
                             % Compute average accuracy for the current
                             % parameter configuration
-                            accuracies(a,b,c,d,e) = mean(accuracyPerFold);
+                            accuracies(a,b,c,d,e) = mean(mean(accuracyPerFold,2),1);
                             
                         end
                     end
