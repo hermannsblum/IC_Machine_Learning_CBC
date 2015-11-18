@@ -32,34 +32,37 @@ switch algorithm
             length(lrIncreaseRatios));
         
         for a = 1:length(hiddenLayers)
+            l = hiddenLayers(a);
             for b = 1:length(neuronsPerLayer);
+                npl = neuronsPerLayer(b);
+                % Create a NN with l layers and npl neurons
+                % per layer
+                net = feedforwardnet(repmat(npl,1,l),algorithm);
                 for c = 1:length(learningRates);
+                    lr = learningRates(c);
+                    % Set learning rate
+                    net.trainParam.lr = lr;
                     for d = 1:length(lrDecreaseRatios);
+                        lr_dec = lrDecreaseRatios(d);
+                        % Set learning rate's decrement rate
+                        net.trainParam.lr_inc = lr_inc;
                         for e = 1:length(lrIncreaseRatios);
-                            l = hiddenLayers(a);
-                            npl = neuronsPerLayer(b);
-                            lr = learningRates(c);
-                            lr_dec = lrDecreaseRatios(d);
                             lr_inc = lrIncreaseRatios(e);
-                            
+                            % Set learning rate's increment rate
+                            net.trainParam.lr_inc = lr_inc;
                             accuracyPerFold = zeros(10,1);
                             for i = 1:10 % Loop over the folds
                                 % Get training and validation indices
                                 trainingSetIndices = getTrainingSetIndexed(foldIndices,i);
                                 validationSetIndices = foldIndices{i};
-                                % Create a NN with l layers and npl neurons
-                                % per layer
-                                net = feedforwardnet(repmat(npl,1,l),algorithm);
                                 % Set indices for training and validation
                                 % sets
                                 net.divideFcn = 'divideInd';
                                 net.divideParam.trainInd = trainingSetIndices;
                                 net.divideParam.valInd = validationSetIndices;
                                 net.divideParam.testInd = [];
-                                % Set training parameters
-                                net.trainParam.lr = lr;
-                                net.trainParam.lr_inc = lr_inc;
-                                net.trainParam.lr_dec = lr_dec;
+                                
+                                
                                 % TODO: Set overfitting avoidance
                                 % parameters
                                 
