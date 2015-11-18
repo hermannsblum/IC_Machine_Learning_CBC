@@ -21,12 +21,12 @@ if(stratified)
         for j=1:numClasses
             foldsIndices{i} = [foldsIndices{i}; getFoldIndexed(indicesPerClass{j},k,i)];
         end
-        foldsIndices{i} = sort(foldsIndices{i});
+        foldsIndices{i} = sort(foldsIndices{i})';
     end    
     
 else
     % Non-stratified cross-validation
     for i=1:k
-        foldsIndices{i} = getFoldIndexed(1:length(labels),k,i);
+        foldsIndices{i} = getFoldIndexed(1:length(labels),k,i)';
     end
 end

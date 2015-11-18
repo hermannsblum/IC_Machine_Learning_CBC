@@ -5,6 +5,6 @@ function trSIndices = getTrainingSetIndexed(indices,i)
 trSIndices = [];
 for j=1:length(indices)
     if(j~=i)
-        trSIndices = [trSIndices; indices{j}];
+        trSIndices = [trSIndices indices{j}];
     end
 end
