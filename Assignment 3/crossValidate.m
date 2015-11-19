@@ -14,6 +14,7 @@ for i=1:10
     
     accuraciesPerFold = validateNeuralNetwork(algorithm,parameters,attributes,labels,trainingSetIndices,validationSetIndices);
     
+    
     accuracies = accuracies+accuraciesPerFold;
 end
 % Average the accuracies

@@ -17,16 +17,16 @@ switch algorithm
         lrDecreaseRatios = parameters{4};
         lrIncreaseRatios = parameters{5};
         
-        accuracies = zeros(length(hiddenLayers),...
-            length(neuronsPerLayer),...
+        accuracies = zeros(length(neuronsPerLayer),...
+            length(hiddenLayers),...
             length(learningRates),...
             length(lrDecreaseRatios),...
             length(lrIncreaseRatios));
         
-        for a = 1:length(hiddenLayers)
-            l = hiddenLayers(a);
-            for b = 1:length(neuronsPerLayer);
-                npl = neuronsPerLayer(b);
+        for a = 1:length(neuronsPerLayer)
+            npl = neuronsPerLayer(a);
+            for b = 1:length(hiddenLayers);
+                l = hiddenLayers(b);
                 % Create a NN with l layers and npl neurons
                 % per layer
                 net = feedforwardnet(repmat(npl,1,l),algorithm);
@@ -61,13 +61,10 @@ switch algorithm
                                 net.divideParam.valInd = validationSetIndices;
                                 net.divideParam.testInd = [];
 
-                                % TODO: Set overfitting avoidance
-                                % parameters
-
                                 % Set up input and output layer
                                 NN{j} = configure(net, attributesNN, labelsNN);
                                 % Train network
-                                [NN{j}, trainRecord] = train(net, attributesNN, labelsNN);
+                                [NN{j}, trainRecord] = train(NN{j}, attributesNN, labelsNN);
                                 % Evaluate mean squared error on validation
                                 % set. trainRecord.best_vperf contains the
                                 % optimal error found in validation set
