@@ -25,7 +25,7 @@ switch algorithm
         parameters{4} = lrDecreaseRatios;
         parameters{5} = lrIncreaseRatios;
         
-        numParams = zeros(5);
+        numParams = zeros(5,1);
         for i=1:5
             numParams(i) = length(parameters{i});
         end
