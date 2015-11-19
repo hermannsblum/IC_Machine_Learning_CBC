@@ -1,6 +1,8 @@
-function [ accuracies ] = validateNeuralNetwork( algorithm, parameters, attributesNN, labelsNN, trainingSetIndices, validationSetIndices )
-% attributesNN and labelsNN must be already in NN format (call ANNdata on the
-% dataset and pass the output to this function)
+function [ accuracies ] = validateNeuralNetwork( algorithm, parameters, attributes, labels, trainingSetIndices, validationSetIndices )
+% attributes and labels must be in CBC format (rows representing single
+% examples, columns attributes; one-column labels)
+
+[attributesNN,labelsNN] = ANNdata(attributes,labels);
 
 % Set common parameters
 neuronsPerLayer = parameters{1};
@@ -44,7 +46,15 @@ switch algorithm
                             lr_inc = lrIncreaseRatios(e);
                             % Set learning rate's increment rate
                             net.trainParam.lr_inc = lr_inc;
-                            trialsAccuracies = zeros(1,5);
+                            
+                            disp(['Testing parameters npl=' num2str(npl)...
+                                ' l=' num2str(l) ' lr=' num2str(lr)...
+                                ' lr_dec=' num2str(lr_dec) ' lr_inc=' num2str(lr_inc)]);
+                            % From http://uk.mathworks.com/help/nnet/ug/improve-neural-network-generalization-and-avoid-overfitting.html?refresh=true
+                            % Train different networks and take the one
+                            % with the minimum mse to avoid overfitting
+                            NN = cell(5,1);
+                            perfs = zeros(5,1);
                             for j = 1:5 
                                 % Set indices for training and validation
                                 % sets
@@ -57,17 +67,24 @@ switch algorithm
                                 % parameters
 
                                 % Set up input and output layer
-                                net = configure(net, attributesNN, labelsNN);
+                                NN{j} = configure(net, attributesNN, labelsNN);
                                 % Train network
-                                net = train(net, attributesNN, labelsNN);
-                                % Get performance on validation set
-                                predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
-                                confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
-                                trialsAccuracies(j) = sum(diag(confMatrix))/length(predictions);
+                                [NN{j}, trainRecord] = train(net, attributesNN, labelsNN);
+                                % Evaluate mean squared error on validation
+                                % set. trainRecord.best_vperf contains the
+                                % optimal error found in validation set
+                                % during the training
+                                perfs(j) = trainRecord.best_vperf;
                             end
+                            [~, jOpt] = min(perfs(j));
+                            net = NN{jOpt};
+                            % Get performance on validation set
+                            predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
+                            confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
+                            
                             % Compute average accuracy for the current
                             % parameter configuration
-                            accuracies(a,b,c,d,e) = mean(trialsAccuracies);
+                            accuracies(a,b,c,d,e) = sum(diag(confMatrix))/length(predictions);
                             
                         end
                     end

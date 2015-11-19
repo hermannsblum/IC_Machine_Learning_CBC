@@ -4,6 +4,8 @@ function [ parameters, numParams ] = getParameters( algorithm )
 
 neuronsPerLayer = 6:45;
 hiddenLayers = 1:3;
+% neuronsPerLayer = 2;
+% hiddenLayers = 1;
 
 switch algorithm
     case 'traingd'
@@ -12,17 +14,20 @@ switch algorithm
         learningRates = [5 2 1 0.5 0.2 0.1 0.05 0.02 0.01];
         lrDecreaseRatios = [0.7 0.5 0.07 0.05];
         lrIncreaseRatios = [1.4 2 5];
-        
+%         learningRates = 0.5;
+%         lrDecreaseRatios = [0.7 0.5];
+%         lrIncreaseRatios = [1.4 2];
+
         parameters = cell(5,1);
-        parameters{1} = hiddenLayers;
-        parameters{2} = neuronsPerLayer;
+        parameters{1} = neuronsPerLayer;
+        parameters{2} = hiddenLayers;
         parameters{3} = learningRates;
         parameters{4} = lrDecreaseRatios;
         parameters{5} = lrIncreaseRatios;
         
         numParams = 5;
         for i=1:5
-            numParams = length(parameters{i});
+            numParams(i) = length(parameters{i});
         end
         
     case 'traingdm'
