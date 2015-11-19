@@ -8,8 +8,6 @@ function [ accuracies ] = validateNeuralNetwork( algorithm, parameters, attribut
 neuronsPerLayer = parameters{1};
 hiddenLayers = parameters{2};
 
-labels = NNout2labels(labelsNN);
-
 switch algorithm
     case 'traingd'
         
