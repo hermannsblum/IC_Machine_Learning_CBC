@@ -23,10 +23,10 @@ switch algorithm
             length(lrDecreaseRatios),...
             length(lrIncreaseRatios));
         
-        for a = 1:length(hiddenLayers)
-            l = hiddenLayers(a);
-            for b = 1:length(neuronsPerLayer);
-                npl = neuronsPerLayer(b);
+        for a = 1:length(neuronsPerLayer)
+            npl = neuronsPerLayer(a);
+            for b = 1:length(hiddenLayers);
+                l = hiddenLayers(b);
                 % Create a NN with l layers and npl neurons
                 % per layer
                 net = feedforwardnet(repmat(npl,1,l),algorithm);
