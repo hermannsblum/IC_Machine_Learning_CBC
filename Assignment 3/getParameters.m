@@ -14,8 +14,8 @@ switch algorithm
         lrIncreaseRatios = [1.4 2 5];
         
         parameters = cell(5,1);
-        parameters{1} = hiddenLayers;
-        parameters{2} = neuronsPerLayer;
+        parameters{1} = neuronsPerLayer;
+        parameters{2} = hiddenLayers;
         parameters{3} = learningRates;
         parameters{4} = lrDecreaseRatios;
         parameters{5} = lrIncreaseRatios;
