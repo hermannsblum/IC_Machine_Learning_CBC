@@ -28,7 +28,7 @@ switch algorithm
     case 'traingdm'
         
     case 'trainrp'
-        delta_inc = [1.5 1.2 1.0 0.15 0.12 0.1];
+        delta_inc = [1.4 1.3 1.2 1.1]; % needs to be greater than 1
         delta_dec = [0.7 0.5 0.3 0.07 0.05 0.03];
         
         parameters = cell(4,1);
@@ -36,6 +36,8 @@ switch algorithm
         parameters{2} = neuronsPerLayer;
         parameters{3} = delta_inc;
         parameters{4} = delta_dec;
+        
+        numParams = 4;
 
 end
 

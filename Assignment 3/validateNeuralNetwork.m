@@ -6,6 +6,8 @@ function [ accuracies ] = validateNeuralNetwork( algorithm, parameters, attribut
 neuronsPerLayer = parameters{1};
 hiddenLayers = parameters{2};
 
+labels = NNout2labels(labelsNN);
+
 switch algorithm
     case 'traingd'
         
@@ -104,9 +106,6 @@ switch algorithm
 
                         trialsAccuracies = zeros(1,5);
                         for j = 1:5
-                            % Get training and validation indices
-                            trainingSetIndices = getTrainingSetIndexed(foldIndices,i);
-                            validationSetIndices = foldIndices{i};
                             % Set indices for training and validation
                             % sets
                             net.divideFcn = 'divideind';
