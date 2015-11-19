@@ -20,7 +20,7 @@ for i=1:10
 end
 % Average the accuracies
 mserrors = mserrors./10;
-save([algorithm '_avgmsErrors.mat'],'parameters','accuracies');
+save([algorithm '_avgmsErrors.mat'],'parameters','mserrors');
 
 
 end
