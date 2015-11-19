@@ -1,4 +1,4 @@
-function [ accuracies ] = validateNeuralNetwork( algorithm, parameters, attributes, labels, trainingSetIndices, validationSetIndices )
+function [ mserrors ] = validateNeuralNetwork( algorithm, parameters, attributes, labels, trainingSetIndices, validationSetIndices )
 % attributes and labels must be in CBC format (rows representing single
 % examples, columns attributes; one-column labels)
 
@@ -17,7 +17,7 @@ switch algorithm
         lrDecreaseRatios = parameters{4};
         lrIncreaseRatios = parameters{5};
         
-        accuracies = zeros(length(neuronsPerLayer),...
+        mserrors = zeros(length(neuronsPerLayer),...
             length(hiddenLayers),...
             length(learningRates),...
             length(lrDecreaseRatios),...
@@ -49,7 +49,7 @@ switch algorithm
                                 ' l=' num2str(l) ' lr=' num2str(lr)...
                                 ' lr_dec=' num2str(lr_dec) ' lr_inc=' num2str(lr_inc)]);
 
-                            accuracies(a,b,c,d,e) = findMinimumError(net, ...
+                            mserrors(a,b,c,d,e) = findMinimumError(net, ...
                                 attributesNN, labelsNN, trainingSetIndices, ...
                                 validationSetIndices);
                             
@@ -67,15 +67,15 @@ switch algorithm
         delta_inc = parameters{3};
         delta_dec = parameters{4};
         
-        accuracies = zeros(length(hiddenLayers),...
-            length(neuronsPerLayer),...
+        mserrors = zeros(length(neuronsPerLayer),...
+            length(hiddenLayers),...
             length(delta_inc),...
             length(delta_dec));
         
-        for a = 1:length(hiddenLayers)
-            l = hiddenLayers(a);
-            for b = 1:length(neuronsPerLayer);
-                npl = neuronsPerLayer(b);
+        for a = 1:length(neuronsPerLayer)
+            npl = neuronsPerLayer(a);
+            for b = 1:length(hiddenLayers);
+                l = hiddenLayers(b);
                 % Create a NN with l layers and npl neurons
                 % per layer
                 net = feedforwardnet(repmat(npl,1,l),algorithm);
@@ -88,7 +88,7 @@ switch algorithm
                         % Set delta dec
                         net.trainParam.delt_dec = delt_dec;
                         
-                        accuracies(a, b, c, d) = findMinimumError(net, ...
+                        mserrors(a, b, c, d) = findMinimumError(net, ...
                             attributesNN, labelsNN, trainingSetIndices, ...
                             validationSetIndices);
                     end
@@ -100,7 +100,7 @@ end
 end
 
 
-function [accuracy] = findMinimumError(net, attributesNN, labelsNN, ...
+function [mserror] = findMinimumError(net, attributesNN, labelsNN, ...
     trainingSetIndices, validationSetIndices)
 % train 5 networks with random start weights and  choose the one with the 
 % minumum Error
@@ -109,7 +109,7 @@ function [accuracy] = findMinimumError(net, attributesNN, labelsNN, ...
 % Train different networks and take the one
 % with the minimum mse to avoid overfitting
 
-labels = NNout2labels(labelsNN);
+% labels = NNout2labels(labelsNN);
 
 NN = cell(5,1);
 perfs = zeros(5,1);
@@ -131,14 +131,14 @@ for j = 1:5
     % during the training
     perfs(j) = trainRecord.best_vperf;
 end
-[~, jOpt] = min(perfs(j));
-net = NN{jOpt};
+[mserror] = min(perfs(j));
+%net = NN{jOpt};
 
-% Get performance on validation set
-predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
-confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
-
-% Compute average accuracy for the current
-% parameter configuration
-accuracy = sum(diag(confMatrix))/length(predictions);
+% % Get performance on validation set
+% predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
+% confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
+% 
+% % Compute average accuracy for the current
+% % parameter configuration
+% mserror = sum(diag(confMatrix))/length(predictions);
 end

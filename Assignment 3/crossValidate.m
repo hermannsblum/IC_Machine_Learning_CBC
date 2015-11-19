@@ -1,4 +1,4 @@
-function [ parameters, accuracies ] = crossValidate( algorithm, attributes, labels )
+function [ parameters, mserrors ] = crossValidate( algorithm, attributes, labels )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -6,20 +6,21 @@ function [ parameters, accuracies ] = crossValidate( algorithm, attributes, labe
 foldsIndices = getFoldsPartitioning(labels,10,true);
 
 [parameters, numParams] = getParameters(algorithm);
-accuracies = zeros(numParams);
+
+mserrors = zeros(numParams);
 for i=1:10
     disp(['Testing fold ' num2str(i)]);
     trainingSetIndices = getTrainingSetIndexed(foldsIndices,i);
     validationSetIndices = foldsIndices{i};
     
-    accuraciesPerFold = validateNeuralNetwork(algorithm,parameters,attributes,labels,trainingSetIndices,validationSetIndices);
+    mserrorsPerFold = validateNeuralNetwork(algorithm,parameters,attributes,labels,trainingSetIndices,validationSetIndices);
+    save([algorithm '_msErrorsFold' num2str(i) '.mat'],'parameters','mserrorsPerFold');
     
-    
-    accuracies = accuracies+accuraciesPerFold;
+    mserrors = mserrors+mserrorsPerFold;
 end
 % Average the accuracies
-accuracies = accuracies./10;
-
+mserrors = mserrors./10;
+save([algorithm '_avgmsErrors.mat'],'parameters','accuracies');
 
 
 end
