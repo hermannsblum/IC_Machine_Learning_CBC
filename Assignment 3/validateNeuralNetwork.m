@@ -94,7 +94,66 @@ switch algorithm
     case 'traingdm'
         
     case 'trainrp'
+    % Define the candidate parameter values
+        delta_inc = parameters{3};
+        delta_dec = parameters{4};
         
+        accuracies = zeros(length(hiddenLayers),...
+            length(neuronsPerLayer),...
+            length(delta_inc),...
+            length(delta_dec));
+        
+        for a = 1:length(hiddenLayers)
+            l = hiddenLayers(a);
+            for b = 1:length(neuronsPerLayer);
+                npl = neuronsPerLayer(b);
+                % Create a NN with l layers and npl neurons
+                % per layer
+                net = feedforwardnet(repmat(npl,1,l),algorithm);
+                for c = 1:length(delta_inc);
+                    delt_inc = delta_inc(c);
+                    % Set delta inc
+                    net.trainParam.delt_inc = delt_inc;
+                    for d = 1:length(delta_dec);
+                        delt_dec = delta_dec(d);
+                        % Set delta dec
+                        net.trainParam.delt_dec = delt_dec;
+
+                        trialsAccuracies = zeros(1,5);
+                        for j = 1:5
+                            % Get training and validation indices
+                            trainingSetIndices = getTrainingSetIndexed(foldIndices,i);
+                            validationSetIndices = foldIndices{i};
+                            % Set indices for training and validation
+                            % sets
+                            net.divideFcn = 'divideind';
+                            net.divideParam.trainInd = trainingSetIndices;
+                            net.divideParam.valInd = validationSetIndices;
+                            net.divideParam.testInd = [];
+
+
+                            % TODO: Set overfitting avoidance
+                            % parameters
+
+                            % Set up input and output layer
+                            net = configure(net, attributesNN, labelsNN);
+                            % Train network
+                            net = train(net, attributesNN, labelsNN);
+                            % Get performance on validation set
+                            predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
+                            confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
+                            trialsAccuracies(j) = sum(diag(confMatrix))/length(predictions);
+                            
+                        end
+                        % Compute average accuracy for the current
+                        % parameter configuration
+                        accuracies(a,b,c,d) = mean(trialsAccuracies);
+
+                        
+                    end
+                end
+            end
+        end
 
 end
 
