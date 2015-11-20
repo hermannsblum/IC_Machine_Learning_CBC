@@ -12,7 +12,7 @@ switch algorithm
         
     case 'traingda'
         learningRates = [1 0.1 0.01];
-        lrDecreaseRatios = [0.7 0.5 0.07 0.05];
+        lrDecreaseRatios = [0.7 0.07 0.03];
         lrIncreaseRatios = [1.4 2 5];
 %         learningRates = 0.5;
 %         lrDecreaseRatios = [0.7 0.5];
