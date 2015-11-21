@@ -109,6 +109,8 @@ switch algorithm
                 % Create a NN with l layers and npl neurons
                 % per layer
                 net = feedforwardnet(repmat(npl,1,l),algorithm);
+                % To avoid showing the performance window
+                net.trainParam.showWindow = 0;
                 for c = 1:length(delta_inc);
                     delt_inc = delta_inc(c);
                     % Set delta inc
@@ -117,6 +119,10 @@ switch algorithm
                         delt_dec = delta_dec(d);
                         % Set delta dec
                         net.trainParam.delt_dec = delt_dec;
+                        
+                        disp(['Testing parameters npl=' num2str(npl)...
+                                ' l=' num2str(l) ' delt_inc=' num2str(delt_inc)...
+                                ' lr_dec=' num2str(delt_dec) ' lr_inc=' num2str(delt_dec)]);
                         
                         mserrors(a, b, c, d) = findMinimumError(net, ...
                             attributesNN, labelsNN, trainingSetIndices, ...
