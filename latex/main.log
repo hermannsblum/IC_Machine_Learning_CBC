@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  21 NOV 2015 01:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  21 NOV 2015 19:33
 entering extended mode
 **main.tex
 (main.tex
@@ -417,16 +417,21 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 28.
- [1
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 30.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 34.
+ (C:\MikTeX\tex\latex\psnfss\ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+) [1
 
 ] (main.aux) ) 
 Here is how much of TeX's memory you used:
- 5569 strings out of 493674
- 77747 string characters out of 3151302
- 240621 words of memory out of 3000000
- 8875 multiletter control sequences out of 15000+200000
- 13291 words of font info for 35 fonts, out of 3000000 for 9000
+ 5598 strings out of 493674
+ 78121 string characters out of 3151302
+ 242621 words of memory out of 3000000
+ 8899 multiletter control sequences out of 15000+200000
+ 14799 words of font info for 39 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  42i,6n,42p,589b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (1 page, 716 bytes).
+Output written on main.dvi (1 page, 2256 bytes).
