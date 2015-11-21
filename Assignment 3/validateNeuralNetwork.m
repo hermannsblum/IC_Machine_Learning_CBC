@@ -91,6 +91,43 @@ switch algorithm
         
         
     case 'traingdm'
+        learningRates = parameters{3};
+        momenta = parameters{4};
+        
+        mserrors = zeros(length(neuronsPerLayer),...
+            length(hiddenLayers),...
+            length(learningRates),...
+            length(momenta));
+        
+        for a = 1:length(neuronsPerLayer)
+            npl = neuronsPerLayer(a);
+            for b = 1:length(hiddenLayers);
+                l = hiddenLayers(b);
+                % Create a NN with l layers and npl neurons
+                % per layer
+                net = feedforwardnet(repmat(npl,1,l),algorithm);
+                % To avoid showing the performance window
+                net.trainParam.showWindow = 0;
+                for c = 1:length(learningRates);
+                    lr = learningRates(c);
+                    % Set learning rate
+                    net.trainParam.lr = lr;
+                    for d = 1:length(momenta);
+                        mc = momenta(d);
+                        % Set momentum
+                        net.trainParam.mc = mc;
+                        
+                        disp(['Testing parameters npl=' num2str(npl)...
+                                ' l=' num2str(l) ' lr=' num2str(lr)...
+                                ' mc=' num2str(mc)]);
+                        
+                        mserrors(a, b, c, d) = findMinimumError(net, ...
+                            attributesNN, labelsNN, trainingSetIndices, ...
+                            validationSetIndices);
+                    end
+                end
+            end
+        end 
         
     case 'trainrp'
     % Define the candidate parameter values
