@@ -53,7 +53,10 @@ switch algorithm
         parameters{3} = delta_inc;
         parameters{4} = delta_dec;
         
-        numParams = 4;
+        numParams = zeros(1,4);
+        for i=1:4
+            numParams(i) = length(parameters{i});
+        end
 
 end
 
