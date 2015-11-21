@@ -9,6 +9,17 @@ hiddenLayers = 1:2;
 
 switch algorithm
     case 'traingd'
+        learningRates = [5 3 1 0.5 0.3 0.1 0.05 0.03 0.01];
+        
+        parameters = cell(3,1);
+        parameters{1} = neuronsPerLayer;
+        parameters{2} = hiddenLayers;
+        parameters{3} = learningRates;
+        
+        numParams = zeros(1,3);
+        for i=1:3
+            numParams(i) = length(parameters{i});
+        end
         
     case 'traingda'
         learningRates = [1 0.1 0.01];

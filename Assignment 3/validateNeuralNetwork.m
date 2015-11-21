@@ -10,6 +10,36 @@ hiddenLayers = parameters{2};
 
 switch algorithm
     case 'traingd'
+        % Define the candidate parameter values (learning rates)
+        learningRates = parameters{3};
+        mserrors = zeros(length(neuronsPerLayer), length(hiddenLayers), length(learningRates));
+        
+        for a = 1:length(neuronsPerLayer)
+            npl = neuronsPerLayer(a);
+            for b = 1:length(hiddenLayers);
+                l = hiddenLayers(b);
+                % Create a NN with l layers and npl neurons
+                % per layer
+                net = feedforwardnet(repmat(npl,1,l),algorithm);
+                % To avoid showing the performance window
+                net.trainParam.showWindow = 0;
+                for c = 1:length(learningRates);
+                    lr = learningRates(c);
+                    % Set learning rate
+                    net.trainParam.lr = lr;
+                    
+                    disp(['Testing parameters npl=' num2str(npl)...
+                                ' l=' num2str(l) ' lr=' num2str(lr)]);
+
+                    mserrors(a,b,c) = findMinimumError(net, ...
+                                attributesNN, labelsNN, trainingSetIndices, ...
+                                validationSetIndices);
+                    
+                end
+                
+            end
+            
+        end
         
     case 'traingda'
         % Define the candidate parameter values
