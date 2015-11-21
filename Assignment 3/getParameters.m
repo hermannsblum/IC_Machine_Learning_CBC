@@ -9,6 +9,17 @@ hiddenLayers = 1:2;
 
 switch algorithm
     case 'traingd'
+        learningRates = [5 3 1 0.5 0.3 0.1 0.05 0.03 0.01];
+        
+        parameters = cell(3,1);
+        parameters{1} = neuronsPerLayer;
+        parameters{2} = hiddenLayers;
+        parameters{3} = learningRates;
+        
+        numParams = zeros(1,3);
+        for i=1:3
+            numParams(i) = length(parameters{i});
+        end
         
     case 'traingda'
         learningRates = [1 0.1 0.01];
@@ -31,6 +42,19 @@ switch algorithm
         end
         
     case 'traingdm'
+        learningRates = [5 3 1 0.5 0.3 0.1 0.05 0.03 0.01];
+        momenta = [0.9 0.95];
+        
+        parameters = cell(3,1);
+        parameters{1} = neuronsPerLayer;
+        parameters{2} = hiddenLayers;
+        parameters{3} = learningRates;
+        parameters{4} = momenta;
+        
+        numParams = zeros(1,4);
+        for i=1:4
+            numParams(i) = length(parameters{i});
+        end
         
     case 'trainrp'
         delta_inc = [1.4 1.3 1.2 1.1]; % needs to be greater than 1
@@ -42,7 +66,10 @@ switch algorithm
         parameters{3} = delta_inc;
         parameters{4} = delta_dec;
         
-        numParams = 4;
+        numParams = zeros(1,4);
+        for i=1:4
+            numParams(i) = length(parameters{i});
+        end
 
 end
 
