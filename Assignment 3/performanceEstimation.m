@@ -1,6 +1,6 @@
 function [confusionMatrix, accuracy, precision, recall, f1] = performanceEstimation(attributes, labels)
 
-algorithms = ['traingd', 'traingda', 'traingdm', 'trainrp'];
+algorithms = {'traingd', 'traingda', 'traingdm', 'trainrp'};
 n_alg = length(algorithms);
 confusionMatrix = zeros(6);
 accuracyFolds = zeros(10,1);
@@ -12,15 +12,16 @@ f1Folds = zeros(10,6);
 foldIndices = getFoldsPartitioning(labels,10,true);
 
 for i = 1:10 % iterate over 10 test folds
-    % share: Test-1 Validation-1 Training-8
+    % Split: Test- 1 Fold (i) Validation- 1 Fold (k) Training-8
     testSetIndices = foldIndices{i};
-    k = i - 1;
-    if k == 0
-        k = 10;
-    end
+    k = mod(i+1,10);
     validationSetIndices = foldIndices{k};
-    trainingSetIndices = getTrainingSetIndexed(...
-        getTrainingSetIndexed(foldIndices, i), k);
+    trainingSetIndices = [];
+    for j=1:10
+        if j~=i && j~=k
+            trainingSetIndices = [trainingSetIndices foldIndices{j}];
+        end
+    end
     
     % find optimal Parameters with training and validation set
     bestPerformingAlgorithm = 1;
@@ -28,8 +29,11 @@ for i = 1:10 % iterate over 10 test folds
     optimalParameters = [];
     
     for k = 1:n_alg
-        parameters = getParameters(algorithms(k));
-        mserrorsAlgorithm = validateNeuralNetwork(algorithms(k), parameters, ...
+        parameters = getParameters(algorithms{k});
+        
+        disp(['Fold ' num2str(i) ' Algorithm: ' algorithms{k}]);
+        
+        mserrorsAlgorithm = validateNeuralNetwork(algorithms{k}, parameters, ...
             attributes, labels, trainingSetIndices, validationSetIndices);
         [minMSE, idx] = min(mserrorsAlgorithm(:));
         idxParameters = ind2sub(size(mserrorsAlgorithm), idx);
@@ -44,7 +48,7 @@ for i = 1:10 % iterate over 10 test folds
         end
     end
     
-    optimalAlgorithm = algorithms(bestPerformingAlgorithm);
+    optimalAlgorithm = algorithms{bestPerformingAlgorithm};
     
     % Configure the best training algorithm with the optimal parameter
     % configuration
