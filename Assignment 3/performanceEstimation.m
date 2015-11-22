@@ -1,12 +1,15 @@
-function [confusion, recall, precision, f1, accuracy] = ...
-    performanceEstimation(attributes, labels)
+function [confusionMatrix, accuracy, precision, recall, f1] = performanceEstimation(attributes, labels)
 
 algorithms = ['traingd', 'traingda', 'traingdm', 'trainrp'];
 n_alg = length(algorithms);
+confusionMatrix = zeros(6);
+accuracyFolds = zeros(10,1);
+precisionFolds = zeros(10,6);
+recallFolds = zeros(10,6);
+f1Folds = zeros(10,6);
 
 % Get the indices of the 10 folds as a cell array of 10 indices arrays
 foldIndices = getFoldsPartitioning(labels,10,true);
-[attributesNN,labelsNN] = ANNdata(attributes,labels);
 
 for i = 1:10 % iterate over 10 test folds
     % share: Test-1 Validation-1 Training-8
@@ -20,62 +23,60 @@ for i = 1:10 % iterate over 10 test folds
         getTrainingSetIndexed(foldIndices, i), k);
     
     % find optimal Parameters with training and validation set
-    optimalParameters = cell(n_alg);
+    bestPerformingAlgorithm = 1;
+    bestMSE = Inf;
+    optimalParameters = [];
+    
     for k = 1:n_alg
         parameters = getParameters(algorithms(k));
-        accuracy = validateNeuralNetwork(algorithms(k), parameters, ...
-            attributesNN, labelsNN, trainingSetIndices, validationSetIndices);
-        [val, idx] = max(accuracy(:));
-        idxParameters = ind2sub(size(accuracy), idx);
-        thisParameters = zeros(length(parameters));
-        for j = 1:length(parameters)
-            thisParameters(j) = parameters{j}(idxParameters(j));
+        mserrorsAlgorithm = validateNeuralNetwork(algorithms(k), parameters, ...
+            attributes, labels, trainingSetIndices, validationSetIndices);
+        [minMSE, idx] = min(mserrorsAlgorithm(:));
+        idxParameters = ind2sub(size(mserrorsAlgorithm), idx);
+        
+        if(minMSE<bestMSE)
+            bestMSE = minMSE;
+            bestPerformingAlgorithm = k;
+            optimalParameters = zeros(length(parameters));
+            for j=1:length(parameters)
+                optimalParameters(j) = parameters{j}(idxParameters(j));
+            end
         end
-        optimalParameters{k} = thisParameters;
     end
     
-    % train with optimal parameters on joined trainign and validation set
-    trainingSetIndices = getTrainingSetIndexed(foldIndices, i);
+    optimalAlgorithm = algorithms(bestPerformingAlgorithm);
     
-    confusion = cell(n_alg, 1);
-    recall = zeros(n_alg);
-    precision = zeros(n_alg);
-    f1 = zeros(n_alg);
-    accuracy = zeros(n_alg);
-    for k = 1:n_alg
-        net = configureNeuralNetwork(algorithms(k), optimalParameters{k});
-        
-        % Set indices for training and test sets
-        net.divideFcn = 'divideind';
-        net.divideParam.trainInd = trainingSetIndices;
-        net.divideParam.valInd = [];
-        net.divideParam.testInd = testSetIndices;
-        
-        % 5 iterations to reduce noise from randomness
-        numIterations = 5;
-        confusionMats = zeros(6,6);
-        accuracies = zeros(numIterations);
-        recalls = zeros(numIterations);
-        precisions = zeros(numIterations);
-        f1s = zeros(numIterations)
-        for j = 1:numIterations
-            % Set up input and output layer
-            net = configure(net, attributesNN, labelsNN);
-            % Train network
-            net = train(net, attributesNN, labelsNN);
-            % Get performance on testset
-            predictions = NNout2labels(sim(net, attributesNN(:,testSetIndices)));
-            confusionMat = getConfusionMatrix(labels(testSetIndices),predictions,6);
-
-            % calculate statistics
-            confusionMats = confusionMats + confusionMat;
-            accuracies(j) = sum(diag(confusionMat))/length(predictions);
-            
-        
+    % Configure the best training algorithm with the optimal parameter
+    % configuration
+    net = configureNeuralNetwork(optimalAlgorithm,optimalParameters);
+    % Train the network 5 times and get the best network
+    [attributesNN,labelsNN] = ANNdata(attributes,labels);
+    [~,net] = repeatNNTraining(net,attributesNN,labelsNN,trainingSetIndices,validationSetIndices);
     
+    % Compute performance on test set
+    predictions = NNout2labels(sim(net,attributesNN(:,testSetIndices)));
+    confMatrixFold = getConfusionMatrix(labels(testSetIndices),predictions,6);
+    save(['confMatrixFold' num2str(i)],'net','confMatrixFold');
     
+    accuracyFolds(i) = sum(diag(confMatrixFold))/length(testSetIndices); % The sum of all the elements in confMatrixFold is
+                                                                         % equal to the size of the test set
+    precisionFolds(i,:) = diag(confMatrixFold)./sum(confMatrixFold,1)';
+    recallFolds(i,:) = diag(confMatrixFold)./sum(confMatrixFold,2);
+    for j=1:6
+        if(precisionFolds(i,j)+recallFolds(i,j)==0)
+            f1Folds(i,j)=0;
+        else
+            f1Folds(i, j) = 2* precisionFolds(i,j).*recallFolds(i,j) ...
+                ./ (precisionFolds(i,j) + recallFolds(i,j));
+        end
+    end
     
-        
-        
+end
+    
+confusionMatrix = confusionMatrix+confMatrixFold;
+accuracy = mean(accuracyFolds);
+precision = mean(precisionFolds,1);
+recall = mean(recallFolds,1);
+f1 = mean(f1Folds,1); 
             
         

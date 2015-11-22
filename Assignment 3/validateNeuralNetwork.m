@@ -31,7 +31,7 @@ switch algorithm
                     disp(['Testing parameters npl=' num2str(npl)...
                                 ' l=' num2str(l) ' lr=' num2str(lr)]);
 
-                    mserrors(a,b,c) = findMinimumError(net, ...
+                    mserrors(a,b,c) = repeatNNTraining(net, ...
                                 attributesNN, labelsNN, trainingSetIndices, ...
                                 validationSetIndices);
                     
@@ -79,7 +79,7 @@ switch algorithm
                                 ' l=' num2str(l) ' lr=' num2str(lr)...
                                 ' lr_dec=' num2str(lr_dec) ' lr_inc=' num2str(lr_inc)]);
 
-                            mserrors(a,b,c,d,e) = findMinimumError(net, ...
+                            mserrors(a,b,c,d,e) = repeatNNTraining(net, ...
                                 attributesNN, labelsNN, trainingSetIndices, ...
                                 validationSetIndices);
                             
@@ -121,7 +121,7 @@ switch algorithm
                                 ' l=' num2str(l) ' lr=' num2str(lr)...
                                 ' mc=' num2str(mc)]);
                         
-                        mserrors(a, b, c, d) = findMinimumError(net, ...
+                        mserrors(a, b, c, d) = repeatNNTraining(net, ...
                             attributesNN, labelsNN, trainingSetIndices, ...
                             validationSetIndices);
                     end
@@ -161,7 +161,7 @@ switch algorithm
                                 ' l=' num2str(l) ' delt_inc=' num2str(delt_inc)...
                                 ' delt_dec=' num2str(delt_dec)]);
                         
-                        mserrors(a, b, c, d) = findMinimumError(net, ...
+                        mserrors(a, b, c, d) = repeatNNTraining(net, ...
                             attributesNN, labelsNN, trainingSetIndices, ...
                             validationSetIndices);
                     end
@@ -170,48 +170,4 @@ switch algorithm
         end
 
 end
-end
-
-
-function [mserror] = findMinimumError(net, attributesNN, labelsNN, ...
-    trainingSetIndices, validationSetIndices)
-% train 5 networks with random start weights and  choose the one with the 
-% minumum Error
-
-% From http://uk.mathworks.com/help/nnet/ug/improve-neural-network-generalization-and-avoid-overfitting.html?refresh=true
-% Train different networks and take the one
-% with the minimum mse to avoid overfitting
-
-% labels = NNout2labels(labelsNN);
-
-NN = cell(5,1);
-perfs = zeros(5,1);
-for j = 1:5
-    % Set indices for training and validation
-    % sets
-    net.divideFcn = 'divideind';
-    net.divideParam.trainInd = trainingSetIndices;
-    net.divideParam.valInd = validationSetIndices;
-    net.divideParam.testInd = [];
-
-    % Set up input and output layer
-    NN{j} = configure(net, attributesNN, labelsNN);
-    % Train network
-    [NN{j}, trainRecord] = train(NN{j}, attributesNN, labelsNN);
-    % Evaluate mean squared error on validation
-    % set. trainRecord.best_vperf contains the
-    % optimal error found in validation set
-    % during the training
-    perfs(j) = trainRecord.best_vperf;
-end
-[mserror] = min(perfs(j));
-%net = NN{jOpt};
-
-% % Get performance on validation set
-% predictions = NNout2labels(sim(net, attributesNN(:,validationSetIndices)));
-% confMatrix = getConfusionMatrix(labels(validationSetIndices),predictions,6);
-% 
-% % Compute average accuracy for the current
-% % parameter configuration
-% mserror = sum(diag(confMatrix))/length(predictions);
 end
