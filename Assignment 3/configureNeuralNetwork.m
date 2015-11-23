@@ -4,6 +4,8 @@ function [net] = configureNeuralNetwork(algorithm, parameters)
 neuronsPerLayer = parameters(1);
 hiddenLayers = parameters(2);
 
+net = feedforwardnet(repmat(neuronsPerLayer,1,hiddenLayers),algorithm);
+
 switch algorithm
     case 'traingd'
         net.trainParam.lr = parameters(3);
@@ -19,7 +21,6 @@ switch algorithm
         delt_inc = parameters(3);
         delt_dec = parameters(4);
         
-        net = feedforwardnet(repmat(neuronsPerLayer,1,hiddenLayers),algorithm);
         net.trainParam.delt_inc = delt_inc;
         net.trainParam.delt_dec = delt_dec;
         

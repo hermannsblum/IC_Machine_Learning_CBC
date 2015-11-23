@@ -14,7 +14,7 @@ foldIndices = getFoldsPartitioning(labels,10,true);
 for i = 1:10 % iterate over 10 test folds
     % Split: Test- 1 Fold (i) Validation- 1 Fold (k) Training-8
     testSetIndices = foldIndices{i};
-    k = mod(i+1,10);
+    k = mod(i,10)+1;
     validationSetIndices = foldIndices{k};
     trainingSetIndices = [];
     for j=1:10
