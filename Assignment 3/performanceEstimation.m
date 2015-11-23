@@ -35,15 +35,19 @@ for i = 1:10 % iterate over 10 test folds
         
         mserrorsAlgorithm = validateNeuralNetwork(algorithms{k}, parameters, ...
             attributes, labels, trainingSetIndices, validationSetIndices);
+        % idx is the index of the minimum in the linearized
+        % mserrorsAlgorithm
         [minMSE, idx] = min(mserrorsAlgorithm(:));
-        idxParameters = ind2sub(size(mserrorsAlgorithm), idx);
+        % Get the corresponding indices in the multidimensional array
+        idxParameters = cell(1,length(parameters));
+        [idxParameters{:}] = ind2sub(size(mserrorsAlgorithm), idx);
         
         if(minMSE<bestMSE)
             bestMSE = minMSE;
             bestPerformingAlgorithm = k;
-            optimalParameters = zeros(length(parameters));
+            optimalParameters = zeros(length(parameters),1);
             for j=1:length(parameters)
-                optimalParameters(j) = parameters{j}(idxParameters(j));
+                optimalParameters(j) = parameters{j}(idxParameters{j});
             end
         end
     end
@@ -83,4 +87,6 @@ precision = mean(precisionFolds,1);
 recall = mean(recallFolds,1);
 f1 = mean(f1Folds,1); 
             
+end
+
         

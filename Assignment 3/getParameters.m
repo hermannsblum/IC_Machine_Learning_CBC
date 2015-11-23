@@ -4,13 +4,13 @@ function [ parameters, numParams ] = getParameters( algorithm )
 
 neuronsPerLayer = 6:45;
 hiddenLayers = 1:2;
-% neuronsPerLayer = 2:6;
-% hiddenLayers = 1:4;
+%neuronsPerLayer = 2:3;
+%hiddenLayers = 1:2;
 
 switch algorithm
     case 'traingd'
         learningRates = [5 3 1 0.5 0.3 0.1 0.05 0.03 0.01];
-        
+        %learningRates = [5 3 1];
         parameters = cell(3,1);
         parameters{1} = neuronsPerLayer;
         parameters{2} = hiddenLayers;
