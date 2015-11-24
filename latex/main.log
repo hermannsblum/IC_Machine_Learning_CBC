@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  21 NOV 2015 19:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  24 NOV 2015 12:34
 entering extended mode
 **main.tex
 (main.tex
@@ -426,12 +426,12 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 
 ] (main.aux) ) 
 Here is how much of TeX's memory you used:
- 5598 strings out of 493674
- 78121 string characters out of 3151302
+ 5599 strings out of 493674
+ 78136 string characters out of 3151302
  242621 words of memory out of 3000000
- 8899 multiletter control sequences out of 15000+200000
- 14799 words of font info for 39 fonts, out of 3000000 for 9000
+ 8900 multiletter control sequences out of 15000+200000
+ 15347 words of font info for 40 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,6n,42p,589b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,6n,42p,682b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (1 page, 2256 bytes).
+Output written on main.dvi (1 page, 3076 bytes).

@@ -43,6 +43,8 @@ In this section we describe our implementation of:
 \end{itemize}
 
 \subsection{Parameter selection}
+In the first part, we use cross- validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds is chosen.\\
+For splitting, we use the same function as in the previous exercise, which performs \emph{stratified} cross-validation: each fold contains approximately the same proportion of examples in every class as the whole dataset. It is implemented in the file \verb$getFoldsPartitioning$\\
 
 
 \subsection{Performance evaluation}
