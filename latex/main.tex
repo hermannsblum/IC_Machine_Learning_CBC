@@ -68,6 +68,61 @@ Neurons per layer = 42; Number of layers = 1; Learning rate = 1; Momentum coeffi
 The optimal parameters for resilient backpropagation are:\\
 Neurons per layer = 14; Number of layers = 2; Delta increase = 1.3; Delta decrease = 0.5; Avg Error = 0.0444\\
 
+
+\subsection{Question 1}
+
+\subsubsection{Overfitting}
+Matlab already implemented \emph{early stopping} by default. [some words about early stopping]. We considered using \emph{regularization}, but this would include another paramenter to optimise. Because all the parameters already took us 2 days, we didn't want to double/triple this time. However, theoretically also other techniques [...] are possible.
+
+\subsubsection{6 Networks with single output}
+Disadvantages\\
+First of all this includes to implement a decision function which classifies on basis of the outputs of the 6 networks (like for the decision trees).\\
+The task for each of the 6 networks is to find a boolean decision function. If we assume that we test the networks with the same topologies as the 1 big network, these networks can represent \textit{exactly} one boolean function as long as they have at least 2 layers. This leads to a huge risk of overfitting compared to the 1 network which approximates an arbitrary function and is therefore more robust to noise.
+
+Furthermore, training 6 networks could lead to a higher risk of overfitting, as the parameters are optimized differently for each output class. Also, this is a time factor as long as one does not have access to 6 powerful computers. (It is possible to parallelize the process of cross-validation as the networks are independent).
+\\
+Advantages\\
+As the networks are trained more specific to recognize one class, this approach could lead to a better performance.\\
+Because the output layer is smaller than for 1 big network, there are less weights to optimize in each network for the same topology. As a result, parallel cross-validation of 6 networks will be faster than the cross-validation of 1 big network.
+
+Combination\\
+The combination of the output of the 6 networks is exactly the problem solved in out last Assignment. We will just look at each discussed strategy:
+\begin{description}
+    \item[random choice] still possible with a threshold value (output a random choice between each network that outputs a value bigger than the treshold.
+    \item[score-based decision] naturally, the output of the networks is also a score, so this is possible without modifications
+    \item[depth-based decision] the depth of a tree is a specific property of a decision tree and therefore not easy to find a similar property for neural networks. Of course, one could use the number of layers, but as this varies just between two values, the algorithm would probably not perform well.
+    \item[error-based decision] as the error of the networks can be calcualted just as the errors of the trees, this strategy is also possible to use without modification
+\end{description}
+
+\subsection{Question 2}
+\subsubsection{a}
+Neural Networks have a significant higher accuracy than our decision tree algorithms. This is of course just an approximation based on our set of samples. It is impossible to judge the general performance of an algorithm just based on a set of samples. Also, this is an arbitrary choice of performance estimator and a simple split in 'better' and 'worse' is not possible as it depends on the problem one want's so solve.
+Furthermore, there are problems which can be solved better with other algorithms than neural networks (e.g.  [...]).
+
+\subsubsection{type of t-test}
+paired t-test, because the samples of the accuracy are dependend. They are based on the same set of examples.
+\subsubsection{why not F1}
+As we have a classification into 6 classes, there are 6 $F_1$ measures for every algorithm. This leads to the problem described by the paragraph \emph{Multiple Comparisions}. It basically means that we loose significance.
+
+\subsubsection{Tradeoff}
+less folds:\\
+-> less samples -> smaller degree of freedom -> higher threshold -> more false negatives
+\\
+
+more folds:\\
+-> higher degree of freedom -> smaller threshold, higher value for t -> reect more often the null-hypothesis -> more false positives
+\\
+We want to note that we have no reason to believe that 10 folds is the optimal number.
+
+
+\subsubsection{more emotions}
+decision tree: just have to add another tree and retrain all trees\\
+
+neural networks: add as many neurons to the output layer as new emotions introduced, retrain the network including parameter optimization with cross-Validation (and fit the possible topologies)
+
+
+
+
 %\section{Training}
 %Decision trees are a conceptually simple, yet powerful model for solving classification problems. The ID3 algorithm is one of the simplest training algorithms for decision trees: it builds the tree by choosing at each step the attribute that maximizes the \emph{Information Gain}, a measure that represents the discriminatory power of an attribute over the class values.
 %
