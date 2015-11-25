@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  24 NOV 2015 12:34
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  25 NOV 2015 11:13
 entering extended mode
 **main.tex
 (main.tex
@@ -422,16 +422,26 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14.4> not available
 LaTeX Font Info:    Try loading font information for TS1+ptm on input line 34.
  (C:\MikTeX\tex\latex\psnfss\ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
-) [1
+)
+Underfull \hbox (badness 10000) in paragraph at lines 46--48
 
-] (main.aux) ) 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 58--70
+
+ []
+
+[1
+
+] [2] (main.aux) ) 
 Here is how much of TeX's memory you used:
  5599 strings out of 493674
  78136 string characters out of 3151302
- 242621 words of memory out of 3000000
+ 245621 words of memory out of 3000000
  8900 multiletter control sequences out of 15000+200000
  15347 words of font info for 40 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,6n,42p,682b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,6n,42p,589b,219s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (1 page, 3076 bytes).
+Output written on main.dvi (2 pages, 5288 bytes).
