@@ -1,6 +1,4 @@
 function [ parameters, mserrors ] = crossValidate( algorithm, attributes, labels )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
 
 % Get the indices of the 10 folds as a cell array of 10 indices arrays
 foldsIndices = getFoldsPartitioning(labels,10,true);
