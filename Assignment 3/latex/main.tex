@@ -125,7 +125,14 @@ At the end of the five iterations, the network that performed best on the valida
 As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.
 
 \subsection{Performance evaluation}
-
+For evaluating the performance of the chosen model on unseen data, we use cross-validation with three sets:
+\begin{itemize}
+	\item a training set, used to execute gradient descent;
+	\item a validation set, used to determine the termination condition and avoid overfitting, as well as optimizing the parameters;
+	\item a test set, used for evaluating the performance.
+\end{itemize}
+The procedure is aimed at verifying the performance of the model obtained via the procedure of the previous subsection on data that have been used neither for training nor for parameter optimization.\\
+The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set.
 
 \section{Performance results}
 
