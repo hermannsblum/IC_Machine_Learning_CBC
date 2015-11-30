@@ -27,7 +27,7 @@
 \title{Assignment 3: Neural Networks}
 \maketitle
 
-\section{Implementation}
+\section{Validation}
 In our second assignment, we apply neural networks to the emotion recognition problem. We use the Neural Network Toolbox provided by MATLAB to train and compare the performance of different neural networks on the dataset at our disposal, in order to find the best training algorithm along with the best parameter configuration.\\
 We compare four different training algorithm:
 \begin{itemize}
@@ -42,7 +42,7 @@ In this section we describe our implementation of:
 	\item evaluation of NN's performance on unseen data.
 \end{itemize}
 
-\subsection{Parameter selection}
+\subsection{Implementation}
 In the first part, we use cross- validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds are chosen.\\
 For each algorithm, we compare several network topologies and parameter values in all their combinations. The tested values are shown in Table~\ref{tab:parameters}\\
 \begin{table}
@@ -124,7 +124,12 @@ and finally keeps the performance value computed on the validation set for the f
 At the end of the five iterations, the network that performed best on the validation set is returned, along with the error measured.
 As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.
 
-\subsection{Performance evaluation}
+\subsection{Selected parameters}
+
+
+\section{Performance evaluation}
+
+\subsection{Implementation}
 For evaluating the performance of the chosen model on unseen data, we use cross-validation with three sets:
 \begin{itemize}
 	\item a training set, used to execute gradient descent;
@@ -132,9 +137,9 @@ For evaluating the performance of the chosen model on unseen data, we use cross-
 	\item a test set, used for evaluating the performance.
 \end{itemize}
 The procedure is aimed at verifying the performance of the model obtained via the procedure of the previous subsection on data that have been used neither for training nor for parameter optimization.\\
-The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set.
+The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set. The network is trained on the training set and the parameters are optimized on the validation set, by using MSE as in the validation above; the resulting network is then tested on the test set in terms of confusion matrix and derived performance measures (accuracy, precision, recall). Since in each iteration the optimization is done on a different validation set, it may happen (and it actually does) that different parameter configurations are tested on different folds: in this way, we are truly estimating the performance of the entire approach we use to train and optimize the network, not just of a single trained network.
 
-\section{Performance results}
+\subsection{Performance results}
 
 
 \section{Questions}

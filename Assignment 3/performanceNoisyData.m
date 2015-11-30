@@ -25,7 +25,7 @@ for i=1:10
     [mserror,net] = repeatNNTraining(net,xNN,yNN,trainingSetIndices,validationSetIndices);
     
     % Compute and save confusion matrix on test fold
-    predictionsNN = sim(net,xNN(testSetIndices));
+    predictionsNN = sim(net,xNN(:,testSetIndices));
     predictions = NNout2labels(predictionsNN);
     confMatrixNoisyFold = getConfusionMatrix(y(testSetIndices),predictions,6);
     save(['confMatrixNoisyFold' num2str(i)],'net','confMatrixNoisyFold');
