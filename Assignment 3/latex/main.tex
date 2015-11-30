@@ -143,66 +143,87 @@ The dataset is divided again in 10 folds. In each of the 10 iterations, one fold
 
 
 \section{Questions}
-\subsection{Question 1}
-We chose the optimal topology and parameters through cross-validation. In detail, in each iteration we tested the performance of the chosen topology on the fold used as validation set; at the end, we averaged the performances of each topology and parameters configuration and chose the setting that showed the best average performance.\\
-We tested topologies with 1 and 2 layers. Topologies with 1 layer can fit any Boolean function, while 2-layer topologies can approximate arbitrarily well any real-valued function.\\
-For each layer, a common practice is to use a number of neurons between the sizes of the input and the output layer. Choosing less neurons than the output leads to a data compression that may cause information loss before reaching the output.\\
-For the algorithms' parameters, we had to trade off the number of tests executed and the total time for testing. We chose learning rates that covered different orders of magnitude where possible.\\
-The optimal parameters for the standard gradient descent are:\\
-Neurons per layer = 18; Number of layers = 2; Learning rate = 0.5; Avg Error = 0.0458\\
-The optimal parameters for the adaptive gradient descent are:\\
-Neurons per layer = 15; Number of layers = 2; Learning rate = 0.1; LR decrease rate = 0.7; LR increase rate = 1.4; Avg Error = 0.0449\\
-The optimal parameters for the gradient descent with momentum are:\\
-Neurons per layer = 42; Number of layers = 1; Learning rate = 1; Momentum coefficient = 0.9; Avg Error = 0.0679\\
-The optimal parameters for resilient backpropagation are:\\
-Neurons per layer = 14; Number of layers = 2; Delta increase = 1.3; Delta decrease = 0.5; Avg Error = 0.0444\\
+\subsection{Part A: Questions}
+\subsubsection*{Question 1}
+We chose the optimal topology and parameters through cross-validation. In detail, in each iteration we tested the performance of the chosen topology on the fold used as validation set. In the end, we averaged the performances of each topology and parameters configuration and chose the setting that showed the best average performance.\\
+In the following our reasons behind the set of tested parameters:
+\begin{itemize}
+\item \textbf{Number of Layers:} We tested topologies with one and two layers. Topologies with one layer can fit any boolean function, while two-layer topologies can approximate arbitrarily well any real-valued function.
+\item \textbf{Number of Neurons:} For each layer, a common practice is to use a number of neurons between the sizes of the input and the output layer. Choosing less neurons than the output leads to a data compression that may cause information loss before reaching the output.
+\end{itemize}
+For the algorithms' parameters, we had to trade off the number of tests executed and the total time for testing. We chose parameters that covered different orders of magnitude where possible.
+\begin{itemize}
+\item \textbf{Learning Rate:} As usual values, the lecture slides give $0.1$ and $0.01$. Because this is an essential parameter, we tested a larger set of different values at 3 different orders of magnitude, on higher than $0.1$ and 1 lower than $0.1$. As the \verb$traingda$ algorithm has 3 parameters to optimize, we had to reduce the number of tested learning rates here.
+\item \textbf{LR Decrease Ratio:} As typical values, $0.5$ and $0.7$ are given in the lecture slides. [...]
+\item \textbf{LR Increase Ratio:} As typical values, $1.05$ and $1.1$ are given in the lecture. [...]
+\item \textbf{Momentum:} We tested the both values given as typical in the lecture slides.
+\item \textbf{Delta Increase:} As a typical value, $1.2$ is given in the lecture slides. As this value has to be bigger than 1, we tested values around this. We didn't consider higher orders of magnitude, as this would just lead to exploding update values and therefore most probably to a lot of oscillation and long converging times. In the end, our optimal parameter was close by the given value.
+\item \textbf{Delta Decrease:} As a typical value, $0.5$ is given in the lecture slides. Again, we tested different values around this number and this time also tested values of smaller magnitude. Bigger magnitues were not possible as the parameter has to be smaller than 1. Our optimal parameter actually was $0.5$.
+\end{itemize}
+The optimal parameters for the different learning techniques are the following.
+\begin{itemize}
+\item \textbf{standard gradient descent:} \\ Neurons per layer = 18, Number of layers = 2, Learning rate (LR) = 0.5, Avg. Error = 0.0458
+\item \textbf{adaptive gradient descent:}\\ Neurons per layer = 15, Number of layers = 2, Learning rate = 0.1, LR decrease rate = 0.7, LR increase rate = 1.4, Avg. Error = 0.0449
+\item \textbf{gradient descent with momentum:}\\ Neurons per layer = 42, Number of layers = 1, Learning rate = 1, Momentum coefficient = 0.9, Avg. Error = 0.0679
+\item \textbf{resilient backpropagation:}\\ Neurons per layer = 14, Number of layers = 2, Delta increase = 1.3, Delta decrease = 0.5, Avg. Error = 0.0444
+\end{itemize}
 
+\subsubsection*{Question 2}
 
-\subsection{Question 1}
-
-\subsubsection{Overfitting}
-Matlab already implemented \emph{early stopping} by default. [some words about early stopping]. We considered using \emph{regularization}, but this would include another paramenter to optimise. Because all the parameters already took us 2 days, we didn't want to double/triple this time. However, theoretically also other techniques [...] are possible.
-
-\subsubsection{6 Networks with single output}
-Disadvantages\\
-First of all this includes to implement a decision function which classifies on basis of the outputs of the 6 networks (like for the decision trees).\\
-The task for each of the 6 networks is to find a boolean decision function. If we assume that we test the networks with the same topologies as the 1 big network, these networks can represent \textit{exactly} one boolean function as long as they have at least 2 layers. This leads to a huge risk of overfitting compared to the 1 network which approximates an arbitrary function and is therefore more robust to noise.
-
-Furthermore, training 6 networks could lead to a higher risk of overfitting, as the parameters are optimized differently for each output class. Also, this is a time factor as long as one does not have access to 6 powerful computers. (It is possible to parallelize the process of cross-validation as the networks are independent).
+\subsubsection*{Question 3}
+Matlab already implemented \emph{early stopping} by default. Therefore the available data is divided into three subsets: the training, validation and test set. The first one is used to find the weights for the network. If the error on the validation set starts to increase for several iterations, which is an indication for overfitting, the process stops and the the weights which produce the minimum error on the validation set are returned.\\
+Early stopping is not a 100\% safe method as it is possible that the error on the validation set will decrease again after an unknown number of steps, but as it also reduces the training time and therefore comes somehow with negative cost, it is especially a good first approach for our (limited) computing power.\\
 \\
-Advantages\\
-As the networks are trained more specific to recognize one class, this approach could lead to a better performance.\\
-Because the output layer is smaller than for 1 big network, there are less weights to optimize in each network for the same topology. As a result, parallel cross-validation of 6 networks will be faster than the cross-validation of 1 big network.
+Furthermore, we considered to use \emph{regularisation}. Regularisation is a mechanism to reduce the occurence of large weights. As large weights imply that some particular paths through the network are much more important than others, it could be more likely for overfitting to occur. Therefore, a function taking the input weights to a perceptron as an input is added to the original Error-Function that is minimized in the training. For example, in L2-Regularisation the squares of the weights are added together:
+\begin{align*}
+    E_{new} = E_{original} + \lambda \sum \limits_{all\ weights} w^2
+\end{align*}
+$\lambda$ is a parameter that sets the balance between the original minimization of the error and the minimization of the weights-function. Therefore, optimisation would include another parameter to optimise and therefore a multiplication of the computing time. Because the optimisation of our other parameters already took approximately two days, we could not spend triple/quadrupel/... of time. \\
+\\
+Theoretically also other techniques, for example \emph{dropout}, are possible. Also \emph{Data Augmentation} by using the noisy dataset additionally to the clean dataset would be an option.\\
+\\
+In the dropout-method, random network nodes are dropped out in every training iteration with a constant probability for each node. Therefore, the network architecture is randomized and every architecture is just trained for a small random subset of the training data. This intuitively reduces the chance that the network is overfitted to the training data set as actually the network with $n$ nodes represents an average of all the before trained dropout-architectures (out of the set of $2^n$ possible networks), where each network node is only fitted to parts of the training data. On the other hand, with small amounts of training data, the dropout-technique can actually reduce the classification. In particular, the paper from Srivastava et al. referenced in the lecture slides shows that dropouts only reduce the classification error for MNIST classification training data sets of size 5000 or bigger, for 100 training examples the classification error was bigger than without dropout. Therefore, we are not confident that the dropout-technique would improve our performance whereas the implementation effort would be big.
 
-Combination\\
-The combination of the output of the 6 networks is exactly the problem solved in out last Assignment. We will just look at each discussed strategy:
-\begin{description}
-    \item[random choice] still possible with a threshold value (output a random choice between each network that outputs a value bigger than the treshold.
-    \item[score-based decision] naturally, the output of the networks is also a score, so this is possible without modifications
-    \item[depth-based decision] the depth of a tree is a specific property of a decision tree and therefore not easy to find a similar property for neural networks. Of course, one could use the number of layers, but as this varies just between two values, the algorithm would probably not perform well.
-    \item[error-based decision] as the error of the networks can be calcualted just as the errors of the trees, this strategy is also possible to use without modification
-\end{description}
+\subsubsection*{Question 4}
+\textbf{Disadvantages} \\
+First of all this leads to a necessary implementation of a decision function, which classifies on the basis of the outputs of the six networks. As in the assignment before, there is no obvious best solution for this problem and therefore the choice of decision function is another parameter to optimize.\\
+The task for each of the six networks is to find a boolean classifying function. If we assume that we test the networks with the same topologies as the first big network, each network can represent \textit{exactly} one boolean function as long as it has at least two layers. This leads to a huge risk of overfitting compared to the one network which only \textit{approximates} an arbitrary function and is therefore more robust to noise. Furthermore, as the parameters are optimised differently for each output class, each network is more specifically fit to the training data and this might be another risk of overfitting.\\
+Moreover, training six networks requires more resources than training one slightly (only the output layer size differs) bigger network. In general, this corresponds to a significantly longer training time. Of coures, the time consumption can be reduced by parallelizing the process of cross-validation because the networks are independent (see advantages).\\
+\\
+\textbf{Advantages} \\
+As the networks are trained more specificly to recognize one class, this approach could lead to a better performance.\\
+Because the output layer is smaller than for one big network, there are less weights to optimize in each network for the same topology. As a result, parallel cross-validation of six networks will be faster than the cross-validation of one big network, as long as one has the required computing power.\\
+\\
+\textbf{Combination of Outputs} \\
+The combination of the output of the six networks is exactly the same problem which was solved in our last assignment. These could be reused with small modifications: 
+\begin{itemize}
+    \item \textbf{random choice:} This is still possible by using a threshold value. Every output with a bigger value than the threshold is considered for the random pick.
+    \item \textbf{score-based decision:} Naturally, the output of the networks is also a score, i.e. this is algorithm can be used without any modifications.
+    \item \textbf{depth-based decision:} The depth of a tree is a specific property of a decision tree and therefore it is not easy to find a similar and meaningful property for neural networks. Of course you could use the number of layers, but as this varies just between two values, the algorithm would probably not perform well as there would be a lot of ties.
+    \item \textbf{error-based decision:} As the error of the networks can be calculated just as the errors of the trees, this strategy is also possible to use without modification.
+\end{itemize}
 
-\subsection{Question 2}
-\subsubsection*{1)}
+
+\subsection{Part B: Questions}
+\subsubsection*{Question 1}
 After performing a t-test, feedforward neural networks showed to have a statistical significantly smaller classification error than our decision tree implementation. However, although for our specific test set performance sample neural networks did better than decision tree, it is not possible to state general conclusion about the relative performance of this two learning algorithm. 
 
 First, it should be observed that a t-test just refers to a specific sample of test performance. This implies that the resulting difference between of the two algorithms is just an estimate of the true difference. Thus, any conclusion behind the observed sample is statistically meaningless. Second, in our case we compared the classification error of the algorithms and in general it could be possible that for other performance metrics the resulting t-test can be different. 
 
 To summarize then, it is not possibile to establish if a specific learning algorithm is better than an another. Rather, analyzing the performance of the algorithms one should always consider the specific problem domain, the relevant performance metric and the available dataset.
 
-\subsubsection*{2)}
+\subsubsection*{Question 2}
 We trained and tested decision trees and neural networks on the same training and test sets which leads to dependent samples. Because of this, we adopted a paired t-test.
 
-\subsubsection*{3)}
+\subsubsection*{Question 3}
 Considering the classification error rather than the F1 measure has the advantage to avoid the so called multiple hypothesis comparison problem. Indeed adopting the F1 measure for this multi-class classification problem leads to 6 different measurements per test set, i.e one per each emotions. As a result the sample for the t-test is constituted by 10 six-elements vector. To compare the two algorithms in this way we have to realize 6 different t-test one per each emotions which leads to the multiple hypothesis comparison problem. Testing simultaneously 6 hypothesis with a significance (i.e a probability of rejecting the null hypothesis when it is actually true) $\alpha=0.05$, leads to an overall probability of error of $0.3$ which lead the test much more effective.
 
-\subsubsection*{4)}
+\subsubsection*{Question 4}
 Let's first analyze the case of reducing the number of folds. Reducing the number of folds leads to a smaller sample on which to perform the t-test. Then, the $SE$ term of the t-statistic increases and the resulting t value get smaller. Moreover, as the number of degree of freedom (df) is directly proportional to the sample size, the corresponding threshold is bigger. As a result, having a smaller statistic to test against a higher threshold the number of false rejection for the null hypothesis increases. 
 
 Conversely, increasing the number of fold leads to a bigger t-statistic and a smaller threshold which in turn might lead to accept the null hypothesis when it is actually false. In any case, it should be observed that increasing the number of folds, one should be aware to get fold with at least 30 examples. Indeed, 30 examples is the minimum number of sample to approximate the fold individual differences between the two algorithm as realization of a normal random variable which provide the theoretical ground for the validity of the t-test. In addition, it is important specify that there is no argument to believe that 10 folds represent the optimum for this specific test.
 
-\subsubsection*{5)}
+\subsubsection*{Question 5}
 In the case of the decision trees learning, adding new emotions requires to grow additional decision decision trees (in particular as many decision trees as many emotions we add) as well as retrain all the others. It should be observed that retraining is required since adding new emotions to the dataset enrich the base of negative examples of the pre-existing classes. On the other hand, in the case of neural networks it is required add as many additional output layers as new emotions are introduced, retrain  and optimize trough cross-validation the network.
 
 %\bibliographystyle{plainnat}
