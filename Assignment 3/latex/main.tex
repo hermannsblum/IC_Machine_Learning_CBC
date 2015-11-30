@@ -1,0 +1,206 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+
+\usepackage{mathptmx}           
+\usepackage{graphicx}           
+\usepackage{url}            
+\usepackage{subcaption}    
+
+
+\usepackage[a4paper,margin=2cm]{geometry}
+
+\usepackage{natbib} 
+\usepackage[numbered, framed]{mcode}
+
+\usepackage{lipsum}
+
+\usepackage{epstopdf}
+%\epstopdfsetup{outdir=./}
+
+\begin{document}
+
+\author{H. Blum, D. Cavezza, A. Paudice and M. Rohbeck\\
+ Machine Learning CO395\\
+  Imperial College London}
+\date{\today}
+\title{Assignment 3: Neural Networks}
+\maketitle
+
+\section{Implementation}
+In our second assignment, we apply neural networks to the emotion recognition problem. We use the Neural Network Toolbox provided by MATLAB to train and compare the performance of different neural networks on the dataset at our disposal, in order to find the best training algorithm along with the best parameter configuration.\\
+We compare four different training algorithm:
+\begin{itemize}
+	\item Standard gradient descent backpropagation (\verb$traingd$ in MATLAB);
+	\item Gradient descent with adaptive learning rate (\verb$traingda$);
+	\item Gradient descent with momentum (\verb$traingdm$)
+	\item Resilient backpropagation (\verb$trainrp$).
+\end{itemize}
+In this section we describe our implementation of:
+\begin{itemize}
+	\item selection of the best set of parameters for each algorithm;
+	\item evaluation of NN's performance on unseen data.
+\end{itemize}
+
+\subsection{Parameter selection}
+In the first part, we use cross- validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds are chosen.\\
+For each algorithm, we compare several network topologies and parameter values in all their combinations. The tested values are shown in Table~\ref{tab:parameters}\\
+\begin{table}
+	\centering
+	\caption{Parameters tested}
+	\label{tab:parameters}
+
+		\begin{tabular}{|l|l|l|}
+		\hline
+		Neurons per hidden layer & \multicolumn{2}{l|}{From 6 to 45} \\\hline
+		Hidden layers		& \multicolumn{2}{l|}{[1, 2]} \\\hline
+		\verb$traingd$	&	Learning rate		&	[5 3 1 0.5 0.3 0.1 0.05 0.03 0.01] \\\hline
+		\verb$traingda$	&	Learning rate & [1 0.1 0.01] \\\cline{2-3}
+										& LR decrease ratio	&	[0.7 0.07 0.03] \\\cline{2-3}
+										& LR increase ratio & [1.4 2 5]	\\\hline
+		\verb$traingdm$	&	Learning rate	&	[5 3 1 0.5 0.3 0.1 0.05 0.03 0.01]	\\\cline{2-3}
+										&	Momentum			&	[0.9 0.95]	\\\hline
+		\verb$trainrp$	&	Delta increase	&	[1.4 1.3 1.2 1.1]	\\\cline{2-3}
+										&	Delta decrease	&	[0.7 0.5 0.3 0.07 0.05 0.03]	\\
+		\hline		
+		\end{tabular}
+\end{table}
+For further details on the criteria that led to those choices, see the answer to Question 1.\\
+The trained network has the default architecture returned by the function \verb$feedforwardnet$: it uses sigmoidal activation functions in the hidden layers and linear activation functions for the output neurons. Therefore, our choice for the performance measure falls onto the Mean Squared Error.\\
+A known problem of the basic training algorithm regards the random choice of the initial weights: a bad choice may lead the MSE to converge to a local minimum different from the global one. To soften the effect of the random choice, in each trial we train the network five times with the same parameters and take as a performance measure the minimum MSE on the validation set.\\
+For splitting the dataset into folds, we use the same function as in the previous exercise, which performs \emph{stratified} cross-validation: each fold contains approximately the same proportion of examples in every class as the whole dataset. It is implemented in the file \verb$getFoldsPartitioning.m$.\\
+The files \verb$crossValidate.m$, \verb$validateNeuralNetwork.m$ and \verb$repeatNNTraining.m$ implement the cross-validation. The function \verb$crossValidate$ requires in input the algorithm to be validated and the dataset. The outputs are:
+\begin{itemize}
+	\item \verb$parameters$: a cell array containing all the parameter values tested in the cross-validation; each cell contains an array of values for a single parameter. For instance, in \emph{traingd} the first cell contains the tested values for the number of neurons per hidden layer, the second cell contains the numbers of hidden layers and the third one all the learning rates tested;
+	\item \verb$mserrors$: a multidimensional array containing the average MSE computed over all the validation sets for each combination of parameters; the indices of each element in the array correspond to the indices of the parameter values in \verb$parameters$.
+\end{itemize}
+Since the cross-validation requires time to be completed, the function saves the performance computed on every validation fold by every parameter configuration as a precaution.
+\begin{lstlisting}[breaklines=true]
+function [ parameters, mserrors ] = crossValidate( algorithm, attributes, labels )
+
+% Get the indices of the 10 folds as a cell array of 10 indices arrays
+foldsIndices = getFoldsPartitioning(labels,10,true);
+
+[parameters, numParams] = getParameters(algorithm);
+
+mserrors = zeros(numParams);
+for i=1:10
+    disp(['Testing fold ' num2str(i)]);
+    trainingSetIndices = getTrainingSetIndexed(foldsIndices,i);
+    validationSetIndices = foldsIndices{i};
+    
+    mserrorsPerFold = validateNeuralNetwork(algorithm,parameters,attributes,labels,trainingSetIndices,validationSetIndices);
+    save([algorithm '_msErrorsFold' num2str(i) '.mat'],'parameters','mserrorsPerFold');
+    
+    mserrors = mserrors+mserrorsPerFold;
+end
+% Average the accuracies
+mserrors = mserrors./10;
+save([algorithm '_avgmsErrors.mat'],'parameters','mserrors');
+
+
+end
+
+
+\end{lstlisting}
+For each validation fold, the function \verb$validateNeuralNetwork$ is called. The main structure of this function has a \verb$switch$ statement, which checks the algorithm that is being tested; according to the algorithm, it loops over all the parameters that we need to test and calls the function \verb$repeatNNTraining$ for each parameter combination. This function first sets the training and validation sets for the training algorithm,
+\begin{lstlisting}[firstnumber=17]
+    net.divideFcn = 'divideind';
+    net.divideParam.trainInd = trainingSetIndices;
+    net.divideParam.valInd = validationSetIndices;
+    net.divideParam.testInd = [];
+\end{lstlisting}
+then it configures the input and output layers' sizes and trains the network,
+\begin{lstlisting}[firstnumber=22]
+    % Set up input and output layer
+    NN{j} = configure(net, attributesNN, labelsNN);
+    % Train network
+    [NN{j}, trainRecord] = train(NN{j}, attributesNN, labelsNN);
+\end{lstlisting}
+and finally keeps the performance value computed on the validation set for the following operations; this value can be retrieved via the field \verb$best_vperf$ of the struct \verb$trainRecord$.
+\begin{lstlisting}[firstnumber=30]
+    perfs(j) = trainRecord.best_vperf;
+\end{lstlisting}
+At the end of the five iterations, the network that performed best on the validation set is returned, along with the error measured.
+As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.
+
+\subsection{Performance evaluation}
+For evaluating the performance of the chosen model on unseen data, we use cross-validation with three sets:
+\begin{itemize}
+	\item a training set, used to execute gradient descent;
+	\item a validation set, used to determine the termination condition and avoid overfitting, as well as optimizing the parameters;
+	\item a test set, used for evaluating the performance.
+\end{itemize}
+The procedure is aimed at verifying the performance of the model obtained via the procedure of the previous subsection on data that have been used neither for training nor for parameter optimization.\\
+The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set.
+
+\section{Performance results}
+
+
+\section{Questions}
+\subsection{Question 1}
+We chose the optimal topology and parameters through cross-validation. In detail, in each iteration we tested the performance of the chosen topology on the fold used as validation set; at the end, we averaged the performances of each topology and parameters configuration and chose the setting that showed the best average performance.\\
+We tested topologies with 1 and 2 layers. Topologies with 1 layer can fit any Boolean function, while 2-layer topologies can approximate arbitrarily well any real-valued function.\\
+For each layer, a common practice is to use a number of neurons between the sizes of the input and the output layer. Choosing less neurons than the output leads to a data compression that may cause information loss before reaching the output.\\
+For the algorithms' parameters, we had to trade off the number of tests executed and the total time for testing. We chose learning rates that covered different orders of magnitude where possible.\\
+The optimal parameters for the standard gradient descent are:\\
+Neurons per layer = 18; Number of layers = 2; Learning rate = 0.5; Avg Error = 0.0458\\
+The optimal parameters for the adaptive gradient descent are:\\
+Neurons per layer = 15; Number of layers = 2; Learning rate = 0.1; LR decrease rate = 0.7; LR increase rate = 1.4; Avg Error = 0.0449\\
+The optimal parameters for the gradient descent with momentum are:\\
+Neurons per layer = 42; Number of layers = 1; Learning rate = 1; Momentum coefficient = 0.9; Avg Error = 0.0679\\
+The optimal parameters for resilient backpropagation are:\\
+Neurons per layer = 14; Number of layers = 2; Delta increase = 1.3; Delta decrease = 0.5; Avg Error = 0.0444\\
+
+
+\subsection{Question 1}
+
+\subsubsection{Overfitting}
+Matlab already implemented \emph{early stopping} by default. [some words about early stopping]. We considered using \emph{regularization}, but this would include another paramenter to optimise. Because all the parameters already took us 2 days, we didn't want to double/triple this time. However, theoretically also other techniques [...] are possible.
+
+\subsubsection{6 Networks with single output}
+Disadvantages\\
+First of all this includes to implement a decision function which classifies on basis of the outputs of the 6 networks (like for the decision trees).\\
+The task for each of the 6 networks is to find a boolean decision function. If we assume that we test the networks with the same topologies as the 1 big network, these networks can represent \textit{exactly} one boolean function as long as they have at least 2 layers. This leads to a huge risk of overfitting compared to the 1 network which approximates an arbitrary function and is therefore more robust to noise.
+
+Furthermore, training 6 networks could lead to a higher risk of overfitting, as the parameters are optimized differently for each output class. Also, this is a time factor as long as one does not have access to 6 powerful computers. (It is possible to parallelize the process of cross-validation as the networks are independent).
+\\
+Advantages\\
+As the networks are trained more specific to recognize one class, this approach could lead to a better performance.\\
+Because the output layer is smaller than for 1 big network, there are less weights to optimize in each network for the same topology. As a result, parallel cross-validation of 6 networks will be faster than the cross-validation of 1 big network.
+
+Combination\\
+The combination of the output of the 6 networks is exactly the problem solved in out last Assignment. We will just look at each discussed strategy:
+\begin{description}
+    \item[random choice] still possible with a threshold value (output a random choice between each network that outputs a value bigger than the treshold.
+    \item[score-based decision] naturally, the output of the networks is also a score, so this is possible without modifications
+    \item[depth-based decision] the depth of a tree is a specific property of a decision tree and therefore not easy to find a similar property for neural networks. Of course, one could use the number of layers, but as this varies just between two values, the algorithm would probably not perform well.
+    \item[error-based decision] as the error of the networks can be calcualted just as the errors of the trees, this strategy is also possible to use without modification
+\end{description}
+
+\subsection{Question 2}
+\subsubsection*{1)}
+After performing a t-test, feedforward neural networks showed to have a statistical significantly smaller classification error than our decision tree implementation. However, although for our specific test set performance sample neural networks did better than decision tree, it is not possible to state general conclusion about the relative performance of this two learning algorithm. 
+
+First, it should be observed that a t-test just refers to a specific sample of test performance. This implies that the resulting difference between of the two algorithms is just an estimate of the true difference. Thus, any conclusion behind the observed sample is statistically meaningless. Second, in our case we compared the classification error of the algorithms and in general it could be possible that for other performance metrics the resulting t-test can be different. 
+
+To summarize then, it is not possibile to establish if a specific learning algorithm is better than an another. Rather, analyzing the performance of the algorithms one should always consider the specific problem domain, the relevant performance metric and the available dataset.
+
+\subsubsection*{2)}
+We trained and tested decision trees and neural networks on the same training and test sets which leads to dependent samples. Because of this, we adopted a paired t-test.
+
+\subsubsection*{3)}
+Considering the classification error rather than the F1 measure has the advantage to avoid the so called multiple hypothesis comparison problem. Indeed adopting the F1 measure for this multi-class classification problem leads to 6 different measurements per test set, i.e one per each emotions. As a result the sample for the t-test is constituted by 10 six-elements vector. To compare the two algorithms in this way we have to realize 6 different t-test one per each emotions which leads to the multiple hypothesis comparison problem. Testing simultaneously 6 hypothesis with a significance (i.e a probability of rejecting the null hypothesis when it is actually true) $\alpha=0.05$, leads to an overall probability of error of $0.3$ which lead the test much more effective.
+
+\subsubsection*{4)}
+Let's first analyze the case of reducing the number of folds. Reducing the number of folds leads to a smaller sample on which to perform the t-test. Then, the $SE$ term of the t-statistic increases and the resulting t value get smaller. Moreover, as the number of degree of freedom (df) is directly proportional to the sample size, the corresponding threshold is bigger. As a result, having a smaller statistic to test against a higher threshold the number of false rejection for the null hypothesis increases. 
+
+Conversely, increasing the number of fold leads to a bigger t-statistic and a smaller threshold which in turn might lead to accept the null hypothesis when it is actually false. In any case, it should be observed that increasing the number of folds, one should be aware to get fold with at least 30 examples. Indeed, 30 examples is the minimum number of sample to approximate the fold individual differences between the two algorithm as realization of a normal random variable which provide the theoretical ground for the validity of the t-test. In addition, it is important specify that there is no argument to believe that 10 folds represent the optimum for this specific test.
+
+\subsubsection*{5)}
+In the case of the decision trees learning, adding new emotions requires to grow additional decision decision trees (in particular as many decision trees as many emotions we add) as well as retrain all the others. It should be observed that retraining is required since adding new emotions to the dataset enrich the base of negative examples of the pre-existing classes. On the other hand, in the case of neural networks it is required add as many additional output layers as new emotions are introduced, retrain  and optimize trough cross-validation the network.
+
+%\bibliographystyle{plainnat}
+%\bibliography{example}
+
+\end{document}
