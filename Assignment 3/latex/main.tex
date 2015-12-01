@@ -335,6 +335,30 @@ The optimal parameters for the different learning techniques are the following.
 \end{itemize}
 
 \subsubsection*{Question 2}
+\begin{figure}
+ \centering
+ \begin{subfigure}[b]{.8\textwidth}
+   \includegraphics[width=\textwidth]{traingd_plot.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.8\textwidth}
+   \includegraphics[width=\textwidth]{traingda_plot.eps}
+ \end{subfigure}
+\end{figure}
+\begin{figure}
+\ContinuedFloat
+\centering
+ \begin{subfigure}[b]{.8\textwidth}
+   \includegraphics[width=\textwidth]{traingdm_plot.eps}
+ \end{subfigure}
+ \begin{subfigure}[b]{.8\textwidth}
+   \includegraphics[width=\textwidth]{trainrp_plot.eps}
+ \end{subfigure}
+ \caption{Topology-Performance plots per algorithm}
+ \label{fig:topologyPerformance}
+\end{figure}
+
+
+
 
 \subsubsection*{Question 3}
 Matlab already implemented \emph{early stopping} by default. Therefore the available data is divided into three subsets: the training, validation and test set. The first one is used to find the weights for the network. If the error on the validation set starts to increase for several iterations, which is an indication for overfitting, the process stops and the the weights which produce the minimum error on the validation set are returned.\\
