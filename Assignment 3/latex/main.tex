@@ -44,7 +44,7 @@ In this section we describe our implementation of:
 
 \subsection{Implementation}
 In the first part, we use cross- validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds are chosen.\\
-For each algorithm, we compare several network topologies and parameter values in all their combinations. The tested values are shown in Table~\ref{tab:parameters}\\
+For each algorithm, we compare several network topologies and parameter values in all their combinations. The tested values are shown in Table~\ref{tab:parameters}.\\
 \begin{table}
 	\centering
 	\caption{Parameters tested}
@@ -66,7 +66,8 @@ For each algorithm, we compare several network topologies and parameter values i
 		\end{tabular}
 \end{table}
 For further details on the criteria that led to those choices, see the answer to Question 1.\\
-The trained network has the default architecture returned by the function \verb$feedforwardnet$: it uses sigmoidal activation functions in the hidden layers and linear activation functions for the output neurons. Therefore, our choice for the performance measure falls onto the Mean Squared Error.\\
+The trained network has the default architecture returned by the function \verb$feedforwardnet$: it uses sigmoidal activation functions in the hidden layers and linear activation functions for the output neurons. %TODO detailed explanation for this reason
+ Therefore, our choice for the performance measure falls onto the Mean Squared Error.\\
 A known problem of the basic training algorithm regards the random choice of the initial weights: a bad choice may lead the MSE to converge to a local minimum different from the global one. To soften the effect of the random choice, in each trial we train the network five times with the same parameters and take as a performance measure the minimum MSE on the validation set.\\
 For splitting the dataset into folds, we use the same function as in the previous exercise, which performs \emph{stratified} cross-validation: each fold contains approximately the same proportion of examples in every class as the whole dataset. It is implemented in the file \verb$getFoldsPartitioning.m$.\\
 The files \verb$crossValidate.m$, \verb$validateNeuralNetwork.m$ and \verb$repeatNNTraining.m$ implement the cross-validation. The function \verb$crossValidate$ requires in input the algorithm to be validated and the dataset. The outputs are:
@@ -131,7 +132,7 @@ The parameters that reach the minimum average MSE over the 10 validation sets ar
 	\item \textbf{Neurons per layer:} 14
 	\item \textbf{Layers:} 2
 	\item \textbf{Delta increase:} 1.3
-	\item \textbf{Delta decrease:} 0.7
+	\item \textbf{Delta decrease:} 0.7 %TODO this is different to the parameters in Question 1
 \end{itemize}
 
 \section{Performance evaluation}
@@ -319,8 +320,8 @@ In the following our reasons behind the set of tested parameters:
 For the algorithms' parameters, we had to trade off the number of tests executed and the total time for testing. We chose parameters that covered different orders of magnitude where possible.
 \begin{itemize}
 \item \textbf{Learning Rate:} As usual values, the lecture slides give $0.1$ and $0.01$. Because this is an essential parameter, we tested a larger set of different values at 3 different orders of magnitude, on higher than $0.1$ and 1 lower than $0.1$. As the \verb$traingda$ algorithm has 3 parameters to optimize, we had to reduce the number of tested learning rates here.
-\item \textbf{LR Decrease Ratio:} As typical values, $0.5$ and $0.7$ are given in the lecture slides. [...]
-\item \textbf{LR Increase Ratio:} As typical values, $1.05$ and $1.1$ are given in the lecture. [...]
+\item \textbf{LR Decrease Ratio:} As typical values, $0.5$ and $0.7$ are given in the lecture slides. [...] %TODO LR Decrese
+\item \textbf{LR Increase Ratio:} As typical values, $1.05$ and $1.1$ are given in the lecture. [...] % TODO LR Increse
 \item \textbf{Momentum:} We tested the both values given as typical in the lecture slides.
 \item \textbf{Delta Increase:} As a typical value, $1.2$ is given in the lecture slides. As this value has to be bigger than 1, we tested values around this. We didn't consider higher orders of magnitude, as this would just lead to exploding update values and therefore most probably to a lot of oscillation and long converging times. In the end, our optimal parameter was close by the given value.
 \item \textbf{Delta Decrease:} As a typical value, $0.5$ is given in the lecture slides. Again, we tested different values around this number and this time also tested values of smaller magnitude. Bigger magnitues were not possible as the parameter has to be smaller than 1. Our optimal parameter actually was $0.5$.
@@ -345,9 +346,11 @@ Furthermore, we considered to use \emph{regularisation}. Regularisation is a mec
 \end{align*}
 $\lambda$ is a parameter that sets the balance between the original minimization of the error and the minimization of the weights-function. Therefore, optimisation would include another parameter to optimise and therefore a multiplication of the computing time. Because the optimisation of our other parameters already took approximately two days, we could not spend triple/quadrupel/... of time. \\
 \\
-Theoretically also other techniques, for example \emph{dropout}, are possible. Also \emph{Data Augmentation} by using the noisy dataset additionally to the clean dataset would be an option.\\
+Theoretically also other techniques, for example \emph{dropout}, are possible. 
 \\
-In the dropout-method, random network nodes are dropped out in every training iteration with a constant probability for each node. Therefore, the network architecture is randomized and every architecture is just trained for a small random subset of the training data. This intuitively reduces the chance that the network is overfitted to the training data set as actually the network with $n$ nodes represents an average of all the before trained dropout-architectures (out of the set of $2^n$ possible networks), where each network node is only fitted to parts of the training data. On the other hand, with small amounts of training data, the dropout-technique can actually reduce the classification. In particular, the paper from Srivastava et al. referenced in the lecture slides shows that dropouts only reduce the classification error for MNIST classification training data sets of size 5000 or bigger, for 100 training examples the classification error was bigger than without dropout. Therefore, we are not confident that the dropout-technique would improve our performance whereas the implementation effort would be big.
+In the dropout-method, random network nodes are dropped out in every training iteration with a constant probability for each node. Therefore, the network architecture is randomized and every architecture is just trained for a small random subset of the training data. This intuitively reduces the chance that the network is overfitted to the training data set as actually the network with $n$ nodes represents an average of all the before trained dropout-architectures (out of the set of $2^n$ possible networks), where each network node is only fitted to parts of the training data. On the other hand, with small amounts of training data, the dropout-technique can actually reduce the classification. In particular, the paper from Srivastava et al. referenced in the lecture slides shows that dropouts only reduce the classification error for MNIST classification training data sets of size 5000 or bigger, for 100 training examples the classification error was bigger than without dropout. Therefore, we are not confident that the dropout-technique would improve our performance whereas the implementation effort would be big.\\
+\\
+Finally, one could also consider \emph{Data Augmentation} by using the noisy dataset additionally to the clean dataset.
 
 \subsubsection*{Question 4}
 \textbf{Disadvantages} \\
@@ -371,25 +374,26 @@ The combination of the output of the six networks is exactly the same problem wh
 
 \subsection{Part B: Questions}
 \subsubsection*{Question 1}
-After performing a t-test, feedforward neural networks showed to have a statistical significantly smaller classification error than our decision tree implementation. However, although for our specific test set performance sample neural networks did better than decision tree, it is not possible to state general conclusion about the relative performance of this two learning algorithm. 
+After performing a t-test, feedforward neural networks showed to have a statistical significantly smaller classification error than our decision tree implementation. %TODO on clean or noisy data or both?
+However, although for our specific test set performance sample neural networks did better than decision tree, it is not possible to state general conclusion about the relative performance of these two learning algorithms. 
 
-First, it should be observed that a t-test just refers to a specific sample of test performance. This implies that the resulting difference between of the two algorithms is just an estimate of the true difference. Thus, any conclusion behind the observed sample is statistically meaningless. Second, in our case we compared the classification error of the algorithms and in general it could be possible that for other performance metrics the resulting t-test can be different. 
+First, it should be observed that a t-test just refers to a specific sample of test performance. This implies that the resulting difference between of the two algorithms is just an estimate of the true difference. Thus, any conclusion behind the observed sample is statistically meaningless. Second, in our case we compared the classification error of the algorithms and in general it could be possible that for other performance metrics the resulting t-test would be different. 
 
-To summarize then, it is not possibile to establish if a specific learning algorithm is better than an another. Rather, analyzing the performance of the algorithms one should always consider the specific problem domain, the relevant performance metric and the available dataset.
+To summarize, it is not possible to say whether a specific learning algorithm is better than an another based on the performance for a given problem. Rather, analyzing the performance of the algorithms one should always consider the specific problem domain, the relevant performance metric and the available dataset.
 
 \subsubsection*{Question 2}
-We trained and tested decision trees and neural networks on the same training and test sets which leads to dependent samples. Because of this, we adopted a paired t-test.
+We trained and tested decision trees and neural networks on the same training and test sets which leads to dependent samples. Because of this, we adopted a paired t-test. %TODO more explanation
 
 \subsubsection*{Question 3}
-Considering the classification error rather than the F1 measure has the advantage to avoid the so called multiple hypothesis comparison problem. Indeed adopting the F1 measure for this multi-class classification problem leads to 6 different measurements per test set, i.e one per each emotions. As a result the sample for the t-test is constituted by 10 six-elements vector. To compare the two algorithms in this way we have to realize 6 different t-test one per each emotions which leads to the multiple hypothesis comparison problem. Testing simultaneously 6 hypothesis with a significance (i.e a probability of rejecting the null hypothesis when it is actually true) $\alpha=0.05$, leads to an overall probability of error of $0.3$ which lead the test much more effective.
+Considering the classification error rather than the F1 measure has the advantage to avoid the so called multiple hypothesis comparison problem. Indeed adopting the F1 measure for this multi-class classification problem leads to 6 different measurements per test set, i.e one per emotion. As a result, the sample for the t-test is constituted by 10 six-elements vectors. To compare the two algorithms in this way we have to apply 6 different t-tests (one per  emotion), which leads to the multiple hypothesis comparison problem. Testing simultaneously 6 hypothesis with a significance (i.e a probability of rejecting the null hypothesis when it is actually true) $\alpha=0.05$ leads to an overall probability of error of $0.3$ which lead the test much more effective. %TODO last words of last sentence make no sense
 
 \subsubsection*{Question 4}
-Let's first analyze the case of reducing the number of folds. Reducing the number of folds leads to a smaller sample on which to perform the t-test. Then, the $SE$ term of the t-statistic increases and the resulting t value get smaller. Moreover, as the number of degree of freedom (df) is directly proportional to the sample size, the corresponding threshold is bigger. As a result, having a smaller statistic to test against a higher threshold the number of false rejection for the null hypothesis increases. 
+Let's first analyze the case of reducing the number of folds. Reducing the number of folds leads to a smaller sample on which to perform the t-test. Then, the $SE$ term of the t-statistic increases and the resulting t value gets smaller. Moreover, as the degree of freedom (df) is directly proportional to the sample size, the corresponding threshold will be bigger. As a result, having a smaller statistic to test against a higher threshold the number of false rejection for the null hypothesis increases. 
 
-Conversely, increasing the number of fold leads to a bigger t-statistic and a smaller threshold which in turn might lead to accept the null hypothesis when it is actually false. In any case, it should be observed that increasing the number of folds, one should be aware to get fold with at least 30 examples. Indeed, 30 examples is the minimum number of sample to approximate the fold individual differences between the two algorithm as realization of a normal random variable which provide the theoretical ground for the validity of the t-test. In addition, it is important specify that there is no argument to believe that 10 folds represent the optimum for this specific test.
+Conversely, increasing the number of folds leads to a bigger t-statistic and a smaller threshold which in turn might lead us to accept the null hypothesis when it is actually false. In any case, it should be observed that increasing the number of folds, one should be aware to get folds with at least 30 examples. Indeed, 30 examples is the minimum number of sample to approximate the fold individual differences between the two algorithm as realization of a normal random variable which provide the theoretical ground for the validity of the t-test. In addition, it is important to specify that there is no argument to believe that 10 folds represent the optimum for this specific test.
 
 \subsubsection*{Question 5}
-In the case of the decision trees learning, adding new emotions requires to grow additional decision decision trees (in particular as many decision trees as many emotions we add) as well as retrain all the others. It should be observed that retraining is required since adding new emotions to the dataset enrich the base of negative examples of the pre-existing classes. On the other hand, in the case of neural networks it is required add as many additional output layers as new emotions are introduced, retrain  and optimize trough cross-validation the network.
+In the case of the decision trees learning, adding new emotions requires to grow additional decision trees (in particular as many decision trees as emotions added). It should be observed that retraining is required since adding new emotions to the dataset enriches the set of negative examples of the pre-existing classes. On the other hand, in the case of neural networks it is required to add as many additional output layers as new emotions, to retrain the network and to optimize it again with cross-validation.
 
 %\bibliographystyle{plainnat}
 %\bibliography{example}
