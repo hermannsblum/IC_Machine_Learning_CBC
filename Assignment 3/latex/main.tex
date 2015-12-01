@@ -36,15 +36,17 @@ We compare four different training algorithm:
 	\item Gradient descent with momentum (\verb$traingdm$)
 	\item Resilient backpropagation (\verb$trainrp$).
 \end{itemize}
-In this section we describe our implementation of:
-\begin{itemize}
-	\item selection of the best set of parameters for each algorithm;
-	\item evaluation of NN's performance on unseen data.
-\end{itemize}
+%In this section we describe our implementation of:
+%\begin{itemize}
+	%\item selection of the best set of parameters for each algorithm;
+	%\item evaluation of NN's performance on unseen data.
+%\end{itemize}
+
+Our Neural Network has an input layer of size 45 (the number of features) and an output layer of 6 neurons. The network tries to approximate a 6-output function in which every output is 0 except for the $i$-th one, which is 1 if the sample is in class $i$. To convert the output of the neural network into a class value, we use the function \verb$NNout2labels$ that has been provided to us: it returns the index of the maximum output as the class value.
 
 \subsection{Implementation}
-In the first part, we use cross- validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds are chosen.\\
-For each algorithm, we compare several network topologies and parameter values in all their combinations. The tested values are shown in Table~\ref{tab:parameters}.\\
+In the first part, we use cross-validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds are chosen.\\
+For each algorithm, we compare several network topologies and parameter values in all their combinations. The tested values are shown in Table~\ref{tab:parameters}.
 \begin{table}
 	\centering
 	\caption{Parameters tested}
@@ -67,9 +69,10 @@ For each algorithm, we compare several network topologies and parameter values i
 \end{table}
 For further details on the criteria that led to those choices, see the answer to Question 1.\\
 The trained network has the default architecture returned by the function \verb$feedforwardnet$: it uses sigmoidal activation functions in the hidden layers and linear activation functions for the output neurons. %TODO detailed explanation for this reason
- Therefore, our choice for the performance measure falls onto the Mean Squared Error.\\
+Therefore, our choice for the performance measure falls onto the Mean Squared Error.\\
 A known problem of the basic training algorithm regards the random choice of the initial weights: a bad choice may lead the MSE to converge to a local minimum different from the global one. To soften the effect of the random choice, in each trial we train the network five times with the same parameters and take as a performance measure the minimum MSE on the validation set.\\
-For splitting the dataset into folds, we use the same function as in the previous exercise, which performs \emph{stratified} cross-validation: each fold contains approximately the same proportion of examples in every class as the whole dataset. It is implemented in the file \verb$getFoldsPartitioning.m$.\\
+As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.\\
+For splitting the dataset into folds, we use the same function as in the previous coursework, which performs \emph{stratified} cross-validation: each fold contains approximately the same proportion of examples in every class as the whole dataset. It is implemented in the file \verb$getFoldsPartitioning.m$.\\
 The files \verb$crossValidate.m$, \verb$validateNeuralNetwork.m$ and \verb$repeatNNTraining.m$ implement the cross-validation. The function \verb$crossValidate$ requires in input the algorithm to be validated and the dataset. The outputs are:
 \begin{itemize}
 	\item \verb$parameters$: a cell array containing all the parameter values tested in the cross-validation; each cell contains an array of values for a single parameter. For instance, in \emph{traingd} the first cell contains the tested values for the number of neurons per hidden layer, the second cell contains the numbers of hidden layers and the third one all the learning rates tested;
@@ -104,7 +107,52 @@ end
 
 
 \end{lstlisting}
-For each validation fold, the function \verb$validateNeuralNetwork$ is called. The main structure of this function has a \verb$switch$ statement, which checks the algorithm that is being tested; according to the algorithm, it loops over all the parameters that we need to test and calls the function \verb$repeatNNTraining$ for each parameter combination. This function first sets the training and validation sets for the training algorithm,
+For each validation fold, the function \verb$validateNeuralNetwork$ is called. The main structure of this function has a \verb$switch$ statement, which checks the algorithm that is being tested; according to the algorithm, it loops over all the parameters that we need to test and calls the function \verb$repeatNNTraining$ for each parameter combination.
+\begin{lstlisting}[breaklines=true]
+function [ mserrors ] = validateNeuralNetwork( algorithm, parameters, attributes, labels, trainingSetIndices, validationSetIndices )
+% attributes and labels must be in CBC format (rows representing single
+% examples, columns attributes; one-column labels)
+
+[attributesNN,labelsNN] = ANNdata(attributes,labels);
+
+% Set common parameters
+neuronsPerLayer = parameters{1};
+hiddenLayers = parameters{2};
+
+switch algorithm
+    case 'traingd'
+        % Define the candidate parameter values (learning rates)
+        learningRates = parameters{3};
+        mserrors = zeros(length(neuronsPerLayer), length(hiddenLayers), length(learningRates));
+        
+        for a = 1:length(neuronsPerLayer)
+            npl = neuronsPerLayer(a);
+            for b = 1:length(hiddenLayers);
+                l = hiddenLayers(b);
+                % Create a NN with l layers and npl neurons
+                % per layer
+                net = feedforwardnet(repmat(npl,1,l),algorithm);
+                % To avoid showing the performance window
+                net.trainParam.showWindow = 0;
+                for c = 1:length(learningRates);
+                    lr = learningRates(c);
+                    % Set learning rate
+                    net.trainParam.lr = lr;
+                    
+                    disp(['Testing parameters npl=' num2str(npl)...
+                                ' l=' num2str(l) ' lr=' num2str(lr)]);
+
+                    mserrors(a,b,c) = repeatNNTraining(net, ...
+                                attributesNN, labelsNN, trainingSetIndices, ...
+                                validationSetIndices);
+                    
+                end
+                
+            end
+            
+        end
+\end{lstlisting}
+The function \verb$repeatNNTraining$ first sets the training and validation sets for the training algorithm,
 \begin{lstlisting}[firstnumber=17]
     net.divideFcn = 'divideind';
     net.divideParam.trainInd = trainingSetIndices;
@@ -123,7 +171,6 @@ and finally keeps the performance value computed on the validation set for the f
     perfs(j) = trainRecord.best_vperf;
 \end{lstlisting}
 At the end of the five iterations, the network that performed best on the validation set is returned, along with the error measured.
-As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.
 
 \subsection{Selected parameters}
 The parameters that reach the minimum average MSE over the 10 validation sets are:
@@ -241,7 +288,6 @@ f1 = mean(f1Folds,1);
             
 end
 \end{lstlisting}
-
 To compute the total confusion matrix, we sum the confusion matrices of the folds. To compute the performance statistics of the whole network, we average the performance statistics over the folds.\\
 For computing the performance on noisy data, we use again cross-validation with training, validation and test sets, but this time we skip the phase of parameter optimization. For testing on each fold we use the 10 optimal networks found on the clean data and saved in the respective \verb$.mat$ files. We train such networks on the training set and perform early stopping by computing the error on the validation set; finally, we get the confusion matrix of the trained network on the test fold.
 
@@ -318,15 +364,15 @@ surprise & 82.3\% & 81.8\% & 81.9\% &\\
 \section{Questions}
 \subsection{Part A: Questions}
 \subsubsection*{Question 1}
-We chose the optimal topology and parameters through cross-validation. In detail, in each iteration we tested the performance of the chosen topology on the fold used as validation set. In the end, we averaged the performances of each topology and parameters configuration and chose the setting that showed the best average performance.\\
+We chose the optimal topology and parameters through cross-validation. In detail, in each iteration we tested the performance of the chosen topology on the fold used as validation set. In the end, we averaged over the folds the performances of each topology and parameters configuration and chose the setting that showed the best average performance.\\
 In the following our reasons behind the set of tested parameters:
 \begin{itemize}
-\item \textbf{Number of Layers:} We tested topologies with one and two layers. Topologies with one layer can fit any boolean function, while two-layer topologies can approximate arbitrarily well any real-valued function.
+\item \textbf{Number of Layers:} We tested topologies with one and two hidden layers. Topologies with one hidden layer (two layers) can fit any bounded continuous function, while two-hidden-layer topologies can approximate arbitrarily well any real-valued function.
 \item \textbf{Number of Neurons:} For each layer, a common practice is to use a number of neurons between the sizes of the input and the output layer. Choosing less neurons than the output leads to a data compression that may cause information loss before reaching the output.
 \end{itemize}
 For the algorithms' parameters, we had to trade off the number of tests executed and the total time for testing. We chose parameters that covered different orders of magnitude where possible.
 \begin{itemize}
-\item \textbf{Learning Rate:} As usual values, the lecture slides give $0.1$ and $0.01$. Because this is an essential parameter, we tested a larger set of different values at 3 different orders of magnitude, on higher than $0.1$ and 1 lower than $0.1$. As the \verb$traingda$ algorithm has 3 parameters to optimize, we had to reduce the number of tested learning rates here.
+\item \textbf{Learning Rate:} If the learning rate is too large, the gradient descent may diverge; conversely, if it is too small, the algorithm may require too long to converge to the minimum error. Typical values are $0.1$ and $0.01$. Because this is an essential parameter, we tested three different values at three different orders of magnitude. The only exception was for the \verb$traingda$ algorithm: since it has 3 parameters to optimize, we had to reduce the number of learning rates tested.
 \item \textbf{LR Decrease Ratio:} As typical values, $0.5$ and $0.7$ are given in the lecture slides. [...] %TODO LR Decrese
 \item \textbf{LR Increase Ratio:} As typical values, $1.05$ and $1.1$ are given in the lecture. [...] % TODO LR Increse
 \item \textbf{Momentum:} We tested the both values given as typical in the lecture slides.
