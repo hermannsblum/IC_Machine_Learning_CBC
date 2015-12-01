@@ -136,11 +136,73 @@ For evaluating the performance of the chosen model on unseen data, we use cross-
 	\item a validation set, used to determine the termination condition and avoid overfitting, as well as optimizing the parameters;
 	\item a test set, used for evaluating the performance.
 \end{itemize}
-The procedure is aimed at verifying the performance of the model obtained via the procedure of the previous subsection on data that have been used neither for training nor for parameter optimization.\\
-The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set. The network is trained on the training set and the parameters are optimized on the validation set, by using MSE as in the validation above; the resulting network is then tested on the test set in terms of confusion matrix and derived performance measures (accuracy, precision, recall). Since in each iteration the optimization is done on a different validation set, it may happen (and it actually does) that different parameter configurations are tested on different folds: in this way, we are truly estimating the performance of the entire approach we use to train and optimize the network, not just of a single trained network.
+The procedure is aimed at verifying the performance of the model obtained via cross-validation on data that have been used neither for training nor for parameter optimization.\\
+The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set. The network is trained on the training set and the parameters are optimized on the validation set, by using MSE as in the validation above; the resulting network is then tested on the test set in terms of confusion matrix and derived performance measures (accuracy, precision, recall). Since in each iteration the optimization is done on a different validation set, it may happen (and it actually does) that different parameter configurations are tested on different folds: in this way, we are truly estimating the performance of the entire approach we use to train and optimize the network, not just of a single trained network.\\
+To compute the total confusion matrix, we sum the confusion matrices of the folds. To compute the performance statistics of the whole network, we average the performance statistics over the folds.
 
 \subsection{Performance results}
+The performance results of the network trained and tested on clean data are shown in Figure~\ref{fig:perfClean}
+\begin{figure}
+    \center
+    \subcaptionbox{Confusion matrix}{
+        $\begin{bmatrix}
+					True\backslash Predicted & anger & disgust & fear & happiness & sadness & surprise \\ 
+					anger & 83 & 12 & 9 & 4 & 23 & 1 \\
+					disgust & 14 & 158 & 3 & 5 & 15 & 3 \\
+					fear & 0 & 2 & 85 & 3 & 10 & 19 \\
+					happiness & 0 & 4 & 5 & 201 & 6 & 0 \\
+					sadness & 11 & 18 & 7 & 7 & 86 & 3 \\
+					surprise & 1 & 0 & 10 & 3 & 5 & 188 \\
+				\end{bmatrix}$
+    }
+		\\\center
+    \subcaptionbox{Performance metrics}{
+        \begin{tabular}{c | c c c | c}
+Class & Precision & Recall & $F_1$ & Accuracy \\
+\hline\hline
+anger & 69.8\% & 63.0\% & 65.5\% &\\ 
+disgust & 81.6\% & 79.8\% & 80.3\% &\\ 
+fear & 72.4\% & 71.4\% & 70.8\% &	79.8\%\\ 
+happiness & 90.6\% & 93.1\% & 91.6\% &\\ 
+sadness & 60.8\% & 65.1\% & 62.3\% &\\ 
+surprise & 88.4\% & 90.9\% & 89.4\% &\\ 
+        \end{tabular}
+    }%
+    
+    \caption{Performance of Neural Network on clean data}
+		\label{fig:perfClean}
+\end{figure}
 
+\begin{figure}
+    \center
+    \subcaptionbox{Confusion matrix}{
+        $\begin{bmatrix}
+					True\backslash Predicted & anger & disgust & fear & happiness & sadness & surprise \\ 
+					anger & 6 & 16 & 21 & 9 & 32 & 4 \\
+					disgust & 2 & 151 & 12 & 7 & 12 & 3 \\
+					fear & 1 & 13 & 133 & 11 & 14 & 15 \\
+					happiness & 3 & 8 & 14 & 173 & 6 & 5 \\
+					sadness & 2 & 14 & 16 & 5 & 61 & 12 \\
+					surprise & 1 & 4 & 18 & 7 & 10 & 180 \\
+				\end{bmatrix}$
+    }
+		\\\center
+    \subcaptionbox{Performance metrics}{
+        \begin{tabular}{c | c c c | c}
+Class & Precision & Recall & $F_1$ & Accuracy \\
+\hline\hline
+anger & 27.5\% & 6.9\% & 10.2\% &\\ 
+disgust & 74.6\% & 80.7\% & 77.0\% &\\ 
+fear & 62.5\% & 71.2\% & 66.5\% &	70.4\%\\ 
+happiness & 81.9\% & 82.8\% & 81.8\% &\\ 
+sadness & 45.6\% & 55.5\% & 49.6\% &\\ 
+surprise & 82.3\% & 81.8\% & 81.9\% &\\ 
+        \end{tabular}
+    }%
+    
+    \caption{Performance of Neural Network on noisy data}
+		\label{fig:perfNoisy}
+\end{figure}
 
 \section{Questions}
 \subsection{Part A: Questions}
