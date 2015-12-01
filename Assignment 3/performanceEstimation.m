@@ -78,10 +78,9 @@ for i = 1:10 % iterate over 10 test folds
                 ./ (precisionFolds(i,j) + recallFolds(i,j));
         end
     end
-    
+    confusionMatrix = confusionMatrix+confMatrixFold;
 end
     
-confusionMatrix = confusionMatrix+confMatrixFold;
 accuracy = mean(accuracyFolds);
 precision = mean(precisionFolds,1);
 recall = mean(recallFolds,1);

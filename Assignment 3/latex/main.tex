@@ -125,7 +125,14 @@ At the end of the five iterations, the network that performed best on the valida
 As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.
 
 \subsection{Selected parameters}
-
+The parameters that reach the minimum average MSE over the 10 validation sets are:
+\begin{itemize}
+	\item \textbf{Algorithm:} Resilient backpropagation (\verb$trainrp$)
+	\item \textbf{Neurons per layer:} 14
+	\item \textbf{Layers:} 2
+	\item \textbf{Delta increase:} 1.3
+	\item \textbf{Delta decrease:} 0.7
+\end{itemize}
 
 \section{Performance evaluation}
 
@@ -137,7 +144,103 @@ For evaluating the performance of the chosen model on unseen data, we use cross-
 	\item a test set, used for evaluating the performance.
 \end{itemize}
 The procedure is aimed at verifying the performance of the model obtained via cross-validation on data that have been used neither for training nor for parameter optimization.\\
-The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set. The network is trained on the training set and the parameters are optimized on the validation set, by using MSE as in the validation above; the resulting network is then tested on the test set in terms of confusion matrix and derived performance measures (accuracy, precision, recall). Since in each iteration the optimization is done on a different validation set, it may happen (and it actually does) that different parameter configurations are tested on different folds: in this way, we are truly estimating the performance of the entire approach we use to train and optimize the network, not just of a single trained network.\\
+The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set. The network is trained on the training set and the parameters are optimized on the validation set; in this phase the performance measure used, both for training and validation, is MSE as in the previous section. As before, we repeat the training 5 times and take the network that achieved the minimum error on the validation set. The resulting network is then tested on the test set in terms of confusion matrix and derived performance measures (accuracy, precision, recall). Since in each iteration the optimization is done on a different validation set, it may happen (and it actually does) that different parameter configurations are tested on different folds: in this way, we are truly estimating the performance of the entire approach we use to train and optimize the network, not just of a single trained network.\\
+The implementation is provided in the file \verb$performanceEstimation.m$. The function first sets up the training, validation and test sets, and then loops over the training algorithms. For each algorithm, it calls \verb$validateNeuralNetwork$ (line 36) to obtain the MSE values for all the configuration parameters. The minimum MSE is recorded for each algorithm and finally the best MSE over all the algorithms on the given validation set is found.\\
+\begin{lstlisting}[breaklines=true]
+function [confusionMatrix, accuracy, precision, recall, f1] = performanceEstimation(attributes, labels)
+
+algorithms = {'traingd', 'traingda', 'traingdm', 'trainrp'};
+n_alg = length(algorithms);
+confusionMatrix = zeros(6);
+accuracyFolds = zeros(10,1);
+precisionFolds = zeros(10,6);
+recallFolds = zeros(10,6);
+f1Folds = zeros(10,6);
+
+% Get the indices of the 10 folds as a cell array of 10 indices arrays
+foldIndices = getFoldsPartitioning(labels,10,true);
+
+for i = 1:10 % iterate over 10 test folds
+    % Split: Test- 1 Fold (i) Validation- 1 Fold (k) Training-8
+    testSetIndices = foldIndices{i};
+    k = mod(i,10)+1;
+    validationSetIndices = foldIndices{k};
+    trainingSetIndices = [];
+    for j=1:10
+        if j~=i && j~=k
+            trainingSetIndices = [trainingSetIndices foldIndices{j}];
+        end
+    end
+    
+    % find optimal Parameters with training and validation set
+    bestPerformingAlgorithm = 1;
+    bestMSE = Inf;
+    optimalParameters = [];
+    
+    for k = 1:n_alg
+        parameters = getParameters(algorithms{k});
+        
+        disp(['Fold ' num2str(i) ' Algorithm: ' algorithms{k}]);
+        
+        mserrorsAlgorithm = validateNeuralNetwork(algorithms{k}, parameters, ...
+            attributes, labels, trainingSetIndices, validationSetIndices);
+        % idx is the index of the minimum in the linearized
+        % mserrorsAlgorithm
+        [minMSE, idx] = min(mserrorsAlgorithm(:));
+        % Get the corresponding indices in the multidimensional array
+        idxParameters = cell(1,length(parameters));
+        [idxParameters{:}] = ind2sub(size(mserrorsAlgorithm), idx);
+        
+        if(minMSE<bestMSE)
+            bestMSE = minMSE;
+            bestPerformingAlgorithm = k;
+            optimalParameters = zeros(length(parameters),1);
+            for j=1:length(parameters)
+                optimalParameters(j) = parameters{j}(idxParameters{j});
+            end
+        end
+    end
+    
+    optimalAlgorithm = algorithms{bestPerformingAlgorithm};
+\end{lstlisting}
+
+The optimized network is used to perform a test on the test set and the corresponding confusion matrix is recorded. Both the optimal network and the confusion matrix are saved to the file \verb$confMatrixFold<i>.mat$ for subsequent use.
+\begin{lstlisting}[firstnumber=57,breaklines=true]
+    % Configure the best training algorithm with the optimal parameter
+    % configuration
+    net = configureNeuralNetwork(optimalAlgorithm,optimalParameters);
+    % Train the network 5 times and get the best network
+    [attributesNN,labelsNN] = ANNdata(attributes,labels);
+    [~,net] = repeatNNTraining(net,attributesNN,labelsNN,trainingSetIndices,validationSetIndices);
+    
+    % Compute performance on test set
+    predictions = NNout2labels(sim(net,attributesNN(:,testSetIndices)));
+    confMatrixFold = getConfusionMatrix(labels(testSetIndices),predictions,6);
+    save(['confMatrixFold' num2str(i)],'net','confMatrixFold');
+    
+    accuracyFolds(i) = sum(diag(confMatrixFold))/length(testSetIndices); % The sum of all the elements in confMatrixFold is
+                                                                         % equal to the size of the test set
+    precisionFolds(i,:) = diag(confMatrixFold)./sum(confMatrixFold,1)';
+    recallFolds(i,:) = diag(confMatrixFold)./sum(confMatrixFold,2);
+    for j=1:6
+        if(precisionFolds(i,j)+recallFolds(i,j)==0)
+            f1Folds(i,j)=0;
+        else
+            f1Folds(i, j) = 2* precisionFolds(i,j).*recallFolds(i,j) ...
+                ./ (precisionFolds(i,j) + recallFolds(i,j));
+        end
+    end
+    confusionMatrix = confusionMatrix+confMatrixFold;
+end
+    
+accuracy = mean(accuracyFolds);
+precision = mean(precisionFolds,1);
+recall = mean(recallFolds,1);
+f1 = mean(f1Folds,1); 
+            
+end
+\end{lstlisting}
+
 To compute the total confusion matrix, we sum the confusion matrices of the folds. To compute the performance statistics of the whole network, we average the performance statistics over the folds.
 
 \subsection{Performance results}
