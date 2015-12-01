@@ -357,7 +357,11 @@ The optimal parameters for the different learning techniques are the following.
  \label{fig:topologyPerformance}
 \end{figure}
 
+With the exception of the Momentum-Algorithm, the plots show increasing error for very large number of neurons in the hidden layer(s). For all but the standard gradient descent, the error becomes also bigger for very small numbers of hidden layer neurons. Our explanation is as follows.
 
+In general, the number of neurons in the hidden layers defines the degrees of freedom in the approximation of the classification function. Therefore, very few hidden neurons lead to very few degrees of freedom, which would explain higher classification errors as the ANN may not be able to fit the training data to a suitable degree. On the other hand, a high degree of freedom increases the possibilities for overfitting, which again will cause a higher classification error on the test set.
+
+Especially interesting is the performance in relation to the number of hidden layers. This is linked to the size of the searched hypothesis space as 2-layer-ANNs can only approximate continuous functions whereas 3-layer-ANNs can approximate every function. This can now have 2 contrary effects. First, with a bigger hypothesis space the ANN might be able to find a better fitting hypothesis and therefore perform better. Second, this is linked to a greater possibility of overfitting, as the hypotheses can be more specific. Both aspects are shown in the plots. For the standard gradient descent, the network with 1 hidden layer becomes increasingly bad for large numbers of neurons, but not nearly as bad as for a 2-layer-network, where there is a much higher possibility of overfitting. On the other Hand, we can see that the resilient backpropagation performs in general better with 2 layers than with 1. It is also the overall best performing algorithm and therefore it is better able to handle a large hypothesis space.
 
 
 \subsubsection*{Question 3}
