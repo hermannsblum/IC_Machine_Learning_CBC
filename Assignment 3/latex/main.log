@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  1 DEC 2015 17:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  1 DEC 2015 22:34
 entering extended mode
 **main.tex
 (main.tex
@@ -480,35 +480,35 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 [1
 
 ]
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 78.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 79.
  (C:\MikTeX\tex\latex\psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 88.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 89.
 
 (C:\MikTeX\tex\latex\psnfss\ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 )
-LaTeX Font Info:    Try loading font information for OMS+pcr on input line 90.
+LaTeX Font Info:    Try loading font information for OMS+pcr on input line 91.
  (C:\MikTeX\tex\latex\psnfss\omspcr.fd
 File: omspcr.fd 
 )
 LaTeX Font Info:    Font shape `OMS/pcr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 90.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 91.
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 146--149
+Underfull \hbox (badness 10000) in paragraph at lines 147--150
 
  []
 
 [3]
-LaTeX Font Info:    Try loading font information for OML+pcr on input line 194.
+LaTeX Font Info:    Try loading font information for OML+pcr on input line 195.
 
  (C:\MikTeX\tex\latex\psnfss\omlpcr.fd
 File: omlpcr.fd 
 )
 LaTeX Font Info:    Font shape `OML/pcr/m/n' in size <8> not available
-(Font)              Font shape `OML/cmm/m/it' tried instead on input line 194.
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 195.
  [4] [5]
 File: traingd_plot.eps Graphic file (type eps)
  <traingd_plot.eps>
@@ -518,32 +518,32 @@ File: traingda_plot.eps Graphic file (type eps)
 File: traingdm_plot.eps Graphic file (type eps)
  <traingdm_plot.eps>
 File: trainrp_plot.eps Graphic file (type eps)
- <trainrp_plot.eps>
-Underfull \hbox (badness 10000) in paragraph at lines 361--365
+ <trainrp_plot.eps> [6] [7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 375--379
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 367--373
+Underfull \hbox (badness 10000) in paragraph at lines 381--389
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 367--373
-
- []
-
-[6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 375--386
+Underfull \hbox (badness 10000) in paragraph at lines 381--389
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 375--386
+Underfull \hbox (badness 10000) in paragraph at lines 391--402
 
  []
 
-[9] [10] (main.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 391--402
+
+ []
+
+[9] [10] [11] (main.aux) ) 
 Here is how much of TeX's memory you used:
  6302 strings out of 493674
  89041 string characters out of 3151302
@@ -551,6 +551,6 @@ Here is how much of TeX's memory you used:
  9549 multiletter control sequences out of 15000+200000
  26102 words of font info for 66 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,11n,44p,1140b,1544s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,11n,44p,1142b,1544s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (10 pages, 74612 bytes).
+Output written on main.dvi (11 pages, 78896 bytes).

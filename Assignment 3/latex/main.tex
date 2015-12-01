@@ -242,10 +242,17 @@ f1 = mean(f1Folds,1);
 end
 \end{lstlisting}
 
-To compute the total confusion matrix, we sum the confusion matrices of the folds. To compute the performance statistics of the whole network, we average the performance statistics over the folds.
+To compute the total confusion matrix, we sum the confusion matrices of the folds. To compute the performance statistics of the whole network, we average the performance statistics over the folds.\\
+For computing the performance on noisy data, we use again cross-validation with training, validation and test sets, but this time we skip the phase of parameter optimization. For testing on each fold we use the 10 optimal networks found on the clean data and saved in the respective \verb$.mat$ files. We train such networks on the training set and perform early stopping by computing the error on the validation set; finally, we get the confusion matrix of the trained network on the test fold.
 
 \subsection{Performance results}
-The performance results of the network trained and tested on clean data are shown in Figure~\ref{fig:perfClean}
+The performance results of the network trained and tested on clean data are shown in Figure~\ref{fig:perfClean}. The accuracy is higher than the one recorded for decision trees (79.8\% against 74.7\%. As in decision trees, also here the classes \emph{anger} and \emph{sadness} have the worst performance figures. It is possible that the Action Units used as features are not able to discriminate these emotions from the other ones; therefore:
+\begin{itemize}
+	\item we have low precision since many sample points belonging to the other classes are confused with \emph{anger} or \emph{sadness};
+	\item we have low recall since many \emph{anger} and \emph{sadness} sample points are not correctly recognized by the network.
+\end{itemize}
+The emotions with the best performance are \emph{happiness} and \emph{surprise}: they exhibit an F-measure of 91.6\% and 89.4\% respectively.\\
+The same observations can be done for noisy data, as shown in Figure~\ref{fig:perfNoisy}. There is a general reduction in terms of performance, particularly for the recall of \emph{anger}, which dramatically decreases to 6.8\%. However, for the other classes the performance remains at high values, above 80\% of $F_1$ for \emph{happiness} and \emph{surprise}.
 \begin{figure}
     \center
     \subcaptionbox{Confusion matrix}{
