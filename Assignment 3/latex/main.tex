@@ -29,7 +29,7 @@
 
 \section{Validation}
 In our second assignment, we apply neural networks to the emotion recognition problem. We use the Neural Network Toolbox provided by MATLAB to train and compare the performance of different neural networks on the dataset at our disposal, in order to find the best training algorithm along with the best parameter configuration.\\
-We compare four different training algorithm:
+We compare four different training algorithms:
 \begin{itemize}
 	\item Standard gradient descent backpropagation (\verb$traingd$ in MATLAB);
 	\item Gradient descent with adaptive learning rate (\verb$traingda$);
@@ -42,7 +42,7 @@ We compare four different training algorithm:
 	%\item evaluation of NN's performance on unseen data.
 %\end{itemize}
 
-Our Neural Network has an input layer of size 45 (the number of features) and an output layer of 6 neurons. The network tries to approximate a 6-output function in which every output is 0 except for the $i$-th one, which is 1 if the sample is in class $i$. To convert the output of the neural network into a class value, we use the function \verb$NNout2labels$ that has been provided to us: it returns the index of the maximum output as the class value.
+Our Neural Network has an input layer of size 45 (the number of features) and an output layer of 6 neurons (the number of classes). The network tries to approximate a 6-output function in which every output is 0 except for the $i$-th one, which is 1 if the sample is in class $i$. To convert the output of the neural network into a class value, we use the function \verb$NNout2labels$ that has been provided to us: it returns the index of the maximum output as the class value.
 
 \subsection{Implementation}
 In the first part, we use cross-validation to select the best performing algorithm on the dataset and the best parameter configuration for it. Cross-validation is performed by splitting the dataset into 10 folds and using 9 folds for training and 1 for validation; iteratively, each fold is in turn used for validation, and ultimately the algorithm and parameter set that yield the best average performance over the folds are chosen.\\
@@ -68,10 +68,11 @@ For each algorithm, we compare several network topologies and parameter values i
 		\end{tabular}
 \end{table}
 For further details on the criteria that led to those choices, see the answer to Question 1.\\
-The trained network has the default architecture returned by the function \verb$feedforwardnet$: it uses sigmoidal activation functions in the hidden layers and linear activation functions for the output neurons. %TODO detailed explanation for this reason
-Therefore, our choice for the performance measure falls onto the Mean Squared Error.\\
+The trained network has the default architecture returned by the function \verb$feedforwardnet$: it uses sigmoid activation functions in the hidden layers and linear activation functions for the output neurons. As mentioned in Mitchell's book, with sigmoid functions in the hidden layer and linear outputs we can approximate arbitrary functions using two hidden layers and continuous functions using only one hidden layer.
+Our choice for the performance measure falls onto the Mean Squared Error (MSE): this is the error function corresponding to the chosen output activation function.\\
 A known problem of the basic training algorithm regards the random choice of the initial weights: a bad choice may lead the MSE to converge to a local minimum different from the global one. To soften the effect of the random choice, in each trial we train the network five times with the same parameters and take as a performance measure the minimum MSE on the validation set.\\
-As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set.\\
+As a technique to avoid overfitting, we rely on the Early Stopping implemented by default in NNTools. This technique stops the training before the maximum number of iterations of gradient descent is performed: when the MSE on the validation set starts rising, the algorithm keeps executing for a maximum of \verb$net.trainParam.max_fail$ iterations; if the error does not decrease in these iterations, the algorithm stops and the weights of the network are set to the values that achieved the minimum error on the validation set, otherwise it continues.\\
+\subsubsection*{Code}
 For splitting the dataset into folds, we use the same function as in the previous coursework, which performs \emph{stratified} cross-validation: each fold contains approximately the same proportion of examples in every class as the whole dataset. It is implemented in the file \verb$getFoldsPartitioning.m$.\\
 The files \verb$crossValidate.m$, \verb$validateNeuralNetwork.m$ and \verb$repeatNNTraining.m$ implement the cross-validation. The function \verb$crossValidate$ requires in input the algorithm to be validated and the dataset. The outputs are:
 \begin{itemize}
@@ -179,7 +180,7 @@ The parameters that reach the minimum average MSE over the 10 validation sets ar
 	\item \textbf{Neurons per layer:} 14
 	\item \textbf{Layers:} 2
 	\item \textbf{Delta increase:} 1.3
-	\item \textbf{Delta decrease:} 0.7 %TODO this is different to the parameters in Question 1
+	\item \textbf{Delta decrease:} 0.5
 \end{itemize}
 
 \section{Performance evaluation}
@@ -193,6 +194,8 @@ For evaluating the performance of the chosen model on unseen data, we use cross-
 \end{itemize}
 The procedure is aimed at verifying the performance of the model obtained via cross-validation on data that have been used neither for training nor for parameter optimization.\\
 The dataset is divided again in 10 folds. In each of the 10 iterations, one fold is used as test set, one as validation set and the remaining 8 as training set. The network is trained on the training set and the parameters are optimized on the validation set; in this phase the performance measure used, both for training and validation, is MSE as in the previous section. As before, we repeat the training 5 times and take the network that achieved the minimum error on the validation set. The resulting network is then tested on the test set in terms of confusion matrix and derived performance measures (accuracy, precision, recall). Since in each iteration the optimization is done on a different validation set, it may happen (and it actually does) that different parameter configurations are tested on different folds: in this way, we are truly estimating the performance of the entire approach we use to train and optimize the network, not just of a single trained network.\\
+
+\subsubsection*{Code}
 The implementation is provided in the file \verb$performanceEstimation.m$. The function first sets up the training, validation and test sets, and then loops over the training algorithms. For each algorithm, it calls \verb$validateNeuralNetwork$ (line 36) to obtain the MSE values for all the configuration parameters. The minimum MSE is recorded for each algorithm and finally the best MSE over all the algorithms on the given validation set is found.\\
 \begin{lstlisting}[breaklines=true]
 function [confusionMatrix, accuracy, precision, recall, f1] = performanceEstimation(attributes, labels)
@@ -292,13 +295,13 @@ To compute the total confusion matrix, we sum the confusion matrices of the fold
 For computing the performance on noisy data, we use again cross-validation with training, validation and test sets, but this time we skip the phase of parameter optimization. For testing on each fold we use the 10 optimal networks found on the clean data and saved in the respective \verb$.mat$ files. We train such networks on the training set and perform early stopping by computing the error on the validation set; finally, we get the confusion matrix of the trained network on the test fold.
 
 \subsection{Performance results}
-The performance results of the network trained and tested on clean data are shown in Figure~\ref{fig:perfClean}. The accuracy is higher than the one recorded for decision trees (79.8\% against 74.7\%. As in decision trees, also here the classes \emph{anger} and \emph{sadness} have the worst performance figures. It is possible that the Action Units used as features are not able to discriminate these emotions from the other ones; therefore:
+The performance results of the network trained and tested on clean data are shown in Figure~\ref{fig:perfClean}. The accuracy is higher than the one recorded for decision trees (79.8\% against 74.7\%). As in decision trees, also here the classes \emph{anger} and \emph{sadness} have the worst performance figures. It is possible that the Action Units used as features are not sufficiently able to discriminate these emotions from the other ones; therefore:
 \begin{itemize}
 	\item we have low precision since many sample points belonging to the other classes are confused with \emph{anger} or \emph{sadness};
 	\item we have low recall since many \emph{anger} and \emph{sadness} sample points are not correctly recognized by the network.
 \end{itemize}
-The emotions with the best performance are \emph{happiness} and \emph{surprise}: they exhibit an F-measure of 91.6\% and 89.4\% respectively.\\
-The same observations can be done for noisy data, as shown in Figure~\ref{fig:perfNoisy}. There is a general reduction in terms of performance, particularly for the recall of \emph{anger}, which dramatically decreases to 6.8\%. However, for the other classes the performance remains at high values, above 80\% of $F_1$ for \emph{happiness} and \emph{surprise}.
+The emotions with the best performance are \emph{happiness} and \emph{surprise}: they exhibit an F-measure of 91.6\% and 89.4\% respectively. Probably, this is because there are AUs whose activation is a strong indication of those emotions: for instance, \emph{happiness} is highly related to the activation of AU12, which corresponds to smile; \emph{surprise}, instead, is strongly related to the activation of AU2, AU1 (Outer and Inner Brow Raiser), AU27 (Mouth Stretch) and AU26 (Jaw Drop)\footnote{\url{https://en.wikipedia.org/wiki/Facial_Action_Coding_System}}. These were the AUs at the higher levels of the corresponding decision trees in the previous exercise: these features are likely to be as discriminative in neural networks.\\
+Similar observations can be done for noisy data, as shown in Figure~\ref{fig:perfNoisy}. There is a general reduction in terms of performance, particularly for the recall of \emph{anger}, which dramatically decreases to 6.9\%. However, for the other classes the performance remains at high values, over 80\% of $F_1$ for \emph{happiness} and \emph{surprise}.
 \begin{figure}
     \center
     \subcaptionbox{Confusion matrix}{
@@ -368,11 +371,11 @@ We chose the optimal topology and parameters through cross-validation. In detail
 In the following our reasons behind the set of tested parameters:
 \begin{itemize}
 \item \textbf{Number of Layers:} We tested topologies with one and two hidden layers. Topologies with one hidden layer (two layers) can fit any bounded continuous function, while two-hidden-layer topologies can approximate arbitrarily well any real-valued function.
-\item \textbf{Number of Neurons:} For each layer, a common practice is to use a number of neurons between the sizes of the input and the output layer. Choosing less neurons than the output leads to a data compression that may cause information loss before reaching the output.
+\item \textbf{Number of Neurons:} For each layer, a common practice is to use a number of neurons between the sizes of the input and the output layer. Choosing less neurons than the output leads to a data compression that may cause information loss before reaching the output and consequently underfitting. On the other hand, using too many neurons can easily lead to overfitting.
 \end{itemize}
 For the algorithms' parameters, we had to trade off the number of tests executed and the total time for testing. We chose parameters that covered different orders of magnitude where possible.
 \begin{itemize}
-\item \textbf{Learning Rate:} If the learning rate is too large, the gradient descent may diverge; conversely, if it is too small, the algorithm may require too long to converge to the minimum error. Typical values are $0.1$ and $0.01$. Because this is an essential parameter, we tested three different values at three different orders of magnitude. The only exception was for the \verb$traingda$ algorithm: since it has 3 parameters to optimize, we had to reduce the number of learning rates tested.
+\item \textbf{Learning Rate:} If the learning rate is too large, the gradient descent may diverge; conversely, if it is too small, the algorithm may require too many iterations to converge to the minimum error. Typical values are $0.1$ and $0.01$. Because this is an essential parameter, we tested three different values at three different orders of magnitude. The only exception was for the \verb$traingda$ algorithm: since it has 3 parameters to optimize, we had to reduce the number of learning rates tested.
 \item \textbf{LR Decrease Ratio:} As typical values, $0.5$ and $0.7$ are given in the lecture slides. [...] %TODO LR Decrese
 \item \textbf{LR Increase Ratio:} As typical values, $1.05$ and $1.1$ are given in the lecture. [...] % TODO LR Increse
 \item \textbf{Momentum:} We tested the both values given as typical in the lecture slides.
