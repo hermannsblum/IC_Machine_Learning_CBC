@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  2 DEC 2015 10:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9 64-bit) (preloaded format=latex 2015.11.7)  2 DEC 2015 11:48
 entering extended mode
 **main.tex
 (main.tex
@@ -534,27 +534,32 @@ File: traingdm_plot.eps Graphic file (type eps)
  <traingdm_plot.eps>
 File: trainrp_plot.eps Graphic file (type eps)
  <trainrp_plot.eps> [7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 424--428
+Underfull \hbox (badness 10000) in paragraph at lines 425--429
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--438
+Underfull \hbox (badness 10000) in paragraph at lines 431--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--438
+Underfull \hbox (badness 10000) in paragraph at lines 431--438
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 440--451
+Underfull \hbox (badness 10000) in paragraph at lines 440--452
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 440--451
+Underfull \hbox (badness 10000) in paragraph at lines 440--452
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 440--452
 
  []
 
@@ -566,6 +571,6 @@ Here is how much of TeX's memory you used:
  9579 multiletter control sequences out of 15000+200000
  32704 words of font info for 81 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,11n,44p,1142b,1542s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,11n,44p,1163b,1542s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on main.dvi (12 pages, 94604 bytes).
+Output written on main.dvi (12 pages, 95540 bytes).
